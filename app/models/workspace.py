@@ -16,12 +16,12 @@ class Workspace(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
 
-    # """ one-to-many """
-    # owner = db.relationship("User", back_populates="user_workspaces")
-    # channels = db.relationship("Channel", back_populates="workspace", cascade="all, delete-orphan")
+    """ one-to-many """
+    owner = db.relationship("User", back_populates="user_workspaces")
+    channels = db.relationship("Channel", back_populates="workspace", cascade="all, delete-orphan")
 
-    # """ many-to-many """
-    # users = db.relationship('User', secondary="memberships", back_populates="workspaces")
+    """ many-to-many """
+    users = db.relationship('User', secondary="memberships", back_populates="workspaces")
 
 
     @classmethod

@@ -17,9 +17,9 @@ class Reaction(db.Model):
     message_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("messages.id")), nullable=False)
 
 
-    # """ one-to-many """
-    # message = db.relationship("Message", back_populates="reactions")
-    # user = db.relationship("User", back_populates="reactions")
+    """ one-to-many """
+    message = db.relationship("Message", back_populates="reactions")
+    user = db.relationship("User", back_populates="reactions")
 
 
     @validates('encoded_text')

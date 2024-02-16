@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from .db import db, environment, SCHEMA
-# from .Message import Message
+from .message import Message
 
 
 class User(db.Model, UserMixin):
@@ -24,14 +24,14 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.Date, default=datetime.now, onupdate=datetime.now)
 
 
-    # """ one-to-many """
-    # user_workspaces = db.relationship("Workspace", back_populates="owner", cascade="all, delete-orphan")
-    # channels = db.relationship("Channel", back_populates="owner")
-    # messages = db.relationship("Message", back_populates="owner", foreign_keys=[Message.sender_id])
-    # reactions = db.relationship("Reaction", back_populates="user")
+    """ one-to-many """
+    user_workspaces = db.relationship("Workspace", back_populates="owner", cascade="all, delete-orphan")
+    channels = db.relationship("Channel", back_populates="owner")
+    messages = db.relationship("Message", back_populates="owner", foreign_keys=[Message.sender_id])
+    reactions = db.relationship("Reaction", back_populates="user")
 
-    # """ many-to-many """
-    # workspaces = db.relationship('Workspace', secondary="memberships", back_populates="users")
+    """ many-to-many """
+    workspaces = db.relationship('Workspace', secondary="memberships", back_populates="users")
 
 
     @validates('first_name')
