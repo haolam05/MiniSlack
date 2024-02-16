@@ -12,6 +12,8 @@ class Channel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+    topic = db.Column(db.String)
+    description = db.Column(db.Text)
     created_at = db.Column(db.Date, default=datetime.now)
     updated_at = db.Column(db.Date, default=datetime.now, onupdate=datetime.now)
 

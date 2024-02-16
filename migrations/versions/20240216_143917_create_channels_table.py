@@ -24,6 +24,8 @@ def upgrade():
     op.create_table('channels',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('name', sa.String(length=50), nullable=False),
+        sa.Column('topic', sa.String()),
+        sa.Column('description', sa.Text()),
         sa.Column('created_at', sa.Date(), nullable=True),
         sa.Column('updated_at', sa.Date(), nullable=True),
         sa.Column('owner_id', sa.Integer(), nullable=False),
