@@ -27,11 +27,15 @@ class Channel(db.Model):
     messages = db.relationship("Message", back_populates="channel", cascade="all, delete-orphan")
 
 
-    @validates('name')
-    def validate_name(self, _, val):
-        if len(val) < 4:
-            raise ValueError({ "name": "Name must be at least 4 characters long" })
-        return val
+    @classmethod
+    def validate(cls, data):
+        if "name" not in data:
+            return { "name": "Name is required" }, 400
+        if len(data["name"]) < 4:
+            return { "name": "Name must be at least 4 characters long" }, 400
+        if cls.query.filter(cls.name == data["name"]).one_or_none():
+            return { "name": "This name is already taken" }, 500
+        return True
 
 
     @classmethod

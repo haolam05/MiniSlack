@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Workspace
-from ..forms import WorkspaceForm
+from ..models import  db, Workspace, Channel
+from ..forms import WorkspaceForm, ChannelForm
 
 workspace_routes = Blueprint("workspaces", __name__)
 
@@ -107,6 +107,45 @@ def channels(id):
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
 
+    if current_user not in workspace.users:
+        return redirect("/api/auth/forbidden")
+
     channels = [channel.to_dict() for channel in workspace.channels]
 
     return { "Channels": channels }, 200
+
+
+@workspace_routes.route("/<int:id>/channels", methods=['POST'])
+@login_required
+def create_channel(id):
+    """Create a new channel for a workspace"""
+    form = ChannelForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        workspace = Workspace.query.get(id)
+        user_id = current_user.to_dict()['id']
+
+        if not workspace:
+            return { "message": "Workspace couldn't be found" }, 404
+
+        result = Channel.validate(form.data)
+        if result != True:
+            return result
+
+        if current_user not in workspace.users:
+            return redirect("/api/auth/forbidden")
+
+        new_channel = Channel(
+            name=form.data["name"],
+            topic=form.data["topic"],
+            description=form.data["description"],
+            owner_id=user_id,
+            workspace_id=id
+        )
+        db.session.add(new_channel)
+        db.session.commit()
+
+        return new_channel.to_dict(), 200
+
+    return form.errors, 400
