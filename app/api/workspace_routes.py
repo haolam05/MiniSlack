@@ -197,3 +197,28 @@ def create_membership(id):
         return { "user_id": user.id, "workspace_id": workspace.id }, 200
 
     return form.errors, 400
+
+
+@workspace_routes.route("/<int:workspace_id>/memberships/<int:user_id>", methods=['DELETE'])
+@login_required
+def delete_membership(workspace_id, user_id):
+    """Delete a membership for a workspace. Only workspace's owner can remove member. User can leaves the workspace."""
+    workspace = Workspace.query.get(workspace_id)
+    user = User.query.get(user_id)
+
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
+
+    if not user:
+        return { "message": "User couldn't be found" }, 404
+
+    if workspace not in  user.workspaces:
+        return { "message": "The user is not a member of this workspace" }, 500
+
+    if current_user != workspace.owner and current_user != user:
+        return redirect("/api/auth/forbidden")
+
+    user.workspaces = [w for w in user.workspaces if w != workspace]
+    db.session.commit()
+
+    return { "message": f"Successfully removed {user.email} from {workspace.name} workspace" }
