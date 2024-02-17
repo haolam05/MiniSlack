@@ -6,4 +6,4 @@ channel_routes = Blueprint('channels', __name__)
 
 @channel_routes.route('/')
 def test_connection():
-    return "channel blueprint works"
+    return "channel blueprint works!!!!"
