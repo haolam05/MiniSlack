@@ -35,6 +35,7 @@ def workspace(id):
 @workspace_routes.route("/", methods=["POST"])
 @login_required
 def create_workspace():
+    """Create a new workspace"""
     form = WorkspaceForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -59,6 +60,7 @@ def create_workspace():
 @workspace_routes.route("/<int:id>", methods=["PUT"])
 @login_required
 def update_workspace(id):
+    """Update a wokspace by id"""
     data = Workspace()
     form = WorkspaceForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
@@ -84,6 +86,16 @@ def update_workspace(id):
     return form.errors, 400
 
 
-# @workspace_routes.route("/", methods=["DELETE"])
-# def delete_workspace():
-#     pass
+@workspace_routes.route("/<int:id>", methods=["DELETE"])
+@login_required
+def delete_workspace(id):
+    """Delete the workspace specifed by id"""
+    workspace = Workspace.query.get(id)
+
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
+
+    db.session.delete(workspace)
+    db.session.commit()
+
+    return { "message": f"Successfully deleted {workspace.name} workspace" }
