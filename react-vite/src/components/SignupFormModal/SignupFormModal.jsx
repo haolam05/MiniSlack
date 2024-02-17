@@ -12,25 +12,22 @@ function SignupFormModal() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profilImageUrl, setProfilImageUrl] = useState("");
+  const [profileImageUrl, setProfileImageUrl] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+      return setErrors({ confirmPassword: "Confirm Password field must be the same as the Password field" });
     }
 
     const serverResponse = await dispatch(
       thunkSignup({
         first_name: firstName,
         last_name: lastName,
-        profile_image_url: profilImageUrl,
+        profile_image_url: profileImageUrl,
         email,
         username,
         password,
@@ -47,78 +44,77 @@ function SignupFormModal() {
   return (
     <>
       <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className="modal-errors">{errors.server}</p>}
       <form onSubmit={handleSubmit}>
-      <label>
+        <label>
           First Name
           <input
             type="text"
             value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={e => setFirstName(e.target.value)}
             required
           />
-      </label>
-      {errors.first_name && <p>{errors.first_name}</p>}
-      <label>
+        </label>
+        {errors.first_name && <p className="modal-errors">{errors.first_name}</p>}
+        <label>
           Last Name
           <input
             type="text"
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={e => setLastName(e.target.value)}
             required
           />
         </label>
-        {errors.last_name && <p>{errors.last_name}</p>}
+        {errors.last_name && <p className="modal-errors">{errors.last_name}</p>}
         <label>
           Email
           <input
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="modal-errors">{errors.email}</p>}
         <label>
           Username
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="modal-errors">{errors.username}</p>}
         <label>
           Password
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="modal-errors">{errors.password}</p>}
         <label>
           Confirm Password
           <input
             type="password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={e => setConfirmPassword(e.target.value)}
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="modal-errors">{errors.confirmPassword}</p>}
         <label>
           Profil Image
           <input
             type="text"
-            value={profilImageUrl}
-            onChange={(e) => setProfilImageUrl(e.target.value)}
-            required
+            value={profileImageUrl}
+            onChange={e => setProfileImageUrl(e.target.value)}
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="modal-errors">{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
     </>

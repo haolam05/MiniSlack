@@ -36,7 +36,7 @@ class Workspace(db.Model):
         if len(data["name"]) < 4:
             return { "name": "Name must be at least 4 characters long" }, 400
         if cls.query.filter(cls.name == data["name"]).one_or_none():
-            return { "name": "This name is alrady taken" }, 500
+            return { "name": "This name is already taken" }, 500
         return True
 
 
