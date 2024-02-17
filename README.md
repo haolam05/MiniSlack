@@ -262,3 +262,131 @@ user's information.
       }
     }
     ```
+
+## WORKSPACES
+### Get all workspaces joined or owned by the current signed in user
+
+* Require Authentication: true
+* Request
+  * Method: GET
+  * URL: /api/workspace/
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "JoinedWorkspaces": [
+        {
+        "id": 1,
+        "name": "to-do",
+        "owner_id": "2",
+        },
+        {
+        "id": 2,
+        "name": "backend-tasks",
+        "owner_id": "3",
+        }
+      ],
+      "OwnedWorkspaces": [
+        {
+        "id": 3,
+        "name": "lecture-questions",
+        "owner_id": 1
+        }
+      ]
+    }
+    ```
+### Get workspace by id
+
+* Require Authentication: true
+* Request
+  * Method: GET
+  * URL: /api/workspace/<int:id>
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+        {
+        "id": 3,
+        "name": "lecture-questions",
+        "owner_id": 1,
+        "Owner": {
+          "id": 1,
+          "first_name": "Hao",
+          "last_name": "Lam",
+          "username": "haolam",
+          "email": "haolam@user.io",
+          "profile_image_url": "image.amazon.url",
+          "is_deleted": false
+        },
+        "Members": [
+          {
+          "id": 2,
+          "first_name": "Nicky",
+          "last_name": "Lei",
+          "username": "nickylei",
+          "email": "nickylei@user.io",
+          "profile_image_url": "image.amazon.url",
+          "is_deleted": false
+          },
+          {
+          "id": 3,
+          "first_name": "Nick",
+          "last_name": "Leger",
+          "username": "nickleger",
+          "email": "nickleger@user.io",
+          "profile_image_url": "image.amazon.url",
+          "is_deleted": false
+          },
+        ],
+        "Channels": [
+          {
+            "id": 1,
+            "name": "general",
+            "topic": "anything",
+            "description": "anything and everything",
+            "owner_id": 1,
+            "workspace_id": 1
+          }
+          {
+            "id": 2,
+            "name": "homework discussion",
+            "topic": "homework",
+            "description": "homework q & a",
+            "owner_id": 1,
+            "workspace_id": 1
+          }
+          {
+            "id": 3,
+            "name": "assessments",
+            "topic": null,
+            "description": null,
+            "owner_id": 2,
+            "workspace_id": 1
+          }
+        ]
+        }
+    ```
+
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    { "message": "Workspace couldn't be found" }
+    ```
+
+
