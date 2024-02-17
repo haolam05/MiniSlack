@@ -56,13 +56,3 @@ def delete_channel(id):
     db.session.commit()
 
     return { "message": f"Successfully deleted {channel.name} channel" }
-
-
-# @channel_routes.route("/")
-# @login_required
-# def channels():
-#   """Get all channels"""
-
-#   channels = Channel.query.all()
-#   channels = [channel.to_dict() for channel in channels]
-#   return channels

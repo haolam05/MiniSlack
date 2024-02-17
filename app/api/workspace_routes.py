@@ -101,13 +101,13 @@ def delete_workspace(id):
 @workspace_routes.route("/<int:id>/channels")
 @login_required
 def channels(id):
-    """Returns all channels that belonintged to a workspace specifed by id"""
+    """Returns all channelrs that belonged to a workspace specifed by id. Only owner and members of workspace can see."""
     workspace = Workspace.query.get(id)
 
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
 
-    if current_user not in workspace.users:
+    if current_user not in workspace.users and current_user != workspace.owner:
         return redirect("/api/auth/forbidden")
 
     channels = [channel.to_dict() for channel in workspace.channels]
@@ -149,3 +149,20 @@ def create_channel(id):
         return new_channel.to_dict(), 200
 
     return form.errors, 400
+
+
+@workspace_routes.route("/<int:id>/memberships")
+@login_required
+def memberships(id):
+    """Returns all members that belonged to a workspace specifed by id"""
+    workspace = Workspace.query.get(id)
+
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
+
+    if current_user not in workspace.users and current_user != workspace.owner:
+        return redirect("/api/auth/forbidden")
+
+    members = [member.to_dict() for member in workspace.users]
+
+    return { "Members": members }, 200
