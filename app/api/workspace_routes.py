@@ -1,10 +1,9 @@
 from flask import Blueprint, request, redirect
-from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from ..models import  db, Workspace
 from ..forms import WorkspaceForm
 
-workspace_routes = Blueprint("workspace", __name__)
+workspace_routes = Blueprint("workspaces", __name__)
 
 
 @workspace_routes.route("/")
@@ -61,10 +60,8 @@ def create_workspace():
 @login_required
 def update_workspace(id):
     """Update a wokspace by id"""
-    data = Workspace()
     form = WorkspaceForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    form.populate_obj(data)
     workspace = Workspace.query.get(id)
     user_id = current_user.to_dict()['id']
 
@@ -99,3 +96,17 @@ def delete_workspace(id):
     db.session.commit()
 
     return { "message": f"Successfully deleted {workspace.name} workspace" }
+
+
+@workspace_routes.route("/<int:id>/channels")
+@login_required
+def channels(id):
+    """Returns all channels that belonged to a workspace specifed by id"""
+    workspace = Workspace.query.get(id)
+
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
+
+    channels = [channel.to_dict() for channel in workspace.channels]
+
+    return { "Channels": channels }, 200

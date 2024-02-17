@@ -307,7 +307,7 @@ user's information.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/workspace/<int:id>
+  * URL: /api/workspace/:id
   * Headers: None
   * Body: None
 
@@ -318,7 +318,7 @@ user's information.
   * Body:
 
     ```json
-        {
+      {
         "id": 3,
         "name": "lecture-questions",
         "owner_id": 1,
@@ -377,7 +377,7 @@ user's information.
             "workspace_id": 1
           }
         ]
-        }
+      }
     ```
 
 * Error response: Workspace not found
@@ -386,7 +386,9 @@ user's information.
     * Content-Type: application/json
   * Body:
    ```json
-    { "message": "Workspace couldn't be found" }
+    {
+      "message": "Workspace couldn't be found"
+    }
     ```
 
 ### Create a new workspace
@@ -510,5 +512,3 @@ Creates a workspace and redirects to workspace's page.
     ```json
     { "name": "This name is already taken" }
     ```
-
-
