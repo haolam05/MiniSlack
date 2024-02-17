@@ -33,7 +33,7 @@ All endpoints that require a current user to be logged in.
 
     ```json
     {
-      "message": "Authentication required"
+      "message": "Unauthorized"
     }
     ```
 
@@ -62,7 +62,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/session
+  * URL: /api/auth
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -79,7 +79,8 @@ Returns the information about the current user that is logged in.
         "lastName": "Smith",
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
-        "profileImageUrl": null
+        "profileImageUrl": null,
+        "is_deleted": false
       }
     }
     ```
