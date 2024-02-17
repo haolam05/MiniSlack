@@ -15,18 +15,20 @@ def workspaces():
     return { "JoinedWorkspaces": user_joined_workspaces, "OwnedWorkspaces": user_owned_workspaces }
 
 
-# @workspace_routes.route("/<int:id>")
-# def workspace(id):
-#     workspace = Workspace.query.get(id)
+@workspace_routes.route("/<int:id>")
+@login_required
+def workspace(id):
+    """Get a workspace details by id"""
+    workspace = Workspace.query.get(id)
 
-#     if not workspace:
-#         return { "message": "Workspace couldn't be found" }, 404
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
 
-#     owner = workspace.owner.to_dict()
-#     members = [user.to_dict() for user in workspace.users]
-#     channels = [channel.to_dict() for channel in workspace.channels]
+    owner = workspace.owner.to_dict()
+    members = [user.to_dict() for user in workspace.users]
+    channels = [channel.to_dict() for channel in workspace.channels]
 
-#     return { **workspace.to_dict(), "Owner": owner, "Members": members, "Channels": channels }
+    return { **workspace.to_dict(), "Owner": owner, "Members": members, "Channels": channels }
 
 
 # @workspace_routes.route("/", methods=["POST"])
