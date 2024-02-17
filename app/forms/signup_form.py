@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, ValidationError, url
 import re
 from app.models import User
 
@@ -36,14 +36,16 @@ def username_check_len(form, field):
          raise ValidationError('Username must be at least 4 characters.')
 
 
-
 def password_check_len(form, field):
     if len(field.data) < 6:
          raise ValidationError('Password must be at least 6 characters.')
 
 
 class SignUpForm(FlaskForm):
+    first_name = StringField("first_name", validators=[DataRequired()])
+    last_name = StringField("last_name", validators=[DataRequired()])
     username = StringField(
         'username', validators=[DataRequired(), username_check_len, username_exists])
     email = StringField('email', validators=[DataRequired(), validate_email, user_exists ])
     password = StringField('password', validators=[DataRequired(), password_check_len])
+    profile_image_url = StringField("profile_image_url", validators=[url()])
