@@ -132,7 +132,7 @@ information.
         "email": "john.smith@gmail.com",
         "username": "JohnSmith",
         "profileImageUrl": null,
-        "is_deleted": false 
+        "is_deleted": false
       }
     }
     ```
@@ -180,7 +180,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /api/users
+  * URL: /api/auth/signup
   * Headers:
     * Content-Type: application/json
   * Body:

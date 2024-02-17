@@ -1,13 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError, url
+from wtforms.validators import DataRequired, ValidationError
 from urllib.request import urlopen
 import re
 from app.models import User
 
 
 def user_exists(form, field):
-    # Checking if user exists
     email = field.data
     user = User.query.filter(User.email == email).first()
     if user:
@@ -15,7 +14,6 @@ def user_exists(form, field):
 
 
 def username_exists(form, field):
-    # Checking if username is already in use
     username = field.data
     user = User.query.filter(User.username == username).first()
     if user:
@@ -39,13 +37,14 @@ def password_check_len(form, field):
 
 
 def validate_photo_url(form, field):
-    try:
-        content_type = urlopen(field.data).info()["content-type"]
-    except:
-        raise ValidationError("Must be a valid URL.")
-    if "image" not in content_type:
-        raise ValidationError("Photo must be a valid image URL!")
-    return False
+    if (field.data):
+        try:
+            content_type = urlopen(field.data).info()["content-type"]
+        except:
+            raise ValidationError("Must be a valid URL.")
+        if "image" not in content_type:
+            raise ValidationError("Photo must be a valid image URL!")
+        return False
 
 class SignUpForm(FlaskForm):
     first_name = StringField("first_name", validators=[DataRequired()])
@@ -53,4 +52,4 @@ class SignUpForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), username_check_len, username_exists])
     email = StringField('email', validators=[DataRequired(), validate_email, user_exists ])
     password = StringField('password', validators=[DataRequired(), password_check_len])
-    profile_image_url = StringField("profile_image_url", validators=[url(), validate_photo_url])
+    profile_image_url = StringField("profile_image_url", validators=[validate_photo_url])
