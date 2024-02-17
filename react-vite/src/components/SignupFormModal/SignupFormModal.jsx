@@ -109,6 +109,16 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        <label>
+          Profil Image
+          <input
+            type="text"
+            value={profilImageUrl}
+            onChange={(e) => setProfilImageUrl(e.target.value)}
+            required
+          />
+        </label>
+        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
     </>
