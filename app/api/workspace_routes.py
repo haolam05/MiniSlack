@@ -118,7 +118,7 @@ def channels(id):
 @workspace_routes.route("/<int:id>/channels", methods=['POST'])
 @login_required
 def create_channel(id):
-    """Create a new channel for a workspace"""
+    """Create a new channel for a workspace. Any workspace's member can create a channel."""
     form = ChannelForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -149,3 +149,45 @@ def create_channel(id):
         return new_channel.to_dict(), 200
 
     return form.errors, 400
+
+
+@workspace_routes.route("/<int:workspace_id>/channels/<int:channel_id>", methods=['PUT'])
+@login_required
+def update_channel(workspace_id, channel_id):
+    """Update a channel for a workspace. Only channel's owner can edit the channel."""
+    form = ChannelForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        workspace = Workspace.query.get(workspace_id)
+        channel = Channel.query.get(channel_id)
+
+        if not workspace:
+            return { "message": "Workspace couldn't be found" }, 404
+
+        if not channel:
+            return { "message": "Channel couldn't be found" }, 404
+
+        if current_user != channel.owner:
+            return redirect("/api/auth/forbidden")
+
+        new_name = form.data["name"] != channel.name
+        result = Channel.validate(form.data, new_name)
+        if result != True:
+            return result
+
+        channel.name = form.data["name"]
+
+        if "topic" in form.data:
+            channel.topic = form.data["topic"]
+
+        if "description" in form.data:
+            channel.description = form.data["description"]
+
+        db.session.commit()
+        return channel.to_dict(), 200
+
+    return form.errors, 400
+
+
+"""Delete a channel of a workspace. Channel's owner and Workspace's owner only."""

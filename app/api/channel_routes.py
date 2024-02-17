@@ -1,8 +1,8 @@
-# from flask import Blueprint, request
+from flask import Blueprint, request
 # from flask_login import login_required, current_user
 # from ..models import  db, Channel
 
-# channel_routes = Blueprint("channels", __name__)
+channel_routes = Blueprint("channels", __name__)
 
 
 # @channel_routes.route("/")
