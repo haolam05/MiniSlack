@@ -9,6 +9,7 @@ auth_routes = Blueprint('auth', __name__)
 
 @auth_routes.route('/')
 def authenticate():
+    """Get Current User. Returns null if user is not signed in, a dictionary of user info if signed in."""
     if current_user.is_authenticated:
         return current_user.to_dict(), 200
     return { 'user': None }, 200
@@ -16,6 +17,7 @@ def authenticate():
 
 @auth_routes.route('/login', methods=['POST'])
 def login():
+    """Login"""
     form = LoginForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -27,12 +29,14 @@ def login():
 
 @auth_routes.route('/logout')
 def logout():
+    """Logout"""
     logout_user()
     return {'message': 'User logged out'}, 200
 
 
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
+    """Signup"""
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -53,4 +57,5 @@ def sign_up():
 
 @auth_routes.route('/unauthorized')
 def unauthorized():
+    """User is not authorized. Please log in."""
     return { 'message': 'Unauthorized' }, 401
