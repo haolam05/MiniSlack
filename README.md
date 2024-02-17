@@ -389,4 +389,126 @@ user's information.
     { "message": "Workspace couldn't be found" }
     ```
 
+### Create a new workspace
+
+Creates a workspace and redirects to workspace's page.
+
+* Require Authentication: true
+* Request
+  * Method: POST
+  * URL: /api/workspace/
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": "new-workspace",
+      "owner_id": "2"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "id": 1,
+        "name": "new-workspace",
+        "owner_id": 2
+      }
+    ```
+
+* Error response: Validation error - name required
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "Name is required" }
+    ```
+* Error response: Validation error - name length too short
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "Name must be at least 4 characters long" }
+    ```
+* Error response: Validation error - name already exists
+  * Status Code: 500
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "This name is already taken" }
+    ```
+### Update a workspace by id
+
+Creates a workspace and redirects to workspace's page.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/workspace/
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": "new-workspace",
+      "owner_id": "2"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "id": 1,
+        "name": "new-workspace",
+        "owner_id": 2
+      }
+    ```
+
+* Error response: Validation error - name required
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "Name is required" }
+    ```
+* Error response: Validation error - name length too short
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "Name must be at least 4 characters long" }
+    ```
+* Error response: Validation error - name already exists
+  * Status Code: 500
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "This name is already taken" }
+    ```
+
 
