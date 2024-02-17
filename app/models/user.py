@@ -78,7 +78,9 @@ class User(db.Model, UserMixin):
 
     @password.setter
     def password(self, password):
+        print(password, generate_password_hash(password),'🐼🐼🐼🐼🐼')
         self.hashed_password = generate_password_hash(password)
+        print(self.hashed_password)
 
 
     def check_password(self, password):
