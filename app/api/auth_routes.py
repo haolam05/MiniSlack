@@ -64,4 +64,4 @@ def unauthorized():
 @auth_routes.route('/forbidden')
 def forbidden():
     """User is forbbiden to perform this action."""
-    return { 'message': 'Forbiddedn' }, 403
+    return { 'message': 'Forbidden' }, 403

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Workspace, Channel
-from ..forms import WorkspaceForm, ChannelForm
+from ..models import  db, Workspace, Channel, User
+from ..forms import WorkspaceForm, ChannelForm, MembershipForm
 
 workspace_routes = Blueprint("workspaces", __name__)
 
@@ -166,3 +166,34 @@ def memberships(id):
     members = [member.to_dict() for member in workspace.users]
 
     return { "Members": members }, 200
+
+
+@workspace_routes.route("/<int:id>/memberships", methods=['POST'])
+@login_required
+def create_membership(id):
+    """Create a new membership for a workspace. Only workspace's owner can invite others."""
+    form = MembershipForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        workspace = Workspace.query.get(id)
+        user = User.query.filter(User.email == form.data["email"]).one_or_none()
+
+        if not workspace:
+            return { "message": "Workspace couldn't be found" }, 404
+
+        if not user:
+            return { "message": "User couldn't be found" }, 404
+
+        if current_user != workspace.owner:
+            return redirect("/api/auth/forbidden")
+
+        if workspace in user.workspaces:
+            return { "message": "User is already a member of the workspace" }, 500
+
+        user.workspaces.append(workspace)
+        db.session.commit()
+
+        return { "user_id": user.id, "workspace_id": workspace.id }, 200
+
+    return form.errors, 400
