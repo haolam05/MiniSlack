@@ -40,7 +40,22 @@ def update_channel(id):
     return form.errors, 400
 
 
-"""Delete a channel of a workspace. Only Channel's owner and Workspace's owner can delete channel."""
+@channel_routes.route("/<int:id>", methods=['DELETE'])
+@login_required
+def delete_channel(id):
+    """Delete a channel of a workspace. Only Channel's owner and Workspace's owner can delete channel."""
+    channel = Channel.query.get(id)
+
+    if not channel:
+        return { "message": "Channel couldn't be found" }, 404
+
+    if current_user != channel.owner:
+        return redirect("/api/auth/forbidden")
+
+    db.session.delete(channel)
+    db.session.commit()
+
+    return { "message": f"Successfully deleted {channel.name} channel" }
 
 
 # @channel_routes.route("/")
