@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, redirect
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from ..models import  db, Workspace
@@ -18,7 +18,7 @@ def workspaces():
 @workspace_routes.route("/<int:id>")
 @login_required
 def workspace(id):
-    """Get a workspace details by id"""
+    """Get a workspace details by id, log in the workspace"""
     workspace = Workspace.query.get(id)
 
     if not workspace:
@@ -31,23 +31,29 @@ def workspace(id):
     return { **workspace.to_dict(), "Owner": owner, "Members": members, "Channels": channels }
 
 
-# @workspace_routes.route("/", methods=["POST"])
-# def create_workspace():
-#     data = request.json
-#     result = Workspace.validate(data)
+@workspace_routes.route("/", methods=["POST"])
+@login_required
+def create_workspace():
+    data = request.json
+    result = Workspace.validate(data)
+    user_id = current_user.to_dict()["id"]
 
-#     if (result != True):
-#         return result
+    if (result != True):
+        return result
 
-#     new_workspace = Workspace(**data)
-#     db.session.add(new_workspace)
-#     db.session.commit()
+    data["owner_id"] = user_id
+    new_workspace = Workspace(**data)
+    db.session.add(new_workspace)
+    db.session.commit()
 
-#     return new_workspace.to_dict(), 201
+    return new_workspace.to_dict(), 201
 
 
 # @workspace_routes.route("/", methods=["PUT"])
 # def update_workspace():
+    # user = current_user.to_dict()
+    # if user["id"]:
+    #     return redirect("/api/auth/forbidden")
 #     pass
 
 

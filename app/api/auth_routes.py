@@ -59,3 +59,9 @@ def sign_up():
 def unauthorized():
     """User is not authorized. Please log in."""
     return { 'message': 'Unauthorized' }, 401
+
+
+@auth_routes.route('/forbidden')
+def forbidden():
+    """User is forbbiden to perform this action."""
+    return { 'message': 'Forbiddedn' }, 403

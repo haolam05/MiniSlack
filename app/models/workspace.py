@@ -31,6 +31,8 @@ class Workspace(db.Model):
 
     @classmethod
     def validate(cls, data):
+        if "name" not in data:
+            return { "name": "Name is required" }, 400
         if len(data["name"]) < 4:
             return { "name": "Name must be at least 4 characters long" }, 400
         if cls.query.filter(cls.name == data["name"]).one_or_none():
