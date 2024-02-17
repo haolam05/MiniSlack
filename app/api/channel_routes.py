@@ -49,7 +49,7 @@ def delete_channel(id):
     if not channel:
         return { "message": "Channel couldn't be found" }, 404
 
-    if current_user != channel.owner:
+    if current_user != channel.owner and current_user != channel.workspace.owner:
         return redirect("/api/auth/forbidden")
 
     db.session.delete(channel)
