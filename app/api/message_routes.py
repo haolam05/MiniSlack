@@ -115,16 +115,18 @@ def delete_message(id):
     return { "message": f"Successfully deleted {current_user.email}'s message" }
 
 
-# @message_routes.route("/<int:id>/reactions")
-# @login_required
-# def reactions(id):
-#     """Get all reactions of a message specified by id"""
-#     message = Message.query.get(id)
+@message_routes.route("/<int:id>/reactions")
+@login_required
+def reactions(id):
+    """Get all reactions of a message specified by id"""
+    message = Message.query.get(id)
 
-#     if not message:
-#         return { "message": "Message couldn't be found" }
+    if not message:
+        return { "message": "Message couldn't be found" }
 
+    """ Message has to be inside a workspace that is owned or joined by the current user """
+    if message.workspace not in current_user.workspaces and message.workspace not in current_user.user_workspaces:
+        return redirect("/api/auth/forbidden")
 
-
-#     reactions = [reaction.to_dict() for reaction in message.reactions]
-#     return reactions, 200
+    reactions = [reaction.to_dict() for reaction in message.reactions]
+    return { "Reactions": reactions }, 200
