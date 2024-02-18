@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { disabledSubmitButton } from "../../utils/dom";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import * as sessionActions from "../../redux/session";
-import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -23,7 +22,10 @@ function LoginFormModal() {
       })
     );
 
-    if (data?.errors) return setErrors(data.errors);
+    if (data?.errors) {
+      enabledSubmitButton();
+      return setErrors(data.errors);
+    }
     closeModal();
   };
 
