@@ -47,9 +47,9 @@ def validate_photo_url(form, field):
         return False
 
 class SignUpForm(FlaskForm):
-    first_name = StringField("first_name", validators=[DataRequired()])
-    last_name = StringField("last_name", validators=[DataRequired()])
-    username = StringField('username', validators=[DataRequired(), username_check_len, username_exists])
-    email = StringField('email', validators=[DataRequired(), validate_email, user_exists ])
-    password = StringField('password', validators=[DataRequired(), password_check_len])
-    profile_image_url = StringField("profile_image_url", validators=[validate_photo_url])
+    first_name = StringField("First name", validators=[DataRequired()])
+    last_name = StringField("Last name", validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired(), username_check_len, username_exists])
+    email = StringField('Email', validators=[DataRequired(), validate_email, user_exists ])
+    password = StringField('Password', validators=[DataRequired(), password_check_len])
+    profile_image_url = StringField("Profile Image URL", validators=[validate_photo_url])

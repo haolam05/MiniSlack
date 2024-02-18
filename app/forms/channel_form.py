@@ -9,6 +9,6 @@ def name_check_len(form, field):
 
 
 class ChannelForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired(), name_check_len])
-    topic = StringField("topic")
-    description = StringField("description")
+    name = StringField("Name", validators=[DataRequired(), name_check_len])
+    topic = StringField("Topic")
+    description = StringField("Description")

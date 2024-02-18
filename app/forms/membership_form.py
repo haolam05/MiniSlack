@@ -19,4 +19,4 @@ def user_exists(form, field):
 
 
 class MembershipForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), validate_email, user_exists])
+    email = StringField('Email', validators=[DataRequired(), validate_email, user_exists])

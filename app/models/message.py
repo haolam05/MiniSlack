@@ -26,11 +26,19 @@ class Message(db.Model):
     channel = db.relationship("Channel", back_populates="messages")
 
 
-    @validates('message')
-    def validate_message(self, _, val):
-        if not len(val):
-            raise ValueError({ "message": "Message is required" })
-        return val
+    @classmethod
+    def validate(cls, data):
+        if "message" not in data or len(data["message"]) <= 0:
+            return { "message": "Message is required" }, 400
+        if "workspace_id" not in data:
+            return { "message": "Workspace Id is required" }, 400
+        if "is_private" not in data:
+            return { "message": "Private status is required" }, 400
+        if data["is_private"] == True and data["receiver_id"] == None:
+            return { "message": "Missing receiver ID" }, 400
+        if data["is_private"] == False and data["channel_id"] == None:
+            return { "message": "Missing channel ID" }, 400
+        return True
 
 
     def to_dict(self):
