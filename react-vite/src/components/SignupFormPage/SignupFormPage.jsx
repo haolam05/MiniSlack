@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import * as sessionActions from "../../redux/session";
 
 function SignupFormPage() {
@@ -17,12 +18,11 @@ function SignupFormPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    disabledSubmitButton();
 
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+      enabledSubmitButton();
+      return setErrors({ confirmPassword: "Confirm Password field must be the same as the Password field", });
     }
 
     const data = await dispatch(
@@ -33,7 +33,11 @@ function SignupFormPage() {
       })
     );
 
-    if (data.errors) return setErrors(data);
+    if (data.errors) {
+      enabledSubmitButton();
+      return setErrors(data);
+    }
+
     navigate("/", { replace: true });
   };
 

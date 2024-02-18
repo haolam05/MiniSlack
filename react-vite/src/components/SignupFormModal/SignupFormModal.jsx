@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkSignup } from "../../redux/session";
+import * as sessionActions from "../../redux/session";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -23,8 +23,8 @@ function SignupFormModal() {
       return setErrors({ confirmPassword: "Confirm Password field must be the same as the Password field" });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
+    const data = await dispatch(
+      sessionActions.signup({
         first_name: firstName,
         last_name: lastName,
         profile_image_url: profileImageUrl,
@@ -34,11 +34,8 @@ function SignupFormModal() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      closeModal();
-    }
+    if (data.errors) return setErrors(data);
+    closeModal();
   };
 
   return (
