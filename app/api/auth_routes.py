@@ -21,7 +21,7 @@ def login():
     form = LoginForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        user = User.query.filter(User.email == form.data['email']).first()
+        user = User.query.filter(User.email == form.data['email'] and User.is_deleted == False).first()
         login_user(user)
         return user.to_dict()
     return form.errors, 401

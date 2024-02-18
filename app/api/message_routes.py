@@ -9,6 +9,7 @@ message_routes = Blueprint("messages", __name__)
 @message_routes.route("/", methods=['POST'])
 @login_required
 def create_message():
+    """Create a new message"""
     form = MessageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -62,5 +63,35 @@ def create_message():
 
         """ Returns new message """
         return new_message.to_dict(), 200
+
+    return form.errors, 400
+
+
+@message_routes.route("/<int:id>", methods=['PUT'])
+@login_required
+def update_message(id):
+    """Update a message"""
+    form = MessageForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        message = Message.query.get(id)
+
+        if not message:
+            return { "message": "Message couldn't be found" }, 404
+
+        result = Message.validate(form.data)
+        if result != True:
+            return result
+
+        workspace = Workspace.query.get(form.data["workspace_id"])
+
+        """ Current user must be the owner or a member of the current workspace and is the message owner to edit a message """
+        if  (workspace not in current_user.workspaces and workspace not in current_user.user_workspaces) or current_user != message.owner:
+            return redirect("/api/auth/forbidden")
+
+        message.message = form.data["message"]
+        db.session.commit()
+        return message.to_dict(), 200
 
     return form.errors, 400
