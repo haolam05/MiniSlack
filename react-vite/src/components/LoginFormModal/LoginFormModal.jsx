@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import * as sessionActions from "../../redux/session";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -13,19 +13,20 @@ function LoginFormModal() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    disabledSubmitButton();
 
-    const serverResponse = await dispatch(
-      thunkLogin({
+    const data = await dispatch(
+      sessionActions.login({
         email,
         password,
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      closeModal();
+    if (data?.errors) {
+      enabledSubmitButton();
+      return setErrors(data.errors);
     }
+    closeModal();
   };
 
   return (

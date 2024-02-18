@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkSignup } from "../../redux/session";
-import "./SignupForm.css";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import * as sessionActions from "../../redux/session";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -18,13 +18,15 @@ function SignupFormModal() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    disabledSubmitButton();
 
     if (password !== confirmPassword) {
+      enabledSubmitButton();
       return setErrors({ confirmPassword: "Confirm Password field must be the same as the Password field" });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
+    const data = await dispatch(
+      sessionActions.signup({
         first_name: firstName,
         last_name: lastName,
         profile_image_url: profileImageUrl,
@@ -34,11 +36,11 @@ function SignupFormModal() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      closeModal();
+    if (data?.errors) {
+      enabledSubmitButton();
+      return setErrors(data);
     }
+    closeModal();
   };
 
   return (

@@ -53,7 +53,7 @@ export const signup = user => async dispatch => {
   dispatch(setUser(data));
 };
 
-export const thunkLogout = () => async dispatch => {
+export const logout = () => async dispatch => {
   await fetch("/api/auth/logout", {
     method: 'DELETE'
   });
