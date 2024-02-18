@@ -19,7 +19,7 @@ RUN pip install psycopg2
 
 COPY . .
 
-RUN flask db downgrade head
-RUN flask db upgrade
+RUN flask db downgrade base
+RUN flask db upgrade heade
 RUN flask seed all
 CMD gunicorn app:apps
