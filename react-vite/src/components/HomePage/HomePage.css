@@ -1,5 +1,5 @@
 #home-page {
-  background-color: rgb(69, 68, 68);
+  background-color: var(--home-page-background);
   position: fixed;
   top: 0;
   left: 90px;
@@ -10,12 +10,12 @@
 }
 
 #home-page #sidebar {
-  box-shadow: -0.4em 0 .5em rgb(158, 158, 158);
+  box-shadow: var(--box-shadow);
 }
 
 #home-page #main-content {
-  box-shadow: -0.4em 0 .5em rgb(174, 173, 173);
-  background-color: rgb(90, 85, 85);
+  box-shadow: var(--box-shadow);
+  background-color: var(--main-content-background);
   position: relative;
 }
 

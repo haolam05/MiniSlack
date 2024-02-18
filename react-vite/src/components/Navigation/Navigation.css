@@ -1,12 +1,39 @@
-.profile-dropdown {
-  /* position: absolute; */
+#profile-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100px;
+}
+
+#user-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#user-buttons button {
+  width: 50px;
+  height: 50px;
+  font-size: 10pt;
+  border: none;
+  color: var(--white);
+  background-color: transparent;
+}
+
+#user-buttons button:hover {
+  background-color: var(--home-page-background);
+  border-radius: 10px;
+}
+
+#user-buttons {
+  font-size: 10px;
 }
 
 #navbar {
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgb(47, 47, 47);
+  background-color: var(--navbar-background);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,12 +55,16 @@
 }
 
 #navbar img {
-  background-color: white;
   border-radius: 10px;
 }
 
+#navbar img:hover {
+  background-color: var(--home-page-background);
+}
+
 #user-menu {
-  color: rgb(139, 90, 90);
+  color: var(--white);
+  background-color: transparent;
   width: 50px;
   height: 50px;
   font-size: large;
@@ -44,4 +75,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+}
+
+#user-menu:hover {
+  background-color: var(--home-page-background);
 }
