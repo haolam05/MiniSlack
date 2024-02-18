@@ -26,6 +26,8 @@ class Reaction(db.Model):
     def validate(cls, data):
         if "encoded_text" not in data:
             return { "message": "Reaction icon is required" }, 400
+        if "workspace_id" not in data:
+            return { "message": "Workspace ID is required" }, 400
         return True
 
 

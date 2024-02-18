@@ -1,7 +1,8 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Message, Workspace, Channel, User
+from ..models import  db, Message, Workspace, Channel, User, Reaction
 from ..forms import MessageForm
+from ..forms import ReactionForm
 
 message_routes = Blueprint("messages", __name__)
 
@@ -39,7 +40,7 @@ def create_message():
         if form.data["is_private"] == True:
             user = User.query.get(form.data["receiver_id"])
             if not user:
-                return { "message": "Receiver does not exists" }
+                return { "message": "Receiver does not exists" }, 404
             if workspace not in user.workspaces and workspace not in user.user_workspaces:
                 return redirect("/api/auth/forbidden")
 
@@ -105,7 +106,7 @@ def delete_message(id):
     message = Message.query.get(id)
 
     if not message:
-        return { "message": "Message couldn't be found" }
+        return { "message": "Message couldn't be found" }, 404
 
     if current_user != message.owner:
         return redirect("/api/auth/forbidden")
@@ -122,7 +123,7 @@ def reactions(id):
     message = Message.query.get(id)
 
     if not message:
-        return { "message": "Message couldn't be found" }
+        return { "message": "Message couldn't be found" }, 404
 
     """ Message has to be inside a workspace that is owned or joined by the current user """
     if message.workspace not in current_user.workspaces and message.workspace not in current_user.user_workspaces:
@@ -130,3 +131,42 @@ def reactions(id):
 
     reactions = [reaction.to_dict() for reaction in message.reactions]
     return { "Reactions": reactions }, 200
+
+
+@message_routes.route("/<int:id>/reactions", methods=['POST'])
+@login_required
+def create_reaction(id):
+    """Create a new reaction for a message specified by id"""
+    form = ReactionForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        message = Message.query.get(id)
+
+        if not message:
+            return { "message": "Message couldn't be found" }, 404
+
+        result =  Reaction.validate(form.data)
+        if result != True:
+            return result
+
+        workspace_id = form.data["workspace_id"]
+        workspace = Workspace.query.get(workspace_id)
+        if not workspace:
+            return { "message": "Workspace couldn't be found" }, 404
+
+        """Message must be in current workspace. User must be a member or owner of current workspace."""
+        if message.workspace != workspace or (workspace not in current_user.workspaces and workspace not in current_user.user_workspaces):
+            return redirect("/api/auth/forbidden")
+
+        new_reaction = Reaction(
+            encoded_text=form.data["encoded_text"],
+            user_id=current_user.id,
+            message_id=message.id
+        )
+
+        db.session.add(new_reaction)
+        db.session.commit()
+        return new_reaction.to_dict(), 200
+
+    return form.errors, 400
