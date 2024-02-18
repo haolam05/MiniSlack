@@ -19,7 +19,6 @@ RUN pip install psycopg2
 
 COPY . .
 
-RUN pipenv shell
 RUN flask db downgrade base
 RUN flask db upgrade head
 RUN flask seed all
