@@ -5,7 +5,7 @@ from .channels import seed_channels, undo_channels
 from .memberships import seed_memberships, undo_memberships
 from .messages import seed_messages, undo_messages
 from .reactions import seed_reactions, undo_reactions
-from app.models.db import db, environment, SCHEMA
+from app.models.db import environment
 
 seed_commands = AppGroup('seed')
 
