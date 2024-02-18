@@ -55,7 +55,8 @@ def create_message():
             is_private=form.data["is_private"],
             sender_id=current_user.id,
             receiver_id=form.data["receiver_id"],
-            channel_id=form.data["channel_id"]
+            channel_id=form.data["channel_id"],
+            workspace_id=form.data["workspace_id"]
         )
         db.session.add(new_message)
         db.session.commit()
@@ -112,3 +113,18 @@ def delete_message(id):
     db.session.delete(message)
     db.session.commit()
     return { "message": f"Successfully deleted {current_user.email}'s message" }
+
+
+# @message_routes.route("/<int:id>/reactions")
+# @login_required
+# def reactions(id):
+#     """Get all reactions of a message specified by id"""
+#     message = Message.query.get(id)
+
+#     if not message:
+#         return { "message": "Message couldn't be found" }
+
+
+
+#     reactions = [reaction.to_dict() for reaction in message.reactions]
+#     return reactions, 200

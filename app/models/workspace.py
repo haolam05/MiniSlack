@@ -19,6 +19,7 @@ class Workspace(db.Model):
     """ one-to-many """
     owner = db.relationship("User", back_populates="user_workspaces")
     channels = db.relationship("Channel", back_populates="workspace", cascade="all, delete-orphan")
+    messages = db.relationship("Message", back_populates="workspace", cascade="all, delete-orphan")
 
     """ many-to-many """
     users = db.relationship('User', secondary="memberships", back_populates="workspaces")

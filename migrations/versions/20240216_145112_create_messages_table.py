@@ -30,6 +30,8 @@ def upgrade():
         sa.Column('sender_id', sa.Integer(), nullable=False),
         sa.Column('receiver_id', sa.Integer(), nullable=True),
         sa.Column('channel_id', sa.Integer(), nullable=True),
+        sa.Column('workspace_id', sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(['workspace_id'], ['workspaces.id'], ),
         sa.ForeignKeyConstraint(['channel_id'], ['channels.id'], ),
         sa.ForeignKeyConstraint(['receiver_id'], ['users.id'], ),
         sa.ForeignKeyConstraint(['sender_id'], ['users.id'], ),

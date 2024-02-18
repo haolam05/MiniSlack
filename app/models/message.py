@@ -18,12 +18,14 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("channels.id")))
+    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")))
 
 
     """ one-to-many """
     owner = db.relationship("User", back_populates="messages", foreign_keys=[sender_id])
     reactions = db.relationship("Reaction", back_populates="message", cascade="all, delete-orphan")
     channel = db.relationship("Channel", back_populates="messages")
+    workspace = db.relationship("Workspace", back_populates="messages")
 
 
     @classmethod
@@ -48,5 +50,6 @@ class Message(db.Model):
             "message": self.message,
             "sender_id": self.sender_id,
             "receiver_id": self.receiver_id,
-            "channel_id": self.channel_id
+            "channel_id": self.channel_id,
+            "workspace_id": self.workspace_id
         }

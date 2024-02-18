@@ -22,11 +22,11 @@ class Reaction(db.Model):
     user = db.relationship("User", back_populates="reactions")
 
 
-    @validates('encoded_text')
-    def validate_message(self, _, val):
-        if not len(val):
-            raise ValueError({ "encoded_text": "Reaction is required" })
-        return val
+    @classmethod
+    def validate(cls, data):
+        if "encoded_text" not in data:
+            return { "message": "Reaction icon is required" }, 400
+        return True
 
 
     def to_dict(self):
