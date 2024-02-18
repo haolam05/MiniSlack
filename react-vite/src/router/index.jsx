@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path:"workspace/new",
+        path: "workspace/new",
         element: <CreateWorkspace />
       }
     ],

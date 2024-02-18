@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { thunkSignup } from "../../redux/session";
+import * as sessionActions from "../../redux/session";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector(sessionActions.sessionUser);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ function SignupFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -25,19 +25,16 @@ function SignupFormPage() {
       });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
+    const data = await dispatch(
+      sessionActions.signup({
         email,
         username,
         password,
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/");
-    }
+    if (data.errors) return setErrors(data);
+    navigate("/", { replace: true });
   };
 
   return (
@@ -50,7 +47,7 @@ function SignupFormPage() {
           <input
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             required
           />
         </label>
@@ -60,7 +57,7 @@ function SignupFormPage() {
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             required
           />
         </label>
@@ -70,7 +67,7 @@ function SignupFormPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
           />
         </label>
@@ -80,7 +77,7 @@ function SignupFormPage() {
           <input
             type="password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={e => setConfirmPassword(e.target.value)}
             required
           />
         </label>

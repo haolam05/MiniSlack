@@ -1,6 +1,12 @@
+import { csrfFetch } from "./csrf";
+
+
+// Actions
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+
+// POJO action creators
 const setUser = user => ({
   type: SET_USER,
   payload: user
@@ -10,8 +16,10 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-export const thunkAuthenticate = () => async dispatch => {
-  const response = await fetch("/api/auth/");
+
+// Thunk action creators
+export const restoreSession = () => async dispatch => {
+  const response = await csrfFetch("/api/auth/");
   if (response.ok) {
     const data = await response.json();
     if (data.errors) return;
@@ -19,47 +27,45 @@ export const thunkAuthenticate = () => async dispatch => {
   }
 };
 
-export const thunkLogin = credentials => async dispatch => {
-  const response = await fetch("/api/auth/login", {
+export const login = credentials => async dispatch => {
+  const response = await csrfFetch("/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials)
+    body: JSON.stringify({
+      ...credentials
+    })
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { server: "Something went wrong. Please try again" };
-  }
+  const data = await response.json();
+  if (!response.ok) return { errros: data };
+  dispatch(setUser(data));
 };
 
-export const thunkSignup = user => async dispatch => {
-  const response = await fetch("/api/auth/signup", {
+export const signup = user => async dispatch => {
+  const response = await csrfFetch("/api/auth/signup", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+    body: JSON.stringify({
+      ...user
+    })
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { server: "Something went wrong. Please try again" };
-  }
+  const data = await response.json();
+  if (!response.ok) return { errors: data };
+  dispatch(setUser(data));
 };
 
 export const thunkLogout = () => async dispatch => {
-  await fetch("/api/auth/logout");
+  await fetch("/api/auth/logout", {
+    method: 'DELETE'
+  });
   dispatch(removeUser());
 };
 
+
+// Custom selectors
+export const sessionUser = state => state.session.user;
+
+
+// Reducer
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
