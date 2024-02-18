@@ -22,4 +22,4 @@ COPY . .
 RUN flask db downgrade base
 RUN flask db upgrade head
 RUN flask seed all
-CMD gunicorn app:apps
+CMD gunicorn app:app
