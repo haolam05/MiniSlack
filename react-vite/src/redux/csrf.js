@@ -8,14 +8,9 @@ export async function csrfFetch(url, options = {}) {
     if (!options.headers["Content-Type"] && !(options.body instanceof FormData)) {
       options.headers["Content-Type"] = "application/json";
     }
-    options.headers['XSRF-Token'] = Cookies.get('csrf_token');
+    options.headers['csrf_token'] = Cookies.get('csrf_token');
   }
 
   const res = await window.fetch(url, options);
-
   return res;
-}
-
-export function restoreCSRF() {
-  return csrfFetch('/api/csrf/restore');
 }
