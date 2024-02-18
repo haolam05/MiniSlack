@@ -100,6 +100,7 @@ def update_message(id):
 @message_routes.route("/<int:id>", methods=['DELETE'])
 @login_required
 def delete_message(id):
+    """Delete a message"""
     message = Message.query.get(id)
 
     if not message:
