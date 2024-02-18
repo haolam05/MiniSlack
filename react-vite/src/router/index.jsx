@@ -3,6 +3,8 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import { CreateWorkspace } from '../components/CreateWorkspace/CreateWorkspace';
+import { CreateChannel } from '../components/CreateChannel/CreateChannel';
+import { CreateMessage } from '../components/CreateMessage/CreateMessage';
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ export const router = createBrowserRouter([
       {
         path:"workspace/new",
         element: <CreateWorkspace />
+      },
+      {
+        path:"channel/new",
+        element: <CreateChannel />
+      },
+      {
+        path:"message/new",
+        element: <CreateMessage />
       }
     ],
   },
