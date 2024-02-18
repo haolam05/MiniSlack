@@ -150,13 +150,8 @@ def create_reaction(id):
         if result != True:
             return result
 
-        workspace_id = form.data["workspace_id"]
-        workspace = Workspace.query.get(workspace_id)
-        if not workspace:
-            return { "message": "Workspace couldn't be found" }, 404
-
-        """Message must be in current workspace. User must be a member or owner of current workspace."""
-        if message.workspace != workspace or (workspace not in current_user.workspaces and workspace not in current_user.user_workspaces):
+        """Message must be in a workspace where the current user is a member or an owner of."""
+        if message.workspace not in current_user.workspaces and message.workspace not in current_user.user_workspaces:
             return redirect("/api/auth/forbidden")
 
         new_reaction = Reaction(
@@ -170,3 +165,13 @@ def create_reaction(id):
         return new_reaction.to_dict(), 200
 
     return form.errors, 400
+
+
+@message_routes.route("/<int:id>/reactions", methods=['DELETE'])
+@login_required
+def delete_reaction():
+    """Delete a reaction of a message specified by id"""
+    message = Message.query.get(id)
+
+    if not message:
+        return { "message": "Message couldn't be found" }, 404
