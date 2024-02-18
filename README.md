@@ -286,11 +286,6 @@ Creates a new user, logs them in as the current user, and returns the current us
         "id": 1,
         "name": "to-do",
         "owner_id": "2",
-        },
-        {
-        "id": 2,
-        "name": "backend-tasks",
-        "owner_id": "3",
         }
       ],
       "OwnedWorkspaces": [
@@ -305,6 +300,7 @@ Creates a new user, logs them in as the current user, and returns the current us
 ### Get workspace by id
 
 * Require Authentication: true
+* Require Authorization: true
 * Request
   * Method: GET
   * URL: /api/workspace/:id
