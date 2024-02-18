@@ -18,11 +18,14 @@ def workspaces():
 @workspace_routes.route("/<int:id>")
 @login_required
 def workspace(id):
-    """Get a workspace details by id, log in the workspace"""
+    """Current user owned or as a member of the workspace can log in the workspace to get details"""
     workspace = Workspace.query.get(id)
 
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
+
+    if workspace.owner_id != current_user.id and (current_user.id not in [workspace.id for workspace in current_user.workspaces]):
+        return redirect("/api/auth/forbidden")
 
     owner = workspace.owner.to_dict()
     members = [user.to_dict() for user in workspace.users]
