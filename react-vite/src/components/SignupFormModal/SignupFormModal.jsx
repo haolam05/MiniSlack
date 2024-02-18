@@ -34,7 +34,7 @@ function SignupFormModal() {
       })
     );
 
-    if (data.errors) return setErrors(data);
+    if (data?.errors) return setErrors(data);
     closeModal();
   };
 

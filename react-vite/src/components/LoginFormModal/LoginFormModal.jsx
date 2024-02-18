@@ -23,7 +23,7 @@ function LoginFormModal() {
       })
     );
 
-    if (data.errors) return setErrors(data.errors);
+    if (data?.errors) return setErrors(data.errors);
     closeModal();
   };
 
