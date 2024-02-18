@@ -1,0 +1,9 @@
+#create-message-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-message-form-container > form {
+    width: 50%;
+}

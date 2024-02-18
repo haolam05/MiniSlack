@@ -1,32 +1,38 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import {useState} from "react"
+// import {useSelector} from "react-redux"
 import './CreateWorkspace.css'
 import Cookies from 'js-cookie'
 
 
 export const CreateWorkspace = () => {
     // const stateData = useSelector(state => state.session.user)
-    // console.log(stateData)
+    // console.log("asdfasdfasdf", stateData)
 
     const [name, setName] = useState('')
 
     const submitForm = async (e) => {
         e.preventDefault()
+        //cannot get cookies below. why?
+        console.log(Cookies.get("session"))
 
-        try {
-            console.log(Cookies)
-            await fetch('/api/workspaces', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "csrf_token": Cookies.get("csrf_token")
-                },
-                body: JSON.stringify({ name })
-            })
-        } catch (e) {
-            let trueE = await e.json()
-            console.log(trueE.message)
+        const payload = {
+            name
         }
+
+        console.log(payload)
+        
+        // try {
+        //     await fetch('/api/workspace', {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({name})
+        //     })
+        // } catch (e) {
+        //     let trueE = await e.json()
+        //     console.log(trueE.message)
+        // }
 
     }
 
