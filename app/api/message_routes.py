@@ -95,3 +95,19 @@ def update_message(id):
         return message.to_dict(), 200
 
     return form.errors, 400
+
+
+@message_routes.route("/<int:id>", methods=['DELETE'])
+@login_required
+def delete_message(id):
+    message = Message.query.get(id)
+
+    if not message:
+        return { "message": "Message couldn't be found" }
+
+    if current_user != message.owner:
+        return redirect("/api/auth/forbidden")
+
+    db.session.delete(message)
+    db.session.commit()
+    return { "message": f"Successfully deleted {current_user.email}'s message" }
