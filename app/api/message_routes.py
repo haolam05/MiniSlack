@@ -167,11 +167,23 @@ def create_reaction(id):
     return form.errors, 400
 
 
-@message_routes.route("/<int:id>/reactions", methods=['DELETE'])
+@message_routes.route("/<int:message_id>/reactions/<int:reaction_id>", methods=['DELETE'])
 @login_required
-def delete_reaction():
+def delete_reaction(message_id, reaction_id):
     """Delete a reaction of a message specified by id"""
-    message = Message.query.get(id)
+    message = Message.query.get(message_id)
+    reaction = Reaction.query.get(reaction_id)
 
     if not message:
         return { "message": "Message couldn't be found" }, 404
+
+    if not reaction:
+        return { "message": "Reaction couldn't be found" }, 404
+
+    """Message must be in a workspace where the current user is a member or an owner of. Current user must be owner of the reaction."""
+    if (message.workspace not in current_user.workspaces and message.workspace not in current_user.user_workspaces) or reaction.message != message or reaction.user != current_user:
+        return redirect("/api/auth/forbidden")
+
+    db.session.delete(reaction)
+    db.session.commit()
+    return { "message": f"Successfully deleted reaction" }, 200
