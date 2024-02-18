@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Channel
+from ..models import  db, Channel, Message
 from ..forms import ChannelForm
 
 channel_routes = Blueprint("channels", __name__)
@@ -56,3 +56,23 @@ def delete_channel(id):
     db.session.commit()
 
     return { "message": f"Successfully deleted {channel.name} channel" }
+
+
+@channel_routes.route("/<int:id>/messages")
+@login_required
+def get_channel_messages(id):
+    """Get all the messages of a channel in a workspace. Only Workspace members and Workspace's owner can see the channel's messages"""
+    channel = Channel.query.get(id)
+    user_joined_workspaces = current_user.workspaces
+    user_owned_workspaces = current_user.user_workspaces
+
+    if not channel:
+        return { "message": "Channel couldn't be found" }, 404
+
+    if channel.workspace not in user_joined_workspaces and channel.workspace not in user_owned_workspaces:
+        return redirect("/api/auth/forbidden")
+
+    messages = Message.query.filter(Message.channel_id == id).all()
+    messages = [message.to_dict() for message in messages]
+
+    return { "Messages": messages }, 200
