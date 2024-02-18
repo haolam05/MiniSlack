@@ -37,6 +37,7 @@ def login():
 
 
 @auth_routes.route('/logout')
+@login_required
 def logout():
     """Logout"""
     logout_user()
