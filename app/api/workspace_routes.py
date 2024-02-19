@@ -52,6 +52,7 @@ def create_workspace():
             name=form.data["name"],
             owner_id=user_id
         )
+        new_workspace.users.append(current_user)
         db.session.add(new_workspace)
         db.session.commit()
 
