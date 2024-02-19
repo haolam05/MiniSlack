@@ -22,7 +22,11 @@ function Navigation() {
 
   useEffect(() => {
     const loadUser = async () => {
-      await dispatch(sessionActions.restoreSession());
+      if (userIsValid(user)) {
+        const data = await dispatch(sessionActions.restoreSession());
+        console.log(data)
+        if (data?.errors) alert(data.errors.message)//setModalContent(<h2 className="modal-errors">{data.errors.message}</h2>)
+      }
       setIsLoaded(true);
     }
     loadUser();
@@ -48,3 +52,9 @@ function Navigation() {
 }
 
 export default Navigation;
+
+// await fetch("/api/workspaces", {
+//   "headers": {
+//     "Set-Cookie": "csrf_token=IjU2M2RhMGRjNDZjOGY3MGM2ZGNkYjU3YjE2N2M2MTQwMTM1NmY4OTYi; HttpOnly; Path=/"
+//   }
+// })

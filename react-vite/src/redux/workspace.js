@@ -16,7 +16,7 @@ export const loadWorkspaces = () => async dispatch => {
   const response = await csrfFetch("/api/workspaces");
   const data = await response.json();
   if (!response.ok) return { errors: data };
-  dispatch(addWorkspaces(data));
+  dispatch(addWorkspaces({ workspace: { ...data.JoinedWorkspaces, ...data.OwnedWorkspaces } }));
 }
 
 
@@ -34,7 +34,7 @@ function workspaceReducer(state = initialState, action) {
         ...state,
         workspaces: {
           ...state.workspaces,
-          ...action.workspaces.reduce((state, workspace) => (state[workspace.id] = workspace), {})
+          ...action.workspaces
         }
       }
     default:
