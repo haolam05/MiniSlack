@@ -12,12 +12,12 @@ import { userIsValid } from "../../utils/user";
 
 function Navigation() {
   const dispatch = useDispatch();
-  const { setModalContent } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useSelector(sessionActions.sessionUser);
 
   const showUserProfile = () => {
-    setModalContent(<UserProfile user={user} setModalContent={setModalContent} />);
+    setModalContent(<UserProfile user={user} setModalContent={setModalContent} closeModal={closeModal} />);
   }
 
   useEffect(() => {

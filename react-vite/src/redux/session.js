@@ -98,6 +98,14 @@ export const updateUserPassword = user => async dispatch => {
   dispatch(removeUser());
 };
 
+export const deleteUser = () => async dispatch => {
+  const response = await csrfFetch(`/api/auth/delete`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) dispatch(removeUser());
+};
+
 export const logout = () => async dispatch => {
   await csrfFetch("/api/auth/logout");
   dispatch(removeUser());

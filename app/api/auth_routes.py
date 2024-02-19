@@ -11,7 +11,7 @@ auth_routes = Blueprint('auth', __name__)
 @auth_routes.route('/')
 def authenticate():
     """Get Current User. Returns null if user is not signed in, a dictionary of user info if signed in."""
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.is_deleted == False:
         return current_user.to_dict(), 200
     return { 'user': None }, 200
 
@@ -25,7 +25,7 @@ def update_user():
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email'] and User.is_deleted == False and user == current_user).first()
-
+        print(user.to_dict())
         if not user:
             return { "message": "User couldn't be found" }, 404
 
@@ -69,6 +69,21 @@ def update_user_password():
     return form.errors, 400
 
 
+@auth_routes.route('/delete', methods=["DELETE"])
+@login_required
+def delete_user():
+    """Delete current user. User's messages in channels are preserved."""
+
+    if current_user.is_deleted == True:
+        return { "message": "User couldn't be found" }, 404
+
+    current_user.is_deleted = True
+    db.session.commit()
+    logout_user()
+
+    return { "message": "Successfully deleted account" }, 200
+
+
 @auth_routes.route("/messages")
 @login_required
 def get_channel_messages():
@@ -83,10 +98,16 @@ def login():
     """Login"""
     form = LoginForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
-        user = User.query.filter(User.email == form.data['email'] and User.is_deleted == False).first()
+        user = User.query.filter(User.email == form.data['email']).first()
+
+        if user.is_deleted == True:
+            return { "message": "User couldn't be found" }, 404
+
         login_user(user)
         return user.to_dict()
+
     return form.errors, 401
 
 

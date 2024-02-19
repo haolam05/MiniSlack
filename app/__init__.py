@@ -75,10 +75,10 @@ def react_root(path):
     """Serving static files"""
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
-    return { "message": "Page Not Found" }, 404
+    return app.send_static_file('index.html')
 
 
 @app.errorhandler(404)
 def not_found(e):
     """Page Not Found"""
-    return { "message": "Page Not Found" }, 404
+    return app.send_static_file('index.html')

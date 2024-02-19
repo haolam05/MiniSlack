@@ -24,6 +24,7 @@ function LoginFormModal() {
 
     if (data?.errors) {
       enabledSubmitButton();
+      if (data.errors.message) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>)
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Sucessfully Logged In</h2>)

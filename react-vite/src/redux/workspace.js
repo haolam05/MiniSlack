@@ -13,7 +13,7 @@ const addWorkspaces = workspaces => ({
 
 // Thunk action creators
 export const loadWorkspaces = () => async dispatch => {
-  const response = await csrfFetch("/api/workspaces");
+  const response = await csrfFetch("/api/workspaces/");
   const data = await response.json();
   if (!response.ok) return { errors: data };
   dispatch(addWorkspaces({ workspace: { ...data.JoinedWorkspaces, ...data.OwnedWorkspaces } }));

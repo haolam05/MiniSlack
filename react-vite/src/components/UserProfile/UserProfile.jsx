@@ -1,9 +1,13 @@
+import { useDispatch } from "react-redux";
 import { getAvatarUrl } from "../../utils/image";
+import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import UpdatePasswordFormModal from "../UpdatePasswordFormModal";
 import UpdateUserFormModal from "../UpdateUserFormModal";
+import * as sessionActions from "../../redux/session";
 import "./UserProfile.css";
 
-function UserProfile({ user, setModalContent }) {
+function UserProfile({ user, setModalContent, closeModal }) {
+  const dispatch = useDispatch();
   if (!user) return;
 
   const openUpdateUserForm = () => {
@@ -12,6 +16,20 @@ function UserProfile({ user, setModalContent }) {
 
   const openUpdatePasswordForm = () => {
     setModalContent(<UpdatePasswordFormModal user={user} />);
+  }
+
+  const openDeleteUserForm = () => {
+    setModalContent(
+      <ConfirmDeleteFormModal
+        user={user}
+        text="Are you sure you want to cancel your account?"
+        deleteCb={deleteUser}
+        cancelDeleteCb={closeModal}
+      />);
+  }
+
+  const deleteUser = async () => {
+    dispatch(sessionActions.deleteUser());
   }
 
   return (
@@ -39,7 +57,7 @@ function UserProfile({ user, setModalContent }) {
       <div className="profile-btns">
         <button className="btn-update" onClick={openUpdateUserForm}>Update</button>
         <button className="btn-delete" onClick={openUpdatePasswordForm}>Change Password</button>
-        <button className="btn-delete">Delete</button>
+        <button className="btn-delete" onClick={openDeleteUserForm}>Delete</button>
       </div>
     </>
   );
