@@ -1,10 +1,10 @@
 import { csrfFetch } from "./csrf";
+import * as workspaceActions from "./workspace";
 
 
 // Actions
-const SET_USER = 'session/SET_USER';
-const REMOVE_USER = 'session/REMOVE_USER';
-const RESET = 'session/RESET'
+const SET_USER = 'session/setUser';
+const REMOVE_USER = 'session/removeUser';
 
 
 // POJO action creators
@@ -17,14 +17,10 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-const reset = () => ({
-  type: RESET
-});
-
 
 // Thunk action creators
 export const restoreSession = () => async (dispatch, getState) => {
-  if (getState().session.user?.user !== null) return;
+  if (getState().session.user !== null) return;
 
   const response = await csrfFetch("/api/auth/");
   if (response.ok) {
@@ -101,6 +97,7 @@ export const updateUserPassword = user => async dispatch => {
   const data = await response.json();
   if (!response.ok) return { errors: data };
   dispatch(removeUser());
+  dispatch(workspaceActions.reset());
 };
 
 export const deleteUser = () => async dispatch => {
@@ -108,12 +105,16 @@ export const deleteUser = () => async dispatch => {
     method: "DELETE"
   });
 
-  if (response.ok) dispatch(removeUser());
+  if (response.ok) {
+    dispatch(removeUser());
+    dispatch(workspaceActions.reset());
+  }
 };
 
 export const logout = () => async dispatch => {
   await csrfFetch("/api/auth/logout");
   dispatch(removeUser());
+  dispatch(workspaceActions.reset());
 };
 
 
@@ -130,8 +131,6 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
-    case RESET:
-      return initialState;
     default:
       return state;
   }

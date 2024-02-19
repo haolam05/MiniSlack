@@ -3,12 +3,17 @@ import { csrfFetch } from "./csrf";
 
 // Actions
 const ADD_WORKSPACES = 'worksapces/ADD_WORKSPACES'
+const RESET = 'workspaces/RESET';
 
 
 // POJO action creators
 const addWorkspaces = workspaces => ({
   type: ADD_WORKSPACES,
   workspaces
+});
+
+export const reset = () => ({
+  type: RESET
 });
 
 
@@ -24,7 +29,7 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
 
 // Custom selectors
 export const getWorkspaces = createSelector(
-  state => state.workspaces,
+  state => state.workspaces.workspaces,
   workspaces => Object.values(workspaces)
 )
 
@@ -42,6 +47,8 @@ function workspaceReducer(state = initialState, action) {
           ...action.workspaces
         }
       }
+    case RESET:
+      return initialState;
     default:
       return state;
   }

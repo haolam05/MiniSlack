@@ -23,3 +23,67 @@
   height: 100%;
   padding: 10px;
 }
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 10px 30px;
+}
+
+/* #sidebar>#workspaces,
+#sidebar>#channels,
+#sidebar>#direct-messages {
+  text-align: left;
+} */
+
+#workspaces .subheading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#workspaces .subheading span,
+#workspaces .subheading i {
+  font-size: 17pt;
+  text-shadow: var(--text-shadow-dark);
+  color: var(--light-gray);
+}
+
+#workspaces .subheading i {
+  cursor: pointer;
+  color: var(--white);
+  font-size: 15pt;
+}
+
+.workspaces-list-wrapper {
+  width: 240px;
+  padding: 10px;
+}
+
+.workspaces-list {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 250px;
+  scrollbar-color: var(--gray) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 1px solid var(--home-page-background);
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+}
+
+.workspaces-list .workspace {
+  padding: 5px;
+  border-radius: 10px;
+  word-wrap: break-word;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.workspace:hover {
+  background-color: var(--navbar-background);
+}
