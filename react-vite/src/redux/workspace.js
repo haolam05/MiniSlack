@@ -29,7 +29,7 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
 
 // Custom selectors
 export const getWorkspaces = createSelector(
-  state => state.workspaces,
+  state => state.workspaces.workspaces,
   workspaces => Object.values(workspaces)
 )
 

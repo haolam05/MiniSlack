@@ -20,7 +20,7 @@ const removeUser = () => ({
 
 // Thunk action creators
 export const restoreSession = () => async (dispatch, getState) => {
-  if (getState().session.user?.user !== null) return;
+  if (getState().session.user !== null) return;
 
   const response = await csrfFetch("/api/auth/");
   if (response.ok) {
