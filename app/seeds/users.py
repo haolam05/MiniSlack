@@ -1,74 +1,83 @@
 from sqlalchemy.sql import text
 from ..models import db, User
 from ..models.db import environment, SCHEMA
-
+from ..api.aws_helpers import BUCKET_NAME
 
 def seed_users():
+    location = f'https://{BUCKET_NAME}.s3.us-west-2.amazonaws.com/public/'
+
     users = [
         {
             "first_name": "Hao",
             "last_name": "Lam",
             "username": "haolam",
             "password": "password",
-            "email": "haolam@user.io"
+            "email": "haolam@user.io",
+            "profile_image_url": location + "avatar1.png"
         },
         {
             "first_name": "Nicky",
             "last_name": "Lei",
             "username": "nickylei",
             "password": "password2",
-            "email": "nickylei@user.io"
+            "email": "nickylei@user.io",
+            "profile_image_url": location + "avatar2.png"
         },
         {
             "first_name": "Nick",
             "last_name": "Leger",
             "username": "nickleger",
             "password": "password3",
-            "email": "nickleger@user.io"
+            "email": "nickleger@user.io",
+            "profile_image_url": location + "avatar3.png"
         },
         {
             "first_name": "Luffy",
             "last_name": "Monkey D.",
             "username": "luffy",
             "password": "password4",
-            "email": "luffy@user.io"
-
+            "email": "luffy@user.io",
+            "profile_image_url": location + "avatar4.png"
         },
         {
             "first_name": "Zoro",
             "last_name": "Roronoa",
             "username": "zoro",
             "password": "password5",
-            "email": "zoro@user.io"
+            "email": "zoro@user.io",
+            "profile_image_url": location + "avatar5.png"
         },
         {
             "first_name": "Sanji",
             "last_name": "Vinsmoke",
             "username": "sanji",
             "password": "password6",
-            "email": "sanji@user.io"
+            "email": "sanji@user.io",
+            "profile_image_url": location + "avatar6.png"
         },
                 {
             "first_name": "Robin",
             "last_name": "Nico",
             "username": "robin",
             "password": "password7",
-            "email": "robin@user.io"
-
+            "email": "robin@user.io",
+            "profile_image_url": location + "avatar7.png"
         },
         {
             "first_name": "Mihawk",
             "last_name": "Dracule",
             "username": "mihawk",
             "password": "password8",
-            "email": "mihawk@user.io"
+            "email": "mihawk@user.io",
+            "profile_image_url": location + "avatar8.png"
         },
         {
             "first_name": "Ace",
             "last_name": "Portgas D.",
             "username": "acee",
             "password": "password9",
-            "email": "ace@user.io"
+            "email": "ace@user.io",
+            "profile_image_url": location + "avatar9.png"
         }
     ]
 

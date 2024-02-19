@@ -30,6 +30,7 @@ function UserProfile({ user, setModalContent, closeModal }) {
 
   const deleteUser = async () => {
     dispatch(sessionActions.deleteUser());
+    setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>);
   }
 
   return (
