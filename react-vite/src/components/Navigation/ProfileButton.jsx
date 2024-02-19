@@ -45,13 +45,9 @@ function ProfileButton({ user }) {
       {showMenu && (
         <div id="user-buttons" ref={ulRef}>
           {user ? (
-            <>
-              <div id="user-info" className="hidden">
-              </div>
-              <div>
-                <button onClick={logout}>Log Out</button>
-              </div>
-            </>
+            <div>
+              <button onClick={logout}>Log Out</button>
+            </div>
           ) : (
             <>
               <div>

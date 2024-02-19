@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as workspaceActions from "../../redux/workspaces";
+import * as workspaceActions from "../../redux/workspace";
+// import * as sessionActions from "../../redux/session";
 import "./HomePage.css";
 import Loading from "../Loading/Loading";
 
@@ -8,11 +9,13 @@ function HomePage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const workspaces = useSelector(state => state.workspaces);
+  // const user = useSelector(state => state.session.user);
+
 
   useEffect(() => {
     const loadWorkspace = async () => {
-      const data = await dispatch(workspaceActions.loadWorkspaces());
-      console.log(data)
+      // await dispatch(sessionActions.restoreSession);
+      await dispatch(workspaceActions.loadWorkspaces());
       setIsLoaded(true);
     }
     loadWorkspace();
@@ -29,7 +32,7 @@ function HomePage() {
       </div>
       <div id="main-content">
         <div id="chat-window">
-          asdsad
+          {workspaces[0]?.name}
         </div>
       </div>
     </div>

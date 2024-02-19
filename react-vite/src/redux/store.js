@@ -6,7 +6,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
-import workspaceReducer from "./workspaces";
+import workspaceReducer from "./workspace";
 
 const rootReducer = combineReducers({
   session: sessionReducer,

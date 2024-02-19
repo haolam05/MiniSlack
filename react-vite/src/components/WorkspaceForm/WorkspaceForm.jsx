@@ -6,7 +6,6 @@ import Cookies from 'js-cookie'
 
 const WorkspaceForm = () => {
     // const stateData = useSelector(state => state.session.user)
-    // console.log("asdfasdfasdf", stateData)
 
     const [name, setName] = useState('')
 
@@ -15,8 +14,6 @@ const WorkspaceForm = () => {
         const payload = {
             name
         }
-
-        console.log(payload)
 
         try {
             await fetch('/api/workspace', {
@@ -28,7 +25,6 @@ const WorkspaceForm = () => {
             })
         } catch (e) {
             let trueE = await e.json()
-            console.log(trueE.message)
         }
 
     }
