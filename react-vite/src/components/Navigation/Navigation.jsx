@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { getAvatarUrl } from "../../utils/image";
 import { useModal } from "../../context/Modal";
+import { userIsValid } from "../../utils/user";
+import { getAvatarUrl } from "../../utils/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ProfileButton from "./ProfileButton";
@@ -8,7 +9,6 @@ import UserProfile from "../UserProfile";
 import Loading from "../Loading/Loading";
 import * as sessionActions from "../../redux/session";
 import "./Navigation.css";
-import { userIsValid } from "../../utils/user";
 
 function Navigation() {
   const dispatch = useDispatch();
@@ -48,9 +48,3 @@ function Navigation() {
 }
 
 export default Navigation;
-
-// await fetch("/api/workspaces", {
-//   "headers": {
-//     "Set-Cookie": "csrf_token=IjU2M2RhMGRjNDZjOGY3MGM2ZGNkYjU3YjE2N2M2MTQwMTM1NmY4OTYi; HttpOnly; Path=/"
-//   }
-// })

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { userIsValid } from "../../utils/user";
+import Loading from "../Loading";
 import * as workspaceActions from "../../redux/workspace";
 import * as sessionActions from "../../redux/session";
 import "./HomePage.css";
-import Loading from "../Loading/Loading";
-import { userIsValid } from "../../utils/user";
 
 function HomePage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const workspaces = useSelector(state => state.workspaces);
-  const user = useSelector(state => state.session.user);
+  const workspaces = useSelector(workspaceActions.getWorkspaces);
+  const user = useSelector(sessionActions.sessionUser);
 
 
   useEffect(() => {
     const loadWorkspaces = async () => {
-      await dispatch(sessionActions.restoreSession);
+      // await dispatch(sessionActions.restoreSession);
       if (userIsValid(user)) await dispatch(workspaceActions.loadWorkspaces());
       setIsLoaded(true);
     }

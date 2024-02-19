@@ -1,4 +1,5 @@
-import { csrfFetch } from "./csrf"
+import { createSelector } from "reselect";
+import { csrfFetch } from "./csrf";
 
 // Actions
 const ADD_WORKSPACES = 'worksapces/ADD_WORKSPACES'
@@ -12,16 +13,20 @@ const addWorkspaces = workspaces => ({
 
 
 // Thunk action creators
-export const loadWorkspaces = () => async dispatch => {
+export const loadWorkspaces = () => async (dispatch, getState) => {
+  if (Object.values(getState().workspaces.workspaces).length) return;
   const response = await csrfFetch("/api/workspaces/");
   const data = await response.json();
   if (!response.ok) return { errors: data };
-  dispatch(addWorkspaces({ workspace: { ...data.JoinedWorkspaces, ...data.OwnedWorkspaces } }));
+  dispatch(addWorkspaces({ ...data.JoinedWorkspaces, ...data.OwnedWorkspaces }));
 }
 
 
 // Custom selectors
-// export const getWorkspaces = () => createSelect
+export const getWorkspaces = createSelector(
+  state => state.workspaces,
+  workspaces => Object.values(workspaces)
+)
 
 
 // Reducer

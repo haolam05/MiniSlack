@@ -2,8 +2,9 @@ import { csrfFetch } from "./csrf";
 
 
 // Actions
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const SET_USER = 'session/SET_USER';
+const REMOVE_USER = 'session/REMOVE_USER';
+const RESET = 'session/RESET'
 
 
 // POJO action creators
@@ -16,10 +17,14 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
+const reset = () => ({
+  type: RESET
+});
+
 
 // Thunk action creators
 export const restoreSession = () => async (dispatch, getState) => {
-  if (getState().session.user !== null) return;
+  if (getState().session.user?.user !== null) return;
 
   const response = await csrfFetch("/api/auth/");
   if (response.ok) {
@@ -125,6 +130,8 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case RESET:
+      return initialState;
     default:
       return state;
   }
