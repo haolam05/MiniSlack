@@ -275,7 +275,7 @@ Creates a new user, logs them in as the current user, and returns the current us
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/workspace/
+  * URL: /api/workspaces/
   * Headers: None
   * Body: None
 
@@ -309,7 +309,7 @@ Creates a new user, logs them in as the current user, and returns the current us
 * Require Authorization: true
 * Request
   * Method: GET
-  * URL: /api/workspace/:id
+  * URL: /api/workspaces/:id
   * Headers: None
   * Body: None
 
@@ -375,7 +375,7 @@ Creates a new workspace.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /api/workspace/
+  * URL: /api/workspaces/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -435,7 +435,7 @@ Update an existing workspace.
 * Require Authorization: true
 * Request
   * Method: POST
-  * URL: /api/workspace/
+  * URL: /api/workspaces/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -507,7 +507,7 @@ Delete an existing workspace by id.
 * Require Authorization: true
 * Request
   * Method: DELETE
-  * URL: /api/workspace/:id
+  * URL: /api/workspaces/:id
   * Body: None
 
 * Successful Response
@@ -541,7 +541,7 @@ Returns all channelrs that belonged to a workspace specifed by id. Only owner an
 * Require Authorization: true
 * Request
   * Method: GET
-  * URL: /api/workspace/:workspaceId/channels
+  * URL: /api/workspaces/:workspaceId/channels
   * Body: None
 
 * Successful Response
@@ -574,3 +574,470 @@ Returns all channelrs that belonged to a workspace specifed by id. Only owner an
       "message": "Workspace couldn't be found"
     }
     ```
+
+### Create a new channel by workspace id
+
+Create a new channel for a workspace. Any workspace's member can create a channel.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/workspaces/:workspaceId/channels
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": "my-xi",
+      "topic": "numbers",
+      "description": "This is a description"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "description": "This is a description",
+        "id": 10,
+        "name": "my-ni",
+        "owner_id": 4,
+        "topic": "numbers",
+        "workspace_id": 6
+      }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+* Error response: Validation error - name already exists
+  * Status Code: 500
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "This name is already taken" }
+    ```
+* Error response: Bad request
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": [
+        "This field is required."
+      ]
+    }
+    or
+    {
+      "name": [
+        "Name must be at least 4 characters"
+      ]
+    }
+    ```
+
+### Create a new membership by workspace id
+
+Create a new membership for a workspace. Only workspace's owner can invite others.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/workspaces/:workspaceId/memberships
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": "zoro@user.io"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "user_id": 1,
+        "workspace_id": 6
+      }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+
+* Error response: bad request - email not found
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": [
+        "Email provided not found."
+      ]
+    }
+    ```
+
+### Get all members by workspace id
+
+Returns all members that belonged to a workspace specifed by id
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: GET
+  * URL: /api/workspaces/:workspaceId/memberships
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Members": [
+        {
+            "email": "haolam@user.io",
+            "first_name": "Hao",
+            "id": 1,
+            "is_deleted": false,
+            "last_name": "Lam",
+            "profile_image_url": null,
+            "username": "haolam"
+        }
+      ]
+    }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+
+### Delete a membership from a Workspace
+
+Delete a membership for a workspace. Only workspace's owner can remove member. User can leaves the workspace..
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: DELETE
+  * URL: /api/workspaces/:workspaceId/memberships/:userId
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully removed haolam@user.io from nick-nicky workspace"
+    }
+    ```
+
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+* Error response: User not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "User couldn't be found"
+    }
+    ```
+* Error response: Validation error - not a member
+  * Status Code: 500
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "The user is not a member of this workspace" }
+    ```
+
+### Get all messages for a channel by channel id
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: GET
+  * URL: /api/channels/:id/messages
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Messages": [
+        {
+            "channel_id": 4,
+            "id": 4,
+            "is_private": false,
+            "message": "Hey guys, let's start by introduce ourselves...",
+            "receiver_id": null,
+            "sender_id": 1,
+            "workspace_id": 2
+        },
+        {
+            "channel_id": 4,
+            "id": 5,
+            "is_private": false,
+            "message": "My name is Nicky.",
+            "receiver_id": null,
+            "sender_id": 2,
+            "workspace_id": 2
+        },
+        {
+            "channel_id": 4,
+            "id": 6,
+            "is_private": false,
+            "message": "I'm Nick",
+            "receiver_id": null,
+            "sender_id": 3,
+            "workspace_id": 2
+        }
+    ]
+    }
+    ```
+  * Error response: User not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Channel couldn't be found"
+    }
+    ```
+
+Create a Message
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/messages/
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "message": "Saying hi from private messages...",
+    "is_private": true,
+    "receiver_id": 4,
+    "workspace_id": 1
+    }
+    or
+    {
+    "message": "Channel message lollll...",
+    "channel_id": 3,
+    "is_private": false,
+    "workspace_id": 1
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "channel_id": null,
+    "id": 7,
+    "is_private": true,
+    "message": "Saying hi from private messages...",
+    "receiver_id": 4,
+    "sender_id": 1,
+    "workspace_id": 1
+    }
+    or
+    {
+    "channel_id": 3,
+    "id": 10,
+    "is_private": false,
+    "message": "Channel message lollll...",
+    "receiver_id": null,
+    "sender_id": 1,
+    "workspace_id": 1
+    }
+    ```
+* Error response: Validation error - missing message or workspace id
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "message": [
+        "This field is required."
+    ],
+    "workspace_id": [
+        "This field is required."
+    ]
+    }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    { 
+      "message": "Workspace couldn't be found" 
+    }
+    ```
+* Error response (channel message): Channel not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    { 
+      "message": "Channel couldn't be found" 
+    }
+    ```
+* Error response (private message): Receiver not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Receiver does not exist"
+    }
+    ```
+
+### Update a message by id
+
+Update an existing message.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: PUT
+  * URL: /api/messages/:id
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "message": "Saying HELLO from private messages...",
+    "is_private": true,
+    "receiver_id": 5,
+    "workspace_id": 1
+    }
+    or
+    {
+    "message": "Saying hi from channel messages...",
+    "channel_id": 6,
+    "is_private": false,
+    "workspace_id": 1
+    }
+    ```
+
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "channel_id": null,
+    "id": 1,
+    "is_private": true,
+    "message": "Saying UPDATE from private messages...",
+    "receiver_id": 3,
+    "sender_id": 1,
+    "workspace_id": 2
+    }
+    or
+    ```
+
+* Error response: Message not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Message couldn't be found"
+    }
+    ```
+
+* Error response: Validation error - missing message or workspace id
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "message": [
+        "This field is required."
+    ],
+    "workspace_id": [
+        "This field is required."
+    ]
+    }
+    ```
+  

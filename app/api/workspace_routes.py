@@ -24,7 +24,7 @@ def workspace(id):
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
 
-    if workspace.owner_id != current_user.id and (current_user.id not in [workspace.id for workspace in current_user.workspaces]):
+    if current_user not in workspace.users and current_user != workspace.owner:
         return redirect("/api/auth/forbidden")
 
     owner = workspace.owner.to_dict()
@@ -95,6 +95,9 @@ def delete_workspace(id):
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
 
+    if current_user.id != workspace.owner_id:
+        return redirect("/api/auth/forbidden")
+
     db.session.delete(workspace)
     db.session.commit()
 
@@ -136,7 +139,7 @@ def create_channel(id):
         if result != True:
             return result
 
-        if current_user not in workspace.users:
+        if current_user not in workspace.users and current_user != workspace.owner:
             return redirect("/api/auth/forbidden")
 
         new_channel = Channel(
