@@ -92,7 +92,10 @@ def update_message(id):
         if  (workspace not in current_user.workspaces and workspace not in current_user.user_workspaces) or current_user != message.owner:
             return redirect("/api/auth/forbidden")
 
-        message.message = form.data["message"]
+        """ The type of message(public/private) that the user is trying to update must matched message's type in the body """
+        if form.data["is_private"] == message.is_private:
+            message.message = form.data["message"]
+
         db.session.commit()
         return message.to_dict(), 200
 
