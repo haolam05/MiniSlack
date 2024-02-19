@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import { isImageValid } from "../../utils/image";
 import * as sessionActions from "../../redux/session";
 
 function UpdateUserFormModal({ user }) {
@@ -17,6 +18,11 @@ function UpdateUserFormModal({ user }) {
     e.preventDefault();
     disabledSubmitButton();
 
+    if (isImageValid(profileImageUrl.name)) {
+      enabledSubmitButton();
+      return setErrors({ profileImageUrl: "Only .png, .jpg, .jpeg, .gif are allowed" });
+    }
+
     const data = await dispatch(
       sessionActions.updateUser({
         first_name: firstName,
@@ -27,7 +33,7 @@ function UpdateUserFormModal({ user }) {
         password,
       })
     );
-    console.log(data)
+
     if (data?.errors) {
       enabledSubmitButton();
       return setErrors(data.errors);
