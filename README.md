@@ -574,3 +574,73 @@ Returns all channelrs that belonged to a workspace specifed by id. Only owner an
       "message": "Workspace couldn't be found"
     }
     ```
+
+### Create a new channel by workspace id
+
+Create a new channel for a workspace. Any workspace's member can create a channel.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: GET
+  * URL: /api/workspace/:workspaceId/channels
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "Channels": [
+            {
+                "description": null,
+                "id": 1,
+                "name": "general",
+                "owner_id": 1,
+                "topic": null,
+                "workspace_id": 1
+            }
+        ]
+      }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+* Error response: Validation error - name already exists
+  * Status Code: 500
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    { "name": "This name is already taken" }
+    ```
+* Error response: Bad request
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": [
+        "This field is required."
+      ]
+    }
+    or
+    {
+      "name": [
+        "Name must be at least 4 characters"
+      ]
+    }
+    ```
