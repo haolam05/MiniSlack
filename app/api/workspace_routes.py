@@ -95,6 +95,9 @@ def delete_workspace(id):
     if not workspace:
         return { "message": "Workspace couldn't be found" }, 404
 
+    if current_user.id != workspace.owner_id:
+            return redirect("/api/auth/forbidden")
+
     db.session.delete(workspace)
     db.session.commit()
 
