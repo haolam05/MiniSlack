@@ -74,12 +74,13 @@ export const updateUser = user => async dispatch => {
 
   if (profile_image_url) formData.append("profile_image_url", profile_image_url);
 
-  const response = await csrfFetch("/api/auth", {
+  const response = await csrfFetch("/api/auth/update", {
     method: "PUT",
     body: formData
   });
 
   const data = await response.json();
+  console.log(response, data)
   if (!response.ok) return { errors: data };
   dispatch(setUser(data));
 };

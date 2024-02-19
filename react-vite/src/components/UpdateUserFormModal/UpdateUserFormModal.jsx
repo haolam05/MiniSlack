@@ -27,7 +27,7 @@ function UpdateUserFormModal({ user }) {
         password,
       })
     );
-
+    console.log(data)
     if (data?.errors) {
       enabledSubmitButton();
       return setErrors(data.errors);

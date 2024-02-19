@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from app.models import db, User, Message
-from app.forms import LoginForm, SignUpForm
+from app.forms import LoginForm, SignUpForm, UpdateUserForm
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import check_password_hash
 from .aws_helpers import upload_file_to_s3, get_unique_filename
@@ -16,23 +16,24 @@ def authenticate():
     return { 'user': None }, 200
 
 
-@auth_routes.route('/', methods=["PUT"])
+@auth_routes.route('/update', methods=["PUT"])
 @login_required
 def update_user():
     """Update current user information. Returns the updated user."""
-    form = SignUpForm()
+    form = UpdateUserForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email'] and User.is_deleted == False and user == current_user).first()
 
         if not user:
-            return { "message": "User couldn't be found" }
+            return { "message": "User couldn't be found" }, 404
 
         if not check_password_hash(user.password, form.data["password"]):
-            return { "password": "Password is incorrect" }
+            return { "password": "Password is incorrect" }, 400
 
         image = form.data["profile_image_url"]
+
         if image:
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
