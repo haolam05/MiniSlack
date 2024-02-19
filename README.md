@@ -877,17 +877,19 @@ Create a Message
 
     ```json
     {
-    "message": "Saying hi from private messages...",
-    "is_private": true,
-    "receiver_id": 4,
-    "workspace_id": 1
+      "message": "Saying hi from private messages...",
+      "is_private": true,
+      "receiver_id": 4,
+      "workspace_id": 1
     }
+
     or
+
     {
-    "message": "Channel message lollll...",
-    "channel_id": 3,
-    "is_private": false,
-    "workspace_id": 1
+      "message": "Channel message lollll...",
+      "channel_id": 3,
+      "is_private": false,
+      "workspace_id": 1
     }
     ```
 
@@ -899,23 +901,23 @@ Create a Message
 
     ```json
     {
-    "channel_id": null,
-    "id": 7,
-    "is_private": true,
-    "message": "Saying hi from private messages...",
-    "receiver_id": 4,
-    "sender_id": 1,
-    "workspace_id": 1
+      "channel_id": null,
+      "id": 7,
+      "is_private": true,
+      "message": "Saying hi from private messages...",
+      "receiver_id": 4,
+      "sender_id": 1,
+      "workspace_id": 1
     }
     or
     {
-    "channel_id": 3,
-    "id": 10,
-    "is_private": false,
-    "message": "Channel message lollll...",
-    "receiver_id": null,
-    "sender_id": 1,
-    "workspace_id": 1
+      "channel_id": 3,
+      "id": 10,
+      "is_private": false,
+      "message": "Channel message lollll...",
+      "receiver_id": null,
+      "sender_id": 1,
+      "workspace_id": 1
     }
     ```
 * Error response: Validation error - missing message or workspace id
@@ -980,37 +982,48 @@ Update an existing message.
 
     ```json
     {
-    "message": "Saying HELLO from private messages...",
-    "is_private": true,
-    "receiver_id": 5,
-    "workspace_id": 1
+      "message": "Saying HELLO from private messages...",
+      "is_private": true,
+      "receiver_id": 5,
+      "workspace_id": 1
     }
     or
     {
-    "message": "Saying hi from channel messages...",
-    "channel_id": 6,
-    "is_private": false,
-    "workspace_id": 1
+      "message": "Saying hi from channel messages...",
+      "channel_id": 6,
+      "is_private": false,
+      "workspace_id": 1
     }
     ```
 
 * Successful Response
-  * Status Code: 201
+  * Status Code: 200
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-    "channel_id": null,
-    "id": 1,
-    "is_private": true,
-    "message": "Saying UPDATE from private messages...",
-    "receiver_id": 3,
-    "sender_id": 1,
-    "workspace_id": 2
+      "channel_id": null,
+      "id": 1,
+      "is_private": true,
+      "message": "Saying UPDATE from private messages...",
+      "receiver_id": 3,
+      "sender_id": 1,
+      "workspace_id": 2
     }
+
     or
+
+    {
+      "channel_id": 4,
+      "id": 4,
+      "is_private": false,
+      "message": "CHANNEL UPDATE!!",
+      "receiver_id": null,
+      "sender_id": 1,
+      "workspace_id": 2
+    }
     ```
 
 * Error response: Message not found
@@ -1038,6 +1051,206 @@ Update an existing message.
     "workspace_id": [
         "This field is required."
     ]
+    }
+    ```
+
+### Delete a Message
+
+Delete a message. Only the message owner can delete a message.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: DELETE
+  * URL: /api/messages/:messageId
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Succesfully deleted <current user's email> message."
+    }
+    ```
+
+* Error response: Message not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Message couldn't be found"
+    }
+    ```
+
+### Get all direct messages of the current user
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: GET
+  * URL: /api/auth/messages
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "Messages": [
+            {
+                "channel_id": null,
+                "id": 2,
+                "is_private": true,
+                "message": "Nice to meet you 😀",
+                "receiver_id": 3,
+                "sender_id": 1,
+                "workspace_id": 2
+            },
+            {
+                "channel_id": null,
+                "id": 7,
+                "is_private": true,
+                "message": "Saying hi from private messages...",
+                "receiver_id": 4,
+                "sender_id": 1,
+                "workspace_id": 1
+            },
+            {
+                "channel_id": null,
+                "id": 9,
+                "is_private": true,
+                "message": "Saying hi from private messages...",
+                "receiver_id": 1,
+                "sender_id": 1,
+                "workspace_id": 1
+            }
+        ] 
+      } 
+    ```
+### Get all reactions of a message specified by id
+
+* Require Authentication: true
+* Request
+  * Method: GET
+  * URL: /messages/:messageID/reactions
+  * Headers: None
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Reactions": [
+          {
+              "created_at": "Mon, 19 Feb 2024 00:00:00 GMT",
+              "encoded_text": "😂",
+              "id": 1,
+              "message_id": 3,
+              "user_id": 1
+          }
+      ]
+    }
+    ```
+* Error response: Message not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Message couldn't be found"
+    }
+    ```
+
+### Create a new reaction for a message specified by id
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /messages/:messageID/reactions
+  * Headers: None
+  * Body:
+  ```json
+    {
+    "encoded_text": "🐼🐼"
+    }
+  ```
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+    "created_at": "Mon, 19 Feb 2024 00:00:00 GMT",
+    "encoded_text": "🐼🐼",
+    "id": 4,
+    "message_id": 3,
+    "user_id": 1
+    }
+    ```
+* Error response: Message not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Message couldn't be found"
+    }
+    ```
+### Delete a reaction for a message specified by id
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: DELETE
+  * URL: /messages/:messageID/reactions/:reactionID
+  * Headers: None
+  * Body: None
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted reaction"
+    }
+    ```
+* Error response: Message not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Message couldn't be found"
+    }
+    ```
+* Error response: Reaction not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Reaction couldn't be found"
     }
     ```
   
