@@ -63,6 +63,27 @@ export const signup = user => async dispatch => {
   dispatch(setUser(data));
 };
 
+export const updateUser = user => async dispatch => {
+  const { first_name, last_name, profile_image_url, email, username, password } = user;
+  const formData = new FormData();
+  formData.append("first_name", first_name)
+  formData.append("last_name", last_name)
+  formData.append("email", email)
+  formData.append("username", username)
+  formData.append("password", password)
+
+  if (profile_image_url) formData.append("profile_image_url", profile_image_url);
+
+  const response = await csrfFetch("/api/auth", {
+    method: "PUT",
+    body: formData
+  });
+
+  const data = await response.json();
+  if (!response.ok) return { errors: data };
+  dispatch(setUser(data));
+};
+
 export const logout = () => async dispatch => {
   await csrfFetch("/api/auth/logout");
   dispatch(removeUser());

@@ -1,8 +1,13 @@
 import { getAvatarUrl } from "../../utils/image";
+import UpdateUserFormModal from "../UpdateUserFormModal";
 import "./UserProfile.css";
 
-function UserProfile({ user }) {
+function UserProfile({ user, setModalContent }) {
   if (!user) return;
+
+  const openUpdateUserForm = () => {
+    setModalContent(<UpdateUserFormModal user={user} />);
+  }
 
   return (
     <>
@@ -26,9 +31,12 @@ function UserProfile({ user }) {
           </div>
         </div>
       </div>
+      <div className="profile-btns">
+        <button className="btn-update" onClick={openUpdateUserForm}>Update</button>
+        <button className="btn-delete">Delete</button>
+      </div>
     </>
   );
 }
-
 
 export default UserProfile;

@@ -59,6 +59,10 @@ img {
   word-break: break-word;
 }
 
+input[disabled]:hover {
+  cursor: not-allowed;
+}
+
 select[disabled]:hover {
   cursor: not-allowed;
 }

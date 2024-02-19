@@ -17,16 +17,12 @@ function Navigation() {
   const user = useSelector(sessionActions.sessionUser);
 
   const showUserProfile = () => {
-    setModalContent(<UserProfile user={user} />);
+    setModalContent(<UserProfile user={user} setModalContent={setModalContent} />);
   }
 
   useEffect(() => {
     const loadUser = async () => {
-      if (userIsValid(user)) {
-        const data = await dispatch(sessionActions.restoreSession());
-        console.log(data)
-        if (data?.errors) alert(data.errors.message)//setModalContent(<h2 className="modal-errors">{data.errors.message}</h2>)
-      }
+      await dispatch(sessionActions.restoreSession());
       setIsLoaded(true);
     }
     loadUser();
