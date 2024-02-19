@@ -144,3 +144,12 @@ form .btn-primary.enabled:hover {
 .modal-errors {
   color: var(--red);
 }
+
+.demo-user {
+  text-align: center;
+  cursor: pointer;
+}
+
+.demo-user:hover {
+  text-decoration: underline;
+}

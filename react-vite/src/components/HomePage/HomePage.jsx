@@ -1,6 +1,12 @@
+import { useEffect } from "react";
+import * as workspaceActions from "../../redux/workspaces";
 import "./HomePage.css";
 
 function HomePage() {
+  useEffect(() => {
+    const workspaces = se
+  });
+
   return (
     <div id="home-page">
       <div id="sidebar">

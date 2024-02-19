@@ -11,14 +11,14 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e, loginAsDemoUser) => {
     e.preventDefault();
     disabledSubmitButton();
 
     const data = await dispatch(
       sessionActions.login({
-        email,
-        password,
+        email: loginAsDemoUser ? "haolam@user.io" : email,
+        password: loginAsDemoUser ? "password" : password,
       })
     );
 
@@ -51,6 +51,7 @@ function LoginFormModal() {
         />
         {errors.password && <p className="modal-errors">{errors.password}</p>}
         <button type="submit" className="btn-submit">Submit</button>
+        <p type="submit" onClick={e => handleSubmit(e, true)} className="demo-user">Login as demo user</p>
       </form>
     </>
   );

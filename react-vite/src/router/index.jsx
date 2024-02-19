@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import HomePage from '../components/HomePage';
 import Layout from './Layout';
+import HomePage from '../components/HomePage';
+import WorkspaceForm from '../components/WorkspaceForm';
 
 export const router = createBrowserRouter([
   {
@@ -9,6 +10,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/workspace",
+        element: <WorkspaceForm />
       }
     ],
   },
