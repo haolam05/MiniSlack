@@ -21,7 +21,7 @@ function SignupFormModal() {
     e.preventDefault();
     disabledSubmitButton();
 
-    if (isImageValid(profileImageUrl.name)) {
+    if (profileImageUrl && !isImageValid(profileImageUrl.name)) {
       enabledSubmitButton();
       return setErrors({ profileImageUrl: "Only .png, .jpg, .jpeg, .gif are allowed" });
     }
