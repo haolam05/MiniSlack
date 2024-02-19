@@ -38,86 +38,72 @@ function SignupFormModal() {
 
     if (data?.errors) {
       enabledSubmitButton();
-      return setErrors(data);
+      return setErrors(data.errors);
     }
     closeModal();
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h2 className="subheading">Sign Up</h2>
       {errors.server && <p className="modal-errors">{errors.server}</p>}
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name
-          <input
-            type="text"
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-            required
-          />
-        </label>
+        <label>First Name</label>
+        <input
+          type="text"
+          value={firstName}
+          onChange={e => setFirstName(e.target.value)}
+          required
+        />
         {errors.first_name && <p className="modal-errors">{errors.first_name}</p>}
-        <label>
-          Last Name
-          <input
-            type="text"
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-            required
-          />
-        </label>
+        <label>Last Name</label>
+        <input
+          type="text"
+          value={lastName}
+          onChange={e => setLastName(e.target.value)}
+          required
+        />
         {errors.last_name && <p className="modal-errors">{errors.last_name}</p>}
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </label>
+        <label>Email</label>
+        <input
+          type="text"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
         {errors.email && <p className="modal-errors">{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
-          />
-        </label>
+        <label>Username</label>
+        <input
+          type="text"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          required
+        />
         {errors.username && <p className="modal-errors">{errors.username}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </label>
+        <label>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
         {errors.password && <p className="modal-errors">{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+          required
+        />
         {errors.confirmPassword && <p className="modal-errors">{errors.confirmPassword}</p>}
-        <label>
-          Profil Image
-          <input
-            type="text"
-            value={profileImageUrl}
-            onChange={e => setProfileImageUrl(e.target.value)}
-          />
-        </label>
-        {errors.confirmPassword && <p className="modal-errors">{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <label>Profile Image</label>
+        <input
+          type="text"
+          value={profileImageUrl}
+          onChange={e => setProfileImageUrl(e.target.value)}
+        />
+        {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
+        <button type="submit" className="btn-submit">Submit</button>
       </form>
     </>
   );

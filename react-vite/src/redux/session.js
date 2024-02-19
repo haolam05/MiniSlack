@@ -36,7 +36,7 @@ export const login = credentials => async dispatch => {
   });
 
   const data = await response.json();
-  if (!response.ok) return { errros: data };
+  if (!response.ok) return { errors: data };
   dispatch(setUser(data));
 };
 

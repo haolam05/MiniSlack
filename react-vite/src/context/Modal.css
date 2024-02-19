@@ -20,7 +20,8 @@
 
 #modal-content {
   position: absolute;
-  background-color: white;
+  background-color: var(--modal-content-background);
+  color: white;
   width: 500px;
   display: flex;
   flex-direction: column;
