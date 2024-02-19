@@ -11,7 +11,7 @@ function UpdateUserFormModal({ user }) {
   const [password, setPassword] = useState("");
   const [profileImageUrl, setProfileImageUrl] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const { setModalContent } = useModal();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function UpdateUserFormModal({ user }) {
       enabledSubmitButton();
       return setErrors(data.errors);
     }
-    closeModal();
+    setModalContent(<h2 className="subheading alert-success">Successfully Updated</h2>);
   };
 
   const inputInvalid = () => {

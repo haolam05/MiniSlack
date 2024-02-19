@@ -12,6 +12,7 @@
   --dark-gray: #999999;
   --light-gray: #CCCCCC;
   --red: #FF5A5F;
+  --green: rgb(93, 203, 93);
 }
 
 * {
@@ -57,6 +58,10 @@ img {
   font-size: 17pt;
   font-weight: bold;
   word-break: break-word;
+}
+
+.alert-success {
+  color: rgb(93, 203, 93);
 }
 
 input[disabled]:hover {

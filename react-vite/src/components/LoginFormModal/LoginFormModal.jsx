@@ -9,7 +9,7 @@ function LoginFormModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const { setModalContent } = useModal();
 
   const handleSubmit = async (e, loginAsDemoUser) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ function LoginFormModal() {
       enabledSubmitButton();
       return setErrors(data.errors);
     }
-    closeModal();
+    setModalContent(<h2 className="subheading alert-success">Sucessfully Logged In</h2>)
   };
 
   const inputInvalid = () => {
