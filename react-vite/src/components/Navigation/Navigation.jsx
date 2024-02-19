@@ -8,12 +8,13 @@ import UserProfile from "../UserProfile";
 import Loading from "../Loading/Loading";
 import * as sessionActions from "../../redux/session";
 import "./Navigation.css";
+import { userIsValid } from "../../utils/user";
 
 function Navigation() {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
-  const user = useSelector(state => state.session.user);
+  const user = useSelector(sessionActions.sessionUser);
 
   const showUserProfile = () => {
     setModalContent(<UserProfile user={user} />);
@@ -36,10 +37,10 @@ function Navigation() {
           <NavLink to="/"><img src="/images/logo.png" alt="logo" /></NavLink>
         </li>
         <li id="profile-buttons">
-          <ProfileButton user={user} />
+          <ProfileButton user={userIsValid(user) ? user : null} />
         </li>
         <div onClick={showUserProfile} id="user-avatar">
-          {user && <img src={getAvatarUrl(user.profile_image_url)} alt="avatar" />}
+          {userIsValid(user) && <img src={getAvatarUrl(user.profile_image_url)} alt="avatar" />}
         </div>
       </ul>
     </div>
