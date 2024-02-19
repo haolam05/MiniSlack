@@ -63,7 +63,6 @@ function SignupFormModal() {
   return (
     <>
       <h2 className="subheading">Sign Up</h2>
-      {errors.server && <p className="modal-errors">{errors.server}</p>}
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label>First Name</label>
         <input

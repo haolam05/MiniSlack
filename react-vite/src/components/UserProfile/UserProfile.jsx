@@ -1,4 +1,5 @@
 import { getAvatarUrl } from "../../utils/image";
+import UpdatePasswordFormModal from "../UpdatePasswordFormModal";
 import UpdateUserFormModal from "../UpdateUserFormModal";
 import "./UserProfile.css";
 
@@ -7,6 +8,10 @@ function UserProfile({ user, setModalContent }) {
 
   const openUpdateUserForm = () => {
     setModalContent(<UpdateUserFormModal user={user} />);
+  }
+
+  const openUpdatePasswordForm = () => {
+    setModalContent(<UpdatePasswordFormModal user={user} />);
   }
 
   return (
@@ -33,6 +38,7 @@ function UserProfile({ user, setModalContent }) {
       </div>
       <div className="profile-btns">
         <button className="btn-update" onClick={openUpdateUserForm}>Update</button>
+        <button className="btn-delete" onClick={openUpdatePasswordForm}>Change Password</button>
         <button className="btn-delete">Delete</button>
       </div>
     </>

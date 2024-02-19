@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from app.models import db, User, Message
-from app.forms import LoginForm, SignUpForm, UpdateUserForm
+from app.forms import LoginForm, SignUpForm, UpdateUserForm, UpdatePasswordForm
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import check_password_hash
 from .aws_helpers import upload_file_to_s3, get_unique_filename
@@ -46,6 +46,25 @@ def update_user():
 
         db.session.commit()
         return user.to_dict()
+
+    return form.errors, 400
+
+
+@auth_routes.route('/password', methods=["PUT"])
+@login_required
+def update_user_password():
+    """Update current user's password. Required to log in again after success update."""
+    form = UpdatePasswordForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        if not check_password_hash(current_user.password, form.data["password"]):
+            return { "password": "Password is incorrect" }, 400
+        current_user.password = form.data["new_password"]
+
+        db.session.commit()
+        logout_user()
+        return { "message": "Successfully updated your password. Please log in again." }, 200
 
     return form.errors, 400
 

@@ -54,7 +54,6 @@ function UpdateUserFormModal({ user }) {
   return (
     <>
       <h2 className="subheading">Update Profile</h2>
-      {errors.server && <p className="modal-errors">{errors.server}</p>}
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label>First Name</label>
         <input
@@ -79,12 +78,14 @@ function UpdateUserFormModal({ user }) {
           className="disabled"
           disabled
         />
+        {errors.email && <p className="modal-errors">{errors.email}</p>}
         <label>Username</label>
         <input
           type="text"
           value={user.username}
           disabled
         />
+        {errors.username && <p className="modal-errors">{errors.username}</p>}
         <label>Password</label>
         <input
           type="password"

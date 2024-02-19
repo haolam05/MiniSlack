@@ -4,21 +4,21 @@ import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import * as sessionActions from "../../redux/session";
 
-function LoginFormModal() {
+function UpdatePasswordFormModal({ user }) {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { setModalContent } = useModal();
 
-  const handleSubmit = async (e, loginAsDemoUser) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     disabledSubmitButton();
 
     const data = await dispatch(
-      sessionActions.login({
-        email: loginAsDemoUser ? "haolam@user.io" : email,
-        password: loginAsDemoUser ? "password" : password,
+      sessionActions.updateUserPassword({
+        password,
+        new_password: newPassword
       })
     );
 
@@ -26,29 +26,23 @@ function LoginFormModal() {
       enabledSubmitButton();
       return setErrors(data.errors);
     }
-    setModalContent(<h2 className="subheading alert-success">Sucessfully Logged In</h2>)
+    setModalContent(<h2 className="subheading alert-success">Successfully Updated! Please log in again!</h2>);
   };
 
   const inputInvalid = () => {
     return (
-      !email.length ||
-      password.length < 6
-    )
+      password.length < 6 ||
+      newPassword.length < 6
+    );
   }
+
+  if (!user) return;
 
   return (
     <>
-      <h2 className="subheading">Log In</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input
-          type="text"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        {errors.email && <p className="modal-errors">{errors.email}</p>}
-        <label>Password</label>
+      <h2 className="subheading">Update Password</h2>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <label>Current Password</label>
         <input
           type="password"
           value={password}
@@ -56,6 +50,14 @@ function LoginFormModal() {
           required
         />
         {errors.password && <p className="modal-errors">{errors.password}</p>}
+        <label>New Password</label>
+        <input
+          type="password"
+          value={newPassword}
+          onChange={e => setNewPassword(e.target.value)}
+          required
+        />
+        {errors.newPassword && <p className="modal-errors">{errors.newPassword}</p>}
         <button
           type="submit"
           className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}
@@ -63,10 +65,9 @@ function LoginFormModal() {
         >
           Submit
         </button>
-        <p type="submit" onClick={e => handleSubmit(e, true)} className="demo-user">Login as demo user</p>
       </form>
     </>
   );
 }
 
-export default LoginFormModal;
+export default UpdatePasswordFormModal;

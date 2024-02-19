@@ -85,6 +85,19 @@ export const updateUser = user => async dispatch => {
   dispatch(setUser(data));
 };
 
+export const updateUserPassword = user => async dispatch => {
+  const response = await csrfFetch("/api/auth/password", {
+    method: "PUT",
+    body: JSON.stringify({
+      ...user
+    })
+  });
+
+  const data = await response.json();
+  if (!response.ok) return { errors: data };
+  dispatch(removeUser());
+};
+
 export const logout = () => async dispatch => {
   await csrfFetch("/api/auth/logout");
   dispatch(removeUser());
