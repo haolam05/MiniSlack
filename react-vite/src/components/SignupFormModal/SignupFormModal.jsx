@@ -43,6 +43,17 @@ function SignupFormModal() {
     closeModal();
   };
 
+  const inputInvalid = () => {
+    return (
+      !firstName.length ||
+      !lastName.length ||
+      !email.length ||
+      username.length < 4 ||
+      password.length < 6 ||
+      confirmPassword !== password
+    )
+  }
+
   return (
     <>
       <h2 className="subheading">Sign Up</h2>
@@ -103,7 +114,13 @@ function SignupFormModal() {
           onChange={e => setProfileImageUrl(e.target.files[0])}
         />
         {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
-        <button type="submit" className="btn-submit">Submit</button>
+        <button
+          type="submit"
+          className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}
+          disabled={inputInvalid()}
+        >
+          Submit
+        </button>
       </form>
     </>
   );

@@ -29,6 +29,13 @@ function LoginFormModal() {
     closeModal();
   };
 
+  const inputInvalid = () => {
+    return (
+      !email.length ||
+      password.length < 6
+    )
+  }
+
   return (
     <>
       <h2 className="subheading">Log In</h2>
@@ -50,7 +57,13 @@ function LoginFormModal() {
           required
         />
         {errors.password && <p className="modal-errors">{errors.password}</p>}
-        <button type="submit" className="btn-submit">Submit</button>
+        <button
+          type="submit"
+          className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}
+          disabled={inputInvalid()}
+        >
+          Submit
+        </button>
         <p type="submit" onClick={e => handleSubmit(e, true)} className="demo-user">Login as demo user</p>
       </form>
     </>

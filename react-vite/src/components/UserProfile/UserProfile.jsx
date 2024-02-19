@@ -26,9 +26,12 @@ function UserProfile({ user }) {
           </div>
         </div>
       </div>
+      <div className="profile-btns">
+        <button className="btn-update">Update</button>
+        <button className="btn-delete">Delete</button>
+      </div>
     </>
   );
 }
-
 
 export default UserProfile;

@@ -9,18 +9,18 @@ import { userIsValid } from "../../utils/user";
 function HomePage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const workspaces = useSelector(state => state.workspaces);
+  // const workspaces = useSelector(state => state.workspaces);
   const user = useSelector(state => state.session.user);
 
 
   useEffect(() => {
-    const loadWorkspace = async () => {
+    const loadWorkspaces = async () => {
       await dispatch(sessionActions.restoreSession);
       if (userIsValid(user)) await dispatch(workspaceActions.loadWorkspaces());
       setIsLoaded(true);
     }
-    loadWorkspace();
-  }, [dispatch]);
+    loadWorkspaces();
+  }, [dispatch, user]);
 
   if (!isLoaded) return <Loading />
 
