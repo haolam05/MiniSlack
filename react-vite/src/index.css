@@ -7,6 +7,7 @@
   --navbar-background: rgb(47, 47, 47);
   --modal-content-background: rgb(58, 58, 58);
   --usermenu-background: rgb(58, 68, 58);
+  --text-shadow: rgb(198, 198, 153) 1px 0 10px;
   --gray: #808080;
   --dark-gray: #999999;
   --light-gray: #CCCCCC;
@@ -105,7 +106,7 @@ form input:focus {
 }
 
 form input[type="file"] {
-  padding: 0;
+  padding: 10px;
   margin: 0;
   text-align: center;
 }
@@ -114,12 +115,12 @@ form input[type="file"]::file-selector-button {
   color: var(--white);
   font-style: italic;
   font-size: 11px;
-  background-color: var(--teal);
+  background-color: var(--modal-content-background);
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  text-shadow: var(--light-yellow) 1px 0 10px;
+  text-shadow: var(--text-shadow);
 }
 
 form select {

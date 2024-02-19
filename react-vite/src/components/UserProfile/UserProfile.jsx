@@ -9,7 +9,7 @@ function UserProfile({ user }) {
       <h2 className="subheading">User Profile</h2>
       <div id="user-profile">
         <div className="profile-avatar">
-          <img src={getAvatarUrl(user.profile_image_url)} alt="avatar" />
+          <img className="user-profile-avatar" src={getAvatarUrl(user.profile_image_url)} alt="avatar" />
         </div>
         <div className="profile-content">
           <div className="profile-titles">

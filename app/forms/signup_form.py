@@ -1,9 +1,11 @@
 import re
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
 from urllib.request import urlopen
 from app.models import User
+from ..api.aws_helpers import ALLOWED_EXTENSIONS
 
 
 def user_exists(form, field):
@@ -46,10 +48,12 @@ def validate_photo_url(form, field):
             raise ValidationError("Photo must be a valid image URL!")
         return False
 
+
 class SignUpForm(FlaskForm):
     first_name = StringField("First name", validators=[DataRequired()])
     last_name = StringField("Last name", validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired(), username_check_len, username_exists])
     email = StringField('Email', validators=[DataRequired(), validate_email, user_exists ])
     password = StringField('Password', validators=[DataRequired(), password_check_len])
-    profile_image_url = StringField("Profile Image URL", validators=[validate_photo_url])
+    profile_image_url = FileField("Profile Image Url", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    # profile_image_url = StringField("Profile Image URL", validators=[validate_photo_url])

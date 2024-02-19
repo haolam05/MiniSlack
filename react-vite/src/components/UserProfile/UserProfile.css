@@ -21,3 +21,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.user-profile-avatar {
+  border-radius: 50%;
+}

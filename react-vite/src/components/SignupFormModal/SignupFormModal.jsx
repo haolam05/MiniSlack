@@ -47,7 +47,7 @@ function SignupFormModal() {
     <>
       <h2 className="subheading">Sign Up</h2>
       {errors.server && <p className="modal-errors">{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label>First Name</label>
         <input
           type="text"
@@ -98,9 +98,9 @@ function SignupFormModal() {
         {errors.confirmPassword && <p className="modal-errors">{errors.confirmPassword}</p>}
         <label>Profile Image</label>
         <input
-          type="text"
-          value={profileImageUrl}
-          onChange={e => setProfileImageUrl(e.target.value)}
+          type="file"
+          accept="image/*"
+          onChange={e => setProfileImageUrl(e.target.files[0])}
         />
         {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
         <button type="submit" className="btn-submit">Submit</button>
