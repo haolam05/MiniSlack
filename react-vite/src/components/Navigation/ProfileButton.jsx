@@ -6,10 +6,9 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import * as sessionActions from "../../redux/session";
 
-function ProfileButton() {
+function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const user = useSelector(sessionActions.sessionUser);
   const ulRef = useRef();
 
   const toggleMenu = e => {
@@ -41,16 +40,14 @@ function ProfileButton() {
   return (
     <>
       <div>
-        <button id="user-menu" onClick={toggleMenu}>
-          <FaUserCircle />
-        </button>
+        <button id="user-menu" onClick={toggleMenu}><FaUserCircle /></button>
       </div>
       {showMenu && (
         <div id="user-buttons" ref={ulRef}>
           {user ? (
             <>
-              <div>{user.username}</div>
-              <div>{user.email}</div>
+              <div id="user-info" className="hidden">
+              </div>
               <div>
                 <button onClick={logout}>Log Out</button>
               </div>

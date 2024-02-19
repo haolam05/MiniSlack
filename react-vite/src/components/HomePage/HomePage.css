@@ -15,7 +15,6 @@
 
 #home-page #main-content {
   box-shadow: var(--box-shadow);
-  background-color: var(--main-content-background);
   position: relative;
 }
 
