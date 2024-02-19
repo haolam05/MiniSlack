@@ -73,13 +73,15 @@ Returns the information about the current user that is logged in.
 
     ```json
     {
-      "id": 1,
-      "first_name": "John",
-      "last_name": "Smith",
-      "email": "john1.smith@gmail.com",
-      "username": "JohnSmith,",
-      "profile_image_url": null,
-      "is_deleted": false
+      "user": {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Smith",
+        "email": "john1.smith@gmail.com",
+        "username": "JohnSmith,",
+        "profile_image_url": null,
+        "is_deleted": false
+      }
     }
     ```
 
@@ -123,13 +125,15 @@ information.
 
     ```json
     {
-      "id": 1,
-      "first_name": "John",
-      "last_name": "Smith",
-      "email": "john1.smith@gmail.com",
-      "username": "JohnSmith,",
-      "profile_image_url": null,
-      "is_deleted": false
+      "user": {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Smith",
+        "email": "john1.smith@gmail.com",
+        "username": "JohnSmith,",
+        "profile_image_url": null,
+        "is_deleted": false
+      }
     }
     ```
   * Error response: Bad request
@@ -207,13 +211,15 @@ Creates a new user, logs them in as the current user, and returns the current us
 
     ```json
     {
-      "id": 10,
-      "first_name": "John",
-      "last_name": "Smith",
-      "email": "john1.smith@gmail.com",
-      "username": "JohnSmith",
-      "is_deleted": false,
-      "profile_image_url": "https://meetup2024.s3.us-west-2.amazonaws.com/public/avatar2.png"
+      "user": {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Smith",
+        "email": "john1.smith@gmail.com",
+        "username": "JohnSmith,",
+        "profile_image_url": "https://meetup2024.s3.us-west-2.amazonaws.com/public/avatar2.png",
+        "is_deleted": false
+      }
     }
     ```
 
@@ -336,16 +342,7 @@ Creates a new user, logs them in as the current user, and returns the current us
           "email": "nickylei@user.io",
           "profile_image_url": "image.amazon.url",
           "is_deleted": false
-          },
-          {
-          "id": 3,
-          "first_name": "Nick",
-          "last_name": "Leger",
-          "username": "nickleger",
-          "email": "nickleger@user.io",
-          "profile_image_url": "image.amazon.url",
-          "is_deleted": false
-          },
+          }
         ],
         "Channels": [
           {
@@ -354,22 +351,6 @@ Creates a new user, logs them in as the current user, and returns the current us
             "topic": "anything",
             "description": "anything and everything",
             "owner_id": 1,
-            "workspace_id": 1
-          }
-          {
-            "id": 2,
-            "name": "homework discussion",
-            "topic": "homework",
-            "description": "homework q & a",
-            "owner_id": 1,
-            "workspace_id": 1
-          }
-          {
-            "id": 3,
-            "name": "assessments",
-            "topic": null,
-            "description": null,
-            "owner_id": 2,
             "workspace_id": 1
           }
         ]
@@ -389,7 +370,7 @@ Creates a new user, logs them in as the current user, and returns the current us
 
 ### Create a new workspace
 
-Creates a workspace and redirects to workspace's page.
+Creates a new workspace.
 
 * Require Authentication: true
 * Request
@@ -401,8 +382,7 @@ Creates a workspace and redirects to workspace's page.
 
     ```json
     {
-      "name": "new-workspace",
-      "owner_id": "2"
+      "name": "new-workspace"
     }
     ```
 
@@ -427,7 +407,7 @@ Creates a workspace and redirects to workspace's page.
   * Body:
 
     ```json
-    { "name": "Name is required" }
+    { "name": "This field is required" }
     ```
 * Error response: Validation error - name length too short
   * Status Code: 400
@@ -436,7 +416,7 @@ Creates a workspace and redirects to workspace's page.
   * Body:
 
     ```json
-    { "name": "Name must be at least 4 characters long" }
+    { "name": "Name must be at least 4 characters" }
     ```
 * Error response: Validation error - name already exists
   * Status Code: 500
@@ -449,7 +429,7 @@ Creates a workspace and redirects to workspace's page.
     ```
 ### Update a workspace by id
 
-Creates a workspace and redirects to workspace's page.
+Update an existing workspace.
 
 * Require Authentication: true
 * Require Authorization: true
@@ -462,8 +442,7 @@ Creates a workspace and redirects to workspace's page.
 
     ```json
     {
-      "name": "new-workspace",
-      "owner_id": "2"
+      "name": "new-workspace"
     }
     ```
 
@@ -488,7 +467,7 @@ Creates a workspace and redirects to workspace's page.
   * Body:
 
     ```json
-    { "name": "Name is required" }
+    { "name": "This field is required" }
     ```
 * Error response: Validation error - name length too short
   * Status Code: 400
@@ -497,7 +476,7 @@ Creates a workspace and redirects to workspace's page.
   * Body:
 
     ```json
-    { "name": "Name must be at least 4 characters long" }
+    { "name": "Name must be at least 4 characters" }
     ```
 * Error response: Validation error - name already exists
   * Status Code: 500
@@ -507,4 +486,91 @@ Creates a workspace and redirects to workspace's page.
 
     ```json
     { "name": "This name is already taken" }
+    ```
+
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+
+### Delete a workspace by id
+
+Delete an existing workspace by id.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: DELETE
+  * URL: /api/workspace/:id
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted <workspaceName> workspace"
+    }
+    ```
+
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
+    ```
+
+### Get all channels by workspace id
+
+Returns all channelrs that belonged to a workspace specifed by id. Only owner and members of workspace can see.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: GET
+  * URL: /api/workspace/:workspaceId/channels
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+      {
+        "Channels": [
+            {
+                "description": null,
+                "id": 1,
+                "name": "general",
+                "owner_id": 1,
+                "topic": null,
+                "workspace_id": 1
+            }
+        ]
+      }
+    ```
+* Error response: Workspace not found
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+   ```json
+    {
+      "message": "Workspace couldn't be found"
+    }
     ```
