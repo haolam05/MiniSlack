@@ -17,7 +17,7 @@ function Navigation() {
   const user = useSelector(sessionActions.sessionUser);
 
   const showUserProfile = () => {
-    setModalContent(<UserProfile user={user} />);
+    setModalContent(<UserProfile user={user} setModalContent={setModalContent} />);
   }
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import re
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
 from urllib.request import urlopen
@@ -55,4 +55,4 @@ class SignUpForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), username_check_len, username_exists])
     email = StringField('Email', validators=[DataRequired(), validate_email, user_exists ])
     password = StringField('Password', validators=[DataRequired(), password_check_len])
-    profile_image_url = FileField("Profile Image Url", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    profile_image_url = FileField("Profile Image Url", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
