@@ -7,7 +7,7 @@ export const CreateChannel = () => {
     const [topic, setTopic] = useState('')
     const [description, setDescription] = useState('')
 
-    const submitForm = async(e) => {
+    const submitForm = async (e) => {
         e.preventDefault()
 
         const payload = {
@@ -15,43 +15,42 @@ export const CreateChannel = () => {
             topic,
             description
         }
-        console.log(payload)
     }
 
     return (
         <div id="create-channel-form-container">
             <form
-            onSubmit={e => submitForm(e)}
+                onSubmit={e => submitForm(e)}
             >
                 <label>
                     name
                     <input
-                    type="text"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                     >
                     </input>
                 </label>
                 <label>
                     topic
                     <input
-                    type="text"
-                    value={topic}
-                    onChange={e => setTopic(e.target.value)}
+                        type="text"
+                        value={topic}
+                        onChange={e => setTopic(e.target.value)}
                     >
                     </input>
                 </label>
                 <label>
                     description
                     <input
-                    type="text"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
+                        type="text"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
                     >
                     </input>
                 </label>
                 <button
-                type="submit"
+                    type="submit"
                 >
                     Create Channel
                 </button>

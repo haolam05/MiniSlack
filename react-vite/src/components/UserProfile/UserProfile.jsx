@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux";
 import { getAvatarUrl } from "../../utils/image";
-import * as sessionActions from "../../redux/session";
 import "./UserProfile.css";
 
-function UserProfile() {
-  const user = useSelector(sessionActions.sessionUser);
+function UserProfile({ user }) {
+  if (!user) return;
 
   return (
     <>

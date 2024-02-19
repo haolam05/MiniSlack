@@ -8,6 +8,7 @@ export async function csrfFetch(url, options = {}) {
     if (!options.headers["Content-Type"] && !(options.body instanceof FormData)) {
       options.headers["Content-Type"] = "application/json";
     }
+    console.log(Cookies.get('csrf_token'), '🐼🐼🐼🐼😎😎😎😎😎')
     options.headers['csrf_token'] = Cookies.get('csrf_token');
   }
 

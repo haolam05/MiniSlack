@@ -13,11 +13,10 @@ function Navigation() {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
-  const user = useSelector(sessionActions.sessionUser);
-
+  const user = useSelector(state => state.session.user);
 
   const showUserProfile = () => {
-    setModalContent(<UserProfile />)
+    setModalContent(<UserProfile user={user} />);
   }
 
   useEffect(() => {
