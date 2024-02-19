@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ProfileButton from "./ProfileButton";
 import UserProfile from "../UserProfile";
 import Loading from "../Loading/Loading";
+import * as sessionActions from "../../redux/session";
 import "./Navigation.css";
 
 function Navigation() {

@@ -18,7 +18,9 @@ const removeUser = () => ({
 
 
 // Thunk action creators
-export const restoreSession = () => async dispatch => {
+export const restoreSession = () => async (dispatch, getState) => {
+  if (getState().session.user !== null) return;
+
   const response = await csrfFetch("/api/auth/");
   if (response.ok) {
     const data = await response.json();
