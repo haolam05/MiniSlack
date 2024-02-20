@@ -12,8 +12,8 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     is_private = db.Column(db.Boolean, nullable=False)
     message = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.Date, default=datetime.now)
-    updated_at = db.Column(db.Date, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     sender_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
