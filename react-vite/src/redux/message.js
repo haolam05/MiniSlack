@@ -27,11 +27,28 @@ export const loadMessages = channeId => async dispatch => {
   dispatch(addMessages(data.Messages));
 }
 
+export const loadDirectMessages = (...ids) => async dispatch => {
+  const res = await csrfFetch(`/api/auth/messages`);
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
+  const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
+  dispatch(addMessages(messages));
+}
+
 
 // Custom selectors
-export const getMessages = createSelector(
+export const getChannelMessages = createSelector(
   state => state.messages.messages,
   messages => Object.values(messages)
+);
+
+
+export const getDirectMessages = (id1, id2) => createSelector(
+  state => state.messages.messages,
+  messages => Object.values(messages).filter(m => {
+    const ids = [m.receiver_id, m.sender_id];
+    return ids.includes(id1) && ids.includes(id2);
+  })
 );
 
 
@@ -44,7 +61,6 @@ export default function messageReducer(state = initialState, action) {
       return {
         ...state,
         messages: {
-          ...state.messages,
           ...action.messages
         }
       }

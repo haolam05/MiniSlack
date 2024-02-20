@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userIsValid } from "../../utils/user";
-import Loading from "../Loading";
 import { select } from "../../utils/dom";
+import { getAvatarUrl } from "../../utils/image";
+import { useModal } from "../../context/Modal";
+import Loading from "../Loading";
+import UserProfile from "../UserProfile";
 import * as sessionActions from "../../redux/session";
 import * as workspaceActions from "../../redux/workspace";
 import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
-import { getAvatarUrl } from "../../utils/image";
 
 function HomePage() {
   const dispatch = useDispatch();
+  const { setModalContent, closeModal } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useSelector(sessionActions.sessionUser);
   const workspaces = useSelector(workspaceActions.getWorkspaces);
   const channels = useSelector(channelActions.getChannels);
-  const messages = useSelector(messageActions.getMessages);
+  const messages = useSelector(messageActions.getChannelMessages);
+  const directMessages = useSelector(messageActions.getDirectMessages);
   const memberships = useSelector(membershipActions.getMemberships);
 
   useEffect(() => {
@@ -30,6 +34,10 @@ function HomePage() {
     }
     loadData();
   }, [dispatch, user]);
+
+  const showUserProfile = (_e, member) => {
+    setModalContent(<UserProfile user={member} setModalContent={setModalContent} closeModal={closeModal} showSettings={false} />);
+  }
 
   const collapseWorkspaces = e => {
     const parentEl = e.target.closest("#workspaces");
@@ -44,9 +52,14 @@ function HomePage() {
     await dispatch(membershipActions.loadMemberships(+e.target.id));
   }
 
-  const showMessages = async e => {
+  const showChannelMessages = async e => {
     select(e);
     await dispatch(messageActions.loadMessages(+e.target.id));
+  }
+
+  const showDirectMessages = async (e, id) => {
+    select(e);
+    await dispatch(messageActions.loadDirectMessages(id, user.id));
   }
 
   if (!isLoaded) return <Loading />
@@ -86,7 +99,7 @@ function HomePage() {
                   id={c.id}
                   key={c.id}
                   className="workspace"
-                  onClick={showMessages}
+                  onClick={showChannelMessages}
                 >
                   {c.name}
                 </div>
@@ -106,9 +119,9 @@ function HomePage() {
                   id={m.id}
                   key={m.id}
                   className="workspace"
-                  onClick={showMessages}
+                  onClick={e => showDirectMessages(e, m.id)}
                 >
-                  <img src={getAvatarUrl(m.profile_image_url)} alt="avatar" /> {m.first_name} {m.last_name}
+                  <img onClick={e => showUserProfile(e, m)} src={getAvatarUrl(m.profile_image_url)} alt="avatar" /> {m.first_name} {m.last_name}
                 </div>
               ))}
             </div>
@@ -116,10 +129,18 @@ function HomePage() {
         </div>
       </div>
       <div id="main-content">
-        <div id="chat-window">
-        </div>
+        {messages.map(m => (
+          <div
+            id={m.id}
+            key={m.id}
+          // className="workspace"
+          // onClick={showDirectMessages}
+          >
+            {m.message}
+          </div>
+        ))}
       </div>
-    </div >
+    </div>
   );
 }
 

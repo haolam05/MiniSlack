@@ -6,7 +6,7 @@ import UpdateUserFormModal from "../UpdateUserFormModal";
 import * as sessionActions from "../../redux/session";
 import "./UserProfile.css";
 
-function UserProfile({ user, setModalContent, closeModal }) {
+function UserProfile({ user, setModalContent, closeModal, showSettings = true }) {
   const dispatch = useDispatch();
   if (!user) return;
 
@@ -55,11 +55,13 @@ function UserProfile({ user, setModalContent, closeModal }) {
           </div>
         </div>
       </div>
-      <div className="profile-btns">
-        <button className="btn-update" onClick={openUpdateUserForm}>Update</button>
-        <button className="btn-delete" onClick={openUpdatePasswordForm}>Change Password</button>
-        <button className="btn-delete" onClick={openDeleteUserForm}>Delete</button>
-      </div>
+      {showSettings &&
+        <div className="profile-btns">
+          <button className="btn-update" onClick={openUpdateUserForm}>Update</button>
+          <button className="btn-delete" onClick={openUpdatePasswordForm}>Change Password</button>
+          <button className="btn-delete" onClick={openDeleteUserForm}>Delete</button>
+        </div>
+      }
     </>
   );
 }
