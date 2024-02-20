@@ -19,7 +19,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                 src={getAvatarUrl(m.profile_image_url)}
                 alt="avatar"
               />
-              <span style={{ backgroundColor: 'transparent' }} >{m.first_name} {m.last_name}</span>
+              <span className="member-name" style={{ backgroundColor: 'transparent' }} >{m.first_name} {m.last_name}</span>
               <span style={{ backgroundColor: 'transparent' }} className="me">{m.id === user.id && <i className="fa-solid fa-user"></i>}</span>
             </div>
           ))}
