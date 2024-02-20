@@ -83,7 +83,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageSettings />
                 <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
               </div>
             )}
