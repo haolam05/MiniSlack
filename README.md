@@ -136,7 +136,7 @@ information.
       }
     }
     ```
-  * Error response: Bad request
+* Error response: Bad request
   * Status Code: 400
   * Headers:
     * Content-Type: application/json
@@ -268,6 +268,78 @@ Creates a new user, logs them in as the current user, and returns the current us
       ],
     }
     ```
+
+### Update a User
+
+Update an existing user. (Only first name and last name can be updated)
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/workspaces/
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": "haolam@user.io",
+      "first_name": "Updated First Name",
+      "last_name": "Updated Last Name",
+      "profile_image_url": "https://slack2024.s3.us-west-2.amazonaws.com/public/avatar1.png",
+      "username": "haolam",
+      "password": "password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": "haolam@user.io",
+      "first_name": "Updated First Name",
+      "id": 1,
+      "is_deleted": false,
+      "last_name": "Updated Last Name",
+      "profile_image_url": "https://slack2024.s3.us-west-2.amazonaws.com/public/avatar1.png",
+      "username": "haolam"
+    }
+    ```
+* Error response: Validation error - first name and last name required
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "first_name": [
+          "This field is required."
+      ],
+      "last_name": [
+          "This field is required."
+      ]
+    }
+    ```
+* Error response: Bad request
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "password": [
+        "Password was incorrect."
+      ]
+    }
+    ```
+  
 
 ## WORKSPACES
 ### Get all workspaces joined or owned by the current signed in user
