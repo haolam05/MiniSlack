@@ -114,6 +114,69 @@ def seed_messages():
             "channel_id": c_w_to_ids["general:hao-nick-nicky"],
             "workspace_id": name_to_ids["hao-nick-nicky"]
         },
+        {
+            "is_private": False,
+            "message": "Where are you from?",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Not sure 🐷",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Don't know 🐼",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "How old are you?",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Not sure 🐷",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Don't know 🐼",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Nice to meet you",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Same",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "SAME 😀",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
     ]
 
     [db.session.add(Message(**message)) for message in messages]

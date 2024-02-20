@@ -78,6 +78,8 @@ function HomePage() {
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadChannelMessages(+e.target.id));
+    const chatWindow = document.querySelector(".messages-details-wrapper");
+    if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   const showDirectMessages = async (e, id) => {
@@ -87,6 +89,8 @@ function HomePage() {
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadDirectMessages(id, user.id));
+    const chatWindow = document.querySelector(".messages-details-wrapper");
+    if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   const showMessageTime = e => {
