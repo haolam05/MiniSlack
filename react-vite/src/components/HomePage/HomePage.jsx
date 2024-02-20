@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userIsValid } from "../../utils/user";
+import { formatUserChannel, userIsValid } from "../../utils/user";
 import { select } from "../../utils/dom";
 import { getAvatarUrl } from "../../utils/image";
 import { useModal } from "../../context/Modal";
@@ -55,11 +55,15 @@ function HomePage() {
 
   const showChannelMessages = async e => {
     select(e);
+    const headerName = getChannelMessagesHeader();
+    if (headerName) document.querySelector(".message-header").textContent = headerName;
     await dispatch(messageActions.loadChannelMessages(+e.target.id));
   }
 
   const showDirectMessages = async (e, id) => {
     select(e);
+    const headerName = getDirectMessagesHeader();
+    if (headerName) document.querySelector(".message-header").textContent = headerName;
     await dispatch(messageActions.loadDirectMessages(id, user.id));
   }
 
@@ -73,6 +77,30 @@ function HomePage() {
       const children = parentEl.children;
       if (children[1]) children[1].classList.toggle("hidden");
     }
+  }
+
+  const getDirectMessagesHeader = () => {
+    const receiver = document.querySelector(".workspace-message.selected");
+    if (receiver) {  // private messages
+      if (receiver.childNodes) {
+        const childNodes = receiver.childNodes;
+        let firstName = '';
+        let lastName = '';
+        if (childNodes[2]) firstName += childNodes[2].textContent;
+        if (childNodes[4]) lastName += childNodes[4].textContent;
+        return `${firstName} ${lastName}`;
+      }
+    }
+  }
+
+  const getChannelMessagesHeader = () => {
+    const channel = document.querySelector(".workspace-channel.selected");
+    if (channel) return formatUserChannel(channel.textContent);
+  }
+
+  const getMessageAuthorImage = m => {
+    const author = memberships.find(member => member.id === m.sender_id)
+    if (author) return getAvatarUrl(author.profile_image_url);
   }
 
   if (!isLoaded) return <Loading />
@@ -111,7 +139,7 @@ function HomePage() {
                 <div
                   id={c.id}
                   key={c.id}
-                  className="workspace"
+                  className="workspace workspace-channel"
                   onClick={showChannelMessages}
                 >
                   {c.name}
@@ -131,7 +159,7 @@ function HomePage() {
                 <div
                   id={m.id}
                   key={m.id}
-                  className="workspace"
+                  className="workspace workspace-message"
                   onClick={e => showDirectMessages(e, m.id)}
                 >
                   <img onClick={e => showUserProfile(e, m)} src={getAvatarUrl(m.profile_image_url)} alt="avatar" /> {m.first_name} {m.last_name}
@@ -143,19 +171,17 @@ function HomePage() {
       </div>
       <div id="main-content">
         <div className="messages-wrapper">
-          {/* <div className="message-header">{}</div> */}
           <div className="messages-details-wrapper">
+            <div className="message-header"></div>
             {messages.map(m => (
               <div
                 id={m.id}
                 key={m.id}
                 className={`message ${m.sender_id === user.id ? 'me' : ''}`}
                 onClick={showMessageTime}
-              // className="workspace"
-              // onClick={showDirectMessages}
               >
                 <div className="message-details">
-                  <div className="message-image"><img src={getAvatarUrl(m.profile_image_url)} alt="avatar" /></div>
+                  <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
                   <div>{m.message}</div>
                 </div>
                 <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>

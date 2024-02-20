@@ -166,3 +166,9 @@
   height: 50px;
   border-radius: 50%;
 }
+
+.message-header {
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--white);
+}
