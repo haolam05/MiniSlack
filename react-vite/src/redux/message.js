@@ -37,7 +37,7 @@ export const loadDirectMessages = (...ids) => async dispatch => {
 
 
 // Custom selectors
-export const getChannelMessages = createSelector(
+export const getMessages = createSelector(
   state => state.messages.messages,
   messages => Object.values(messages)
 );

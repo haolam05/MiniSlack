@@ -20,8 +20,7 @@ function HomePage() {
   const user = useSelector(sessionActions.sessionUser);
   const workspaces = useSelector(workspaceActions.getWorkspaces);
   const channels = useSelector(channelActions.getChannels);
-  const messages = useSelector(messageActions.getChannelMessages);
-  const directMessages = useSelector(messageActions.getDirectMessages);
+  const messages = useSelector(messageActions.getMessages);
   const memberships = useSelector(membershipActions.getMemberships);
 
   useEffect(() => {
