@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
+import EditMessageForm from "../EditMessageForm";
 import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage }) {
@@ -67,6 +68,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
               {m.sender_id === user.id ? (
                 <>
                   <div>{m.message}</div>
+                  <EditMessageForm m={m} messageActions={messageActions} dispatch={dispatch} messageInput={messageInput} setMessageInput={setMessageInput} />
                   <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
                 </>
               ) : (
@@ -92,6 +94,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
       <div id="message-input">
         <form onSubmit={handleSubmit}>
           <textarea
+            spellCheck="false"
             value={messageInput}
             disabled={disabledInputMessage()}
             onChange={e => setMessageInput(e.target.value)}

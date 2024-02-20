@@ -7,24 +7,13 @@ function MessageSettings() {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
 
-  const updateMessage = () => {
-
-  }
-
   const openUpdateMessageForm = e => {
     const message = e.target.closest(".message");
     if (!message) return;
-    const messageId = +message.id;
-
-    console.log(message)
-
-    // setModalContent(
-    //   <ConfirmDeleteFormModal
-    //     text="Are you sure you want to delete this message?"
-    //     deleteCb={() => updateMessage(e, messageId)}
-    //     cancelDeleteCb={closeModal}
-    //   />
-    // );
+    const messageDetails = message.querySelector(".message-details>div");
+    const form = message.querySelector(".edit-message-form");
+    messageDetails.classList.add("hidden");
+    form.classList.remove("hidden");
   }
 
   const deleteMessage = async (e, messageId) => {

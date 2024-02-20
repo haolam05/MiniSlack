@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf";
 // Action
 const ADD_MESSAGES = " messages/ADD_MESSAGES";
 const RESET = 'messages/RESET';
-const CREATE_MESSAGE = "messages/CREATE_MESSAGE";
+const ADD_MESSAGE = "messages/ADD_MESSAGE";
 const REMOVE_MESSAGE = "messages/REMOVE_MESSAGE";
 
 // POJO action creators
@@ -19,9 +19,9 @@ export const reset = () => ({
   type: RESET
 });
 
-const createMessage = message => {
+const addMessage = message => {
   return {
-    type: CREATE_MESSAGE,
+    type: ADD_MESSAGE,
     message
   }
 }
@@ -66,7 +66,19 @@ export const createMessageThunk = payload => async dispatch => {
   });
   const data = await res.json()
   if (!res.ok) return { errors: data };
-  dispatch(createMessage(data));
+  dispatch(addMessage(data));
+}
+
+export const updateMessageThunk = (messageId, payload) => async dispatch => {
+  const res = await csrfFetch(`/api/messages/${messageId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      ...payload
+    })
+  });
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
+  dispatch(addMessage(data));
 }
 
 export const deleteMessageThunk = messageId => async dispatch => {
@@ -92,14 +104,19 @@ const initialState = { messages: {} };
 export default function messageReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_MESSAGES: {
+      const messages = {};
+      action.messages.forEach(m => {
+        messages[m.id] = m
+      });
       return {
         ...state,
         messages: {
-          ...action.messages
+          ...messages
+          // ...action.messages.reduce((s, m) => (s[m.id] = m), {})
         }
       }
     }
-    case CREATE_MESSAGE:
+    case ADD_MESSAGE:
       return {
         ...state,
         messages: {

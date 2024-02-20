@@ -258,3 +258,23 @@
   line-break: anywhere;
   word-wrap: break-word;
 }
+
+.edit-message-form textarea {
+  resize: none;
+  background-color: var(--home-page-background);
+  border: none;
+  height: 40px;
+  width: 200px;
+  border-radius: 5px;
+  padding-right: 40px;
+}
+
+.edit-message-form i {
+  position: relative;
+  left: 210px;
+  bottom: 35px;
+}
+
+.edit-message-form i:hover {
+  color: var(--red);
+}
