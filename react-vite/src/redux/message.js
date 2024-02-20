@@ -37,20 +37,20 @@ export const loadDirectMessages = (...ids) => async dispatch => {
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
-  console.log(data)
   const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
   dispatch(addMessages(messages));
 }
 
-export const createMessageThunk = (payload) => async dispatch => {
-  const res = await csrfFetch('/api/messages', {
+export const createMessageThunk = payload => async dispatch => {
+  const res = await csrfFetch('/api/messages/', {
     method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
+    body: JSON.stringify({
+      ...payload
+    })
+  });
   const data = await res.json()
   if (!res.ok) return { errors: data };
-  dispatch(createMessage(data))
+  dispatch(createMessage(data));
 }
 
 
@@ -83,13 +83,14 @@ export default function messageReducer(state = initialState, action) {
         }
       }
     }
-    case CREATE_MESSAGE: {
-      const allMessages = {
-        ...state.messages
+    case CREATE_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.message.id]: action.message
+        }
       }
-      allMessages[action.id] = action.message
-      return { ...state, messages: allMessages }
-    }
     case RESET:
       return initialState;
     default:

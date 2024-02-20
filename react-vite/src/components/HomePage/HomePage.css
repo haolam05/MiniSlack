@@ -104,7 +104,8 @@
   gap: 20px;
   box-shadow: var(--box-shadow);
   height: 800px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   margin-right: 20px;
   padding: 10px;
   padding-top: 0;
@@ -181,4 +182,49 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+}
+
+#message-input {
+  margin: 0;
+  padding: 0px 0;
+  display: flex;
+}
+
+#message-input textarea {
+  flex-grow: 1;
+  box-shadow: var(--box-shadow);
+  background-color: var(--home-page-background);
+  border: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-right: 20px;
+  height: 80px;
+  padding: 10px;
+  padding-right: 40px;
+  resize: none;
+  scrollbar-color: var(--gray) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#message-input textarea:focus {
+  outline: none;
+}
+
+#message-input button {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+
+#message-input button>i {
+  font-size: 17pt;
+}
+
+#message-input button>i:hover {
+  color: var(--red);
 }
