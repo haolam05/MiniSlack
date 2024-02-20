@@ -7,7 +7,7 @@ export const enabledSubmitButton = () => {
 }
 
 export const select = e => {
-  const parentElement = e.target.parentElement;
+  const parentElement = e.target.closest(".workspaces-list");
   if (!parentElement) return;
   const children = Array.from(parentElement.children);
 

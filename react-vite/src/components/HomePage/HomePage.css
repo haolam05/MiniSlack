@@ -229,3 +229,9 @@
 #message-input button>i:hover {
   color: var(--red);
 }
+
+.workspace-message {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

@@ -1,4 +1,4 @@
-function Memberships({ collapseWorkspaces, memberships, showUserProfile, showDirectMessages, getAvatarUrl }) {
+function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, showDirectMessages, getAvatarUrl }) {
   return (
     <div id="workspaces" className="direct-messages">
       <h2 className="subheading">
@@ -14,7 +14,13 @@ function Memberships({ collapseWorkspaces, memberships, showUserProfile, showDir
               className="workspace workspace-message"
               onClick={e => showDirectMessages(e, m.id)}
             >
-              <img onClick={e => showUserProfile(e, m)} src={getAvatarUrl(m.profile_image_url)} alt="avatar" /> {m.first_name} {m.last_name}
+              <img
+                onClick={e => showUserProfile(e, m)}
+                src={getAvatarUrl(m.profile_image_url)}
+                alt="avatar"
+              />
+              <span style={{ backgroundColor: 'transparent' }} >{m.first_name} {m.last_name}</span>
+              <span style={{ backgroundColor: 'transparent' }} className="me">{m.id === user.id && <i className="fa-solid fa-user"></i>}</span>
             </div>
           ))}
         </div>

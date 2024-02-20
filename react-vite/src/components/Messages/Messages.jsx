@@ -85,6 +85,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
               <div>{formattedDate(m.created_at)}</div>
               <div className="dot"><i className="fa-solid fa-circle"></i></div>
               <div>{formattedTime(m.created_at)}</div>
+              <div><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
             </div>
           </div>
         ))}

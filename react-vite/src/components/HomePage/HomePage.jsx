@@ -134,6 +134,7 @@ function HomePage() {
           showChannelMessages={showChannelMessages}
         />
         <Memeberships
+          user={user}
           memberships={memberships}
           collapseWorkspaces={collapseWorkspaces}
           showUserProfile={showUserProfile}
