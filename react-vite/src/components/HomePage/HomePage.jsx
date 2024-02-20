@@ -181,8 +181,17 @@ function HomePage() {
                 onClick={showMessageTime}
               >
                 <div className="message-details">
-                  <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
-                  <div>{m.message}</div>
+                  {m.sender_id === user.id ? (
+                    <>
+                      <div>{m.message}</div>
+                      <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
+                      <div>{m.message}</div>
+                    </>
+                  )}
                 </div>
                 <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
                   <div>{formattedDate(m.created_at)}</div>
