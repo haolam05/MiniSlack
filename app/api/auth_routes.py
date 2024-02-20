@@ -25,7 +25,7 @@ def update_user():
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email'] and User.is_deleted == False and user == current_user).first()
-        print(user.to_dict())
+
         if not user:
             return { "message": "User couldn't be found" }, 404
 

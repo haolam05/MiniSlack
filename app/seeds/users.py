@@ -1,9 +1,11 @@
+import os
 from sqlalchemy.sql import text
 from ..models import db, User
 from ..models.db import environment, SCHEMA
-from ..api.aws_helpers import BUCKET_NAME
+
 
 def seed_users():
+    BUCKET_NAME = os.environ.get("S3_BUCKET")
     location = f'https://{BUCKET_NAME}.s3.us-west-2.amazonaws.com/public/'
 
     users = [

@@ -84,7 +84,6 @@ export const updateUser = user => async dispatch => {
   });
 
   const data = await response.json();
-  console.log(response, data)
   if (!response.ok) return { errors: data };
   dispatch(setUser(data));
 };
