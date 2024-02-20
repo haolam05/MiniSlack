@@ -65,8 +65,14 @@ function HomePage() {
 
   const showMessageTime = e => {
     e.stopPropagation();
-    const children = e.target.children;
-    if (children[0]) children[0].classList.toggle("hidden");
+    const timeEl = e.target.querySelector(".message-time");
+    if (timeEl) {
+      timeEl.classList.toggle("hidden");
+    } else {
+      const parentEl = e.target.closest(".message");
+      const children = parentEl.children;
+      if (children[1]) children[1].classList.toggle("hidden");
+    }
   }
 
   if (!isLoaded) return <Loading />
@@ -137,6 +143,7 @@ function HomePage() {
       </div>
       <div id="main-content">
         <div className="messages-wrapper">
+          {/* <div className="message-header">{}</div> */}
           <div className="messages-details-wrapper">
             {messages.map(m => (
               <div
@@ -147,7 +154,10 @@ function HomePage() {
               // className="workspace"
               // onClick={showDirectMessages}
               >
-                {m.message}
+                <div className="message-details">
+                  <div className="message-image"><img src={getAvatarUrl(m.profile_image_url)} alt="avatar" /></div>
+                  <div>{m.message}</div>
+                </div>
                 <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
                   <div>{formattedDate(m.created_at)}</div>
                   <div className="dot"><i className="fa-solid fa-circle"></i></div>
