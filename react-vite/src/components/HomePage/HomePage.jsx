@@ -49,7 +49,8 @@ function HomePage() {
 
   const scrollToNewMessage = () => {
     const chatWindow = document.querySelector(".messages-details-wrapper");
-    if (chatWindow && chatWindow.clientHeight + chatWindow.scrollTop + 79 === chatWindow.scrollHeight) {
+    const messageElementHeight = 79; // px
+    if (chatWindow && chatWindow.clientHeight + chatWindow.scrollTop + messageElementHeight === chatWindow.scrollHeight) {
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
   }
@@ -99,7 +100,7 @@ function HomePage() {
     if (message) {
       const messageDetails = message.querySelector(".message-details>div");
       const form = message.querySelector(".edit-message-form");
-      if (!form.classList.contains("hidden") && !message.children[1].classList.contains("hidden")) {
+      if (form && !form.classList.contains("hidden") && !message.children[1].classList.contains("hidden")) {
         form.classList.add("hidden");
         messageDetails.classList.remove("hidden");
         setEditMessageInput(messageDetails.textContent);
@@ -112,6 +113,7 @@ function HomePage() {
     hideEditMessageForm(e);
 
     const timeEl = e.target.querySelector(".message-time");
+    console.log(e.target, timeEl)
     if (timeEl) {
       timeEl.classList.toggle("hidden");
     } else {
