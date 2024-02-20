@@ -16,6 +16,13 @@ def authenticate():
     return { 'user': None }, 200
 
 
+@auth_routes.route("/emojis")
+@login_required
+def get_emojis():
+    """Get emojis from Open Emoji API"""
+
+
+
 @auth_routes.route('/update', methods=["PUT"])
 @login_required
 def update_user():

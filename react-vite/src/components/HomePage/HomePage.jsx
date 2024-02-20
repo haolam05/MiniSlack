@@ -113,7 +113,6 @@ function HomePage() {
     hideEditMessageForm(e);
 
     const timeEl = e.target.querySelector(".message-time");
-    console.log(e.target, timeEl)
     if (timeEl) {
       timeEl.classList.toggle("hidden");
     } else {

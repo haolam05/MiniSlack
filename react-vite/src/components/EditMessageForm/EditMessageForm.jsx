@@ -3,7 +3,7 @@ import { useEffect } from "react";
 function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEditMessageInput }) {
   useEffect(() => {
     setEditMessageInput(m.message);
-  }, []);
+  }, [m, setEditMessageInput]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -35,7 +35,8 @@ function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEdi
         channel_id: +channelReceiver.id
       }
     }
-    await dispatch(messageActions.updateMessageThunk(messageId, payload));
+    const data = await dispatch(messageActions.updateMessageThunk(messageId, payload));
+    if (data?.errors) return;
     form.classList.add("hidden");
     messageDetails.classList.remove("hidden");
     messageDetails.textContent = editMessageInput;

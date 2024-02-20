@@ -136,6 +136,10 @@
   align-self: flex-end;
 }
 
+.message.me .message-details {
+  align-self: flex-end;
+}
+
 .message-time {
   font-style: italic;
   display: flex;

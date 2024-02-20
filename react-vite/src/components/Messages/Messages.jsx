@@ -26,8 +26,8 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     const channelReceiver = document.querySelector(".workspace-channel.selected");
     const workspace = document.querySelector(".workspace.selected");
 
-    if (!userReceiver && !channelReceiver) return;
-    if (!workspace || !messageInput.length) return;
+    if (!userReceiver && !channelReceiver) return enabledSubmitButton();
+    if (!workspace || !messageInput.length) return enabledSubmitButton();
 
     let payload;
 
