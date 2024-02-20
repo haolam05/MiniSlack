@@ -2,15 +2,24 @@ import { createSelector } from "reselect";
 import { csrfFetch } from "./csrf";
 
 // Actions
-const ADD_WORKSPACES = 'worksapces/ADD_WORKSPACES'
+const LOAD_WORKSPACES = 'worksapce/LOAD_WORKSPACES';
 const RESET = 'workspaces/RESET';
-
+const CREATE_WORKSPACE = "workspace/CREATE_WORKSPACE";
+const EDIT_WORKSPACE = "workspace/EDIT_WORKSPACE";
+const EDLETE_WORKSPACE = "workspace/EDLETE_WORKSPACE";
 
 // POJO action creators
-const addWorkspaces = workspaces => ({
-  type: ADD_WORKSPACES,
+const loadWorkspacesAction = workspaces => ({
+  type: LOAD_WORKSPACES,
   workspaces
 });
+
+const createWorkspace = workspace => {
+  return {
+    type: CREATE_WORKSPACE,
+    workspace
+  }
+}
 
 export const reset = () => ({
   type: RESET
@@ -23,8 +32,10 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
   const response = await csrfFetch("/api/workspaces/");
   const data = await response.json();
   if (!response.ok) return { errors: data };
-  dispatch(addWorkspaces({ ...data.JoinedWorkspaces, ...data.OwnedWorkspaces }));
+  dispatch(loadWorkspacesAction(data.JoinedWorkspaces));
 }
+
+
 
 
 // Custom selectors
@@ -39,14 +50,12 @@ const initialState = { workspaces: {} };
 
 function workspaceReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_WORKSPACES:
-      return {
-        ...state,
-        workspaces: {
-          ...state.workspaces,
-          ...action.workspaces
-        }
-      }
+    case LOAD_WORKSPACES: {
+      const allWorkspace = {}
+      action.workspaces.forEach(wo => allWorkspace[wo.id] = wo)
+      return {...state, workspaces: allWorkspace}
+    }
+
     case RESET:
       return initialState;
     default:
