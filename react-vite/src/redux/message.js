@@ -37,7 +37,14 @@ export const loadDirectMessages = (...ids) => async dispatch => {
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
-  const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
+
+  let messages;
+  if (ids[0] === ids[1]) {
+    messages = data.Messages.filter(m => m.sender_id === m.receiver_id);
+  } else {
+    messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id) && m.sender_id !== m.receiver_id);
+  }
+
   dispatch(addMessages(messages));
 }
 
@@ -62,15 +69,6 @@ export const deleteMessageThunk = messageId => async dispatch => {
 export const getMessages = createSelector(
   state => state.messages.messages,
   messages => Object.values(messages)
-);
-
-
-export const getDirectMessages = (id1, id2) => createSelector(
-  state => state.messages.messages,
-  messages => Object.values(messages).filter(m => {
-    const ids = [m.receiver_id, m.sender_id];
-    return ids.includes(id1) && ids.includes(id2);
-  })
 );
 
 

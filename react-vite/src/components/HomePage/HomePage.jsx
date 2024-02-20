@@ -46,6 +46,13 @@ function HomePage() {
     loadData();
   }, [dispatch, user]);
 
+  const scrollToNewMessage = () => {
+    const chatWindow = document.querySelector(".messages-details-wrapper");
+    if (chatWindow && chatWindow.clientHeight + chatWindow.scrollTop + 79 === chatWindow.scrollHeight) {
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+  }
+
   const showUserProfile = (_e, member) => {
     setModalContent(<UserProfile user={member} setModalContent={setModalContent} closeModal={closeModal} showSettings={false} />);
   }
@@ -146,6 +153,7 @@ function HomePage() {
           formattedTime={formattedTime}
           messageInput={messageInput}
           setMessageInput={setMessageInput}
+          scrollToNewMessage={scrollToNewMessage}
         />
       </div>
     </div>

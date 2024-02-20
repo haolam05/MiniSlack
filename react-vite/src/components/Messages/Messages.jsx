@@ -4,15 +4,8 @@ import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage }) {
   const dispatch = useDispatch();
-
-  const scrollToNewMessage = () => {
-    const chatWindow = document.querySelector(".messages-details-wrapper");
-    if (chatWindow && chatWindow.clientHeight + chatWindow.scrollTop + 79 === chatWindow.scrollHeight) {
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-  }
 
   const disabledInputMessage = () => {
     if (user && user.user === null) return true;
