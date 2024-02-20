@@ -4,7 +4,6 @@ import { csrfFetch } from "./csrf";
 // Action
 const ADD_MESSAGES = " messages/ADD_MESSAGES";
 const RESET = 'messages/RESET';
-const CREATE_MESSAGE = "messages/CREATE_MESSAGE";
 
 // POJO action creators
 const addMessages = messages => {
@@ -13,17 +12,10 @@ const addMessages = messages => {
     messages
   }
 }
-
 export const reset = () => ({
   type: RESET
 });
 
-const createMessage = message => {
-    return {
-        type: CREATE_MESSAGE,
-        message
-    }
-}
 
 // Thunk action creators
 export const loadMessages = channeId => async dispatch => {
@@ -33,6 +25,15 @@ export const loadMessages = channeId => async dispatch => {
   dispatch(addMessages(data.Messages));
 }
 
+export const loadDirectMessages = (...ids) => async dispatch => {
+  const res = await csrfFetch(`/api/auth/messages`);
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
+  const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
+  dispatch(addMessages(messages));
+}
+
+
 // Custom selectors
 export const getMessages = createSelector(
   state => state.messages.messages,
@@ -40,8 +41,18 @@ export const getMessages = createSelector(
 );
 
 
+export const getDirectMessages = (id1, id2) => createSelector(
+  state => state.messages.messages,
+  messages => Object.values(messages).filter(m => {
+    const ids = [m.receiver_id, m.sender_id];
+    return ids.includes(id1) && ids.includes(id2);
+  })
+);
+
+
 // Reducer
 const initialState = { messages: {} };
+
 export default function messageReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_MESSAGES: {
@@ -54,13 +65,6 @@ export default function messageReducer(state = initialState, action) {
     }
     case RESET:
       return initialState;
-    case CREATE_MESSAGE: {
-        const allMessages = {
-            ...state.messages
-        }
-        allMessages[action.id] = action.message
-        return {...state, messages: allMessages}
-    }
     default:
       return state;
   }
