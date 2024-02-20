@@ -12,6 +12,7 @@ import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
+import { formattedDate, formattedTime } from "../../utils/dateFormatter";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -60,6 +61,12 @@ function HomePage() {
   const showDirectMessages = async (e, id) => {
     select(e);
     await dispatch(messageActions.loadDirectMessages(id, user.id));
+  }
+
+  const showMessageTime = e => {
+    e.stopPropagation();
+    const children = e.target.children;
+    if (children[0]) children[0].classList.toggle("hidden");
   }
 
   if (!isLoaded) return <Loading />
@@ -129,16 +136,27 @@ function HomePage() {
         </div>
       </div>
       <div id="main-content">
-        {messages.map(m => (
-          <div
-            id={m.id}
-            key={m.id}
-          // className="workspace"
-          // onClick={showDirectMessages}
-          >
-            {m.message}
+        <div className="messages-wrapper">
+          <div className="messages-details-wrapper">
+            {messages.map(m => (
+              <div
+                id={m.id}
+                key={m.id}
+                className={`message ${m.sender_id === user.id ? 'me' : ''}`}
+                onClick={showMessageTime}
+              // className="workspace"
+              // onClick={showDirectMessages}
+              >
+                {m.message}
+                <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
+                  <div>{formattedDate(m.created_at)}</div>
+                  <div className="dot"><i className="fa-solid fa-circle"></i></div>
+                  <div>{formattedTime(m.created_at)}</div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

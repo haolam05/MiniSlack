@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 // Action
 const ADD_MESSAGES = " messages/ADD_MESSAGES";
 const RESET = 'messages/RESET';
+const CREATE_MESSAGE = "messages/CREATE_MESSAGE";
 
 // POJO action creators
 const addMessages = messages => {
@@ -12,10 +13,17 @@ const addMessages = messages => {
     messages
   }
 }
+
 export const reset = () => ({
   type: RESET
 });
 
+const createMessage = message => {
+  return {
+    type: CREATE_MESSAGE,
+    message
+  }
+}
 
 // Thunk action creators
 export const loadChannelMessages = channeId => async dispatch => {
@@ -32,6 +40,17 @@ export const loadDirectMessages = (...ids) => async dispatch => {
   console.log(data)
   const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
   dispatch(addMessages(messages));
+}
+
+export const createMessageThunk = (payload) => async dispatch => {
+  const res = await csrfFetch('/api/messages', {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  const data = await res.json()
+  if (!res.ok) return { errors: data };
+  dispatch(createMessage(data))
 }
 
 
@@ -63,6 +82,13 @@ export default function messageReducer(state = initialState, action) {
           ...action.messages
         }
       }
+    }
+    case CREATE_MESSAGE: {
+      const allMessages = {
+        ...state.messages
+      }
+      allMessages[action.id] = action.message
+      return { ...state, messages: allMessages }
     }
     case RESET:
       return initialState;

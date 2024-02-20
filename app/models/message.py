@@ -51,5 +51,6 @@ class Message(db.Model):
             "sender_id": self.sender_id,
             "receiver_id": self.receiver_id,
             "channel_id": self.channel_id,
-            "workspace_id": self.workspace_id
+            "workspace_id": self.workspace_id,
+            "created_at": self.created_at
         }

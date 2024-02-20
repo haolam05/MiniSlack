@@ -16,6 +16,9 @@
 #home-page #main-content {
   box-shadow: var(--box-shadow);
   position: relative;
+  padding: 45px;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
 }
 
 #home-page #chat-window {
@@ -30,12 +33,6 @@
   gap: 30px;
   padding: 10px 30px;
 }
-
-/* #sidebar>#workspaces,
-#sidebar>#channels,
-#sidebar>#direct-messages {
-  text-align: left;
-} */
 
 #workspaces .subheading {
   display: flex;
@@ -99,4 +96,64 @@
   vertical-align: middle;
   text-align: center;
   text-align: justify;
+}
+
+.messages-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--box-shadow);
+  height: 900px;
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.message {
+  background-color: var(--other-message-background);
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 60%;
+  line-break: anywhere;
+  word-wrap: break-word;
+}
+
+.message.me {
+  text-align: right;
+  background-color: var(--my-message-background);
+  align-self: flex-end;
+}
+
+.message-time {
+  font-style: italic;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+
+}
+
+.message-time div {
+  font-size: 8pt;
+}
+
+.message-time.me {
+  justify-content: flex-end;
+}
+
+.dot {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  margin-bottom: 6px;
+}
+
+.fa-circle:before {
+  font-size: 3pt;
 }

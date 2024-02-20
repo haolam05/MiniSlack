@@ -1,4 +1,3 @@
-import os
 from sqlalchemy.sql import text
 from ..models import db, User
 
