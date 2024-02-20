@@ -18,7 +18,7 @@ export const reset = () => ({
 
 
 // Thunk action creators
-export const loadMessages = channeId => async dispatch => {
+export const loadChannelMessages = channeId => async dispatch => {
   const res = await csrfFetch(`/api/channels/${channeId}/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
@@ -29,6 +29,7 @@ export const loadDirectMessages = (...ids) => async dispatch => {
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
+  console.log(data)
   const messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id));
   dispatch(addMessages(messages));
 }

@@ -54,7 +54,7 @@ function HomePage() {
 
   const showChannelMessages = async e => {
     select(e);
-    await dispatch(messageActions.loadMessages(+e.target.id));
+    await dispatch(messageActions.loadChannelMessages(+e.target.id));
   }
 
   const showDirectMessages = async (e, id) => {
