@@ -5,6 +5,8 @@ import Loading from "../Loading";
 import * as workspaceActions from "../../redux/workspace";
 import * as sessionActions from "../../redux/session";
 import "./HomePage.css";
+import OpenModalButton from "../OpenModalButton";
+import CreateChannelFormModal from "../CreateChannelFormModal/CreateChannelFormModal";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -61,6 +63,12 @@ function HomePage() {
         </div>
         <div id="channels">
           <h2 className="subheading">Channels</h2>
+          <div>
+                <OpenModalButton
+                  buttonText="Create a Channel"
+                  modalComponent={<CreateChannelFormModal />}
+                />
+          </div>
         </div>
         <div id="messages">
           <h2 className="subheading">Direct Messages</h2>

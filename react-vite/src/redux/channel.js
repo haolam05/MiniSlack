@@ -30,7 +30,7 @@ export const getChannelsThunk = (workspaceId, channel) => async (dispatch) => {
 }
 
 export const addChannelsThunk = (workspaceId, channel) => async (dispatch) => {
-    const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels/`, {
+    const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(channel)
