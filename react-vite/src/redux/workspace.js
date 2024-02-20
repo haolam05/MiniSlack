@@ -6,7 +6,7 @@ const LOAD_WORKSPACES = 'worksapce/LOAD_WORKSPACES';
 const RESET = 'workspaces/RESET';
 const CREATE_WORKSPACE = "workspace/CREATE_WORKSPACE";
 const EDIT_WORKSPACE = "workspace/EDIT_WORKSPACE";
-const EDLETE_WORKSPACE = "workspace/EDLETE_WORKSPACE";
+const DELETE_WORKSPACE = "workspace/DELETE_WORKSPACE";
 
 // POJO action creators
 const loadWorkspacesAction = workspaces => ({
@@ -18,6 +18,20 @@ const createWorkspaceAction = workspace => {
   return {
     type: CREATE_WORKSPACE,
     workspace
+  }
+}
+
+const editWorkspaceAction = workspace => {
+  return {
+    type: EDIT_WORKSPACE,
+    workspace
+  }
+}
+
+const deleteWorkspaceAction = workspaceId => {
+  return {
+    type: DELETE_WORKSPACE,
+    workspaceId
   }
 }
 
@@ -35,7 +49,7 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
   dispatch(loadWorkspacesAction(data.JoinedWorkspaces));
 }
 
-export const createWorkspaceThunk = (workspace) => async dispatch => {
+export const createWorkspaceThunk = workspace => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/`, {
       method: "POST",
       body: JSON.stringify(workspace)
@@ -45,6 +59,24 @@ export const createWorkspaceThunk = (workspace) => async dispatch => {
   dispatch(createWorkspaceAction(data))
 }
 
+export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => {
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}`, {
+    method: "PUT",
+    body: JSON.stringify(workspace)
+  });
+  const data = await res.json();
+  if (!res.ok) return {errors: data}
+  dispatch(editWorkspaceAction(data))
+}
+
+export const deleteWorkspaceThunk = (workspaceId) => async dispatch => {
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}/`, {
+      method: "DELETE"
+  });
+  const data = await res.json();
+  if (!res.ok) return {errors: data}
+  dispatch(deleteWorkspaceAction(workspaceId))
+}
 
 // Custom selectors
 export const getWorkspaces = createSelector(
@@ -59,9 +91,9 @@ const initialState = { workspaces: {} };
 function workspaceReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_WORKSPACES: {
-      const allWorkspace = {}
-      action.workspaces.forEach(wo => allWorkspace[wo.id] = wo)
-      return {...state, workspaces: allWorkspace}
+      const allWorkspaces = {}
+      action.workspaces.forEach(wo => allWorkspaces[wo.id] = wo)
+      return {...state, workspaces: allWorkspaces}
     }
     case CREATE_WORKSPACE: {
       return {
@@ -72,7 +104,20 @@ function workspaceReducer(state = initialState, action) {
         }
       }
     }
-
+    case EDIT_WORKSPACE: {
+      return {
+        ...state,
+        workspaces: {
+          ...state.workspaces,
+          [action.workspace.id]: action.workspace
+        }
+      }
+    }
+    case DELETE_WORKSPACE: {
+      const allWorkspaces = {...state.workspaces};
+      delete allWorkspaces[action.workspaceId];
+      return { ...state, workspaces: allWorkspaces}
+    }
     case RESET:
       return initialState;
     default:
