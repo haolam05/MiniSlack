@@ -5,7 +5,6 @@ import { csrfFetch } from "./csrf";
 const ADD_MESSAGES = " messages/ADD_MESSAGES";
 const RESET = 'messages/RESET';
 
-
 // POJO action creators
 const addMessages = messages => {
   return {
@@ -13,7 +12,6 @@ const addMessages = messages => {
     messages
   }
 }
-
 export const reset = () => ({
   type: RESET
 });

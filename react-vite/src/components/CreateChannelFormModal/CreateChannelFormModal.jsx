@@ -1,11 +1,12 @@
 import { useState } from "react"
-import ".CreateChannelFormModal.css"
+import "./CreateChannelFormModal.css"
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom"
 import { useDispatch } from "react-redux";
-const { setModalContent } = useModal();
 import { addChannelsThunk } from "../../redux/channel";
+import { useModal } from "../../context/Modal";
 
 const CreateChannelFormModal = () => {
+    const { setModalContent } = useModal();
 
     const [name, setName] = useState('');
     const [topic, setTopic] = useState('');
@@ -17,13 +18,13 @@ const CreateChannelFormModal = () => {
         e.preventDefault()
         disabledSubmitButton();
 
-        const payload = {
+        const channel = {
             name,
             topic,
             description
         }
 
-        const data = await dispatch(addChannelsThunk(payload));
+        const data = await dispatch(addChannelsThunk( 1, channel));
 
         if (data?.errors) {
             enabledSubmitButton();
@@ -63,7 +64,7 @@ const CreateChannelFormModal = () => {
                 />
                 <button
                     type="submit"
-                    className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}
+                    className={`btn-submit ${invalidInput() ? 'disabled' : ''}`}
                     disabled={invalidInput()}
                 >
                     Create Channel
