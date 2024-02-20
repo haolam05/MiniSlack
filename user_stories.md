@@ -5,29 +5,26 @@
 ### Sign Up
 
 * Unregistered and unauthorized users are able to sign up for the website via a sign-up form.
-  * When on the `/signup` page:
-    * A user is able to enter their first name, last name, email, username, and preferred password on a clearly laid out form.
+  * A user accesses the sign-up form by clicking the profile button on the left side of the page, then clicking the sign up button, at which point a modal appears:
+    * A user is able to enter their first name, last name, email, username, password, and profile image (optional) on a clearly laid out form.
     * A user will be logged in upon successful completion of the sign-up form, seamlessly accessing the site's functionality
-  * When a user enters invalid data on the sign-up form:
-    * The website will display validation errors in the form, and also repopulate the form with the valid entries (except password). <br />
-    This allows the user to edit the form without having to re-enter valid data.
+    * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
+    * When a user enters invalid data on the sign-up form, the website will display validation errors in the form, and also repopulate the form with the valid entries. <br />
 
 ### Log in
 
 * Registered but unauthorized users may log into the website via a log-in form.
-  * When on the `/login` page:
-    * A user is able to enter their email or username with their password on a clearly laid out form.
-    * A user will be logged in upon successful completion of the sign-up form, seamlessly accessing the site's functionality <br />
-    (profile page which displays workspaces, channels, and dms)
-  * When a user enters invalid data on the log-in form:
-    * The website will display validation errors in the form, and also repopulate the form with the valid entries (except password). <br />
-    This allows the user to edit the form without having to re-enter valid data.
+  * A user accesses the sign-up form by clicking the profile button on the left side of the page, then clicking the Log in button, at which point a modal appears:
+    * A user is able to enter their email and password on a clearly laid out form. The user also has an option to login as a demo user.
+    * A user will be logged in upon successful completion of the sign-up form or by clicking 'login as demo user' <br />
+    * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
+    * When a user enters invalid data on the log-in form, 
+    the form will display validation errors. 
+   
 ### Demo User
 
-* Unregistered and unauthorized users can login as a demo user via the a clear button on both the `/signup` and `/login` pages. <br />
-Clikc either button logs the user in as a guest so they can visit the site as a guest
-  * When on either the `/signup` or `/login` page:
-    * A user can click on a 'Demo User' button to log in and use the site as a standard user
+* As mentioned above, unregistered and unauthorized users can login as a demo user via the link at the bottom of the login form.
+Clicking the link logs the user in as a guest so they can use the site as a standard user.
 
 ### Log Out
 
