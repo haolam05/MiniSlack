@@ -102,7 +102,7 @@ function HomePage() {
       if (!form.classList.contains("hidden") && !message.children[1].classList.contains("hidden")) {
         form.classList.add("hidden");
         messageDetails.classList.remove("hidden");
-        setEditMessageInput("");
+        setEditMessageInput(messageDetails.textContent);
       }
     }
   }

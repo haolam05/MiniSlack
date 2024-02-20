@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import * as messageActions from "../../redux/message";
 
-function MessageSettings() {
+function MessageSettings({ setEditMessageInput }) {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
 
@@ -12,8 +12,14 @@ function MessageSettings() {
     if (!message) return;
     const messageDetails = message.querySelector(".message-details>div");
     const form = message.querySelector(".edit-message-form");
+
+    const allEditForms = document.querySelectorAll(".message .edit-message-form");
+    for (let i = 0; i < allEditForms.length; i++) {
+      if (!allEditForms[i].classList.contains("hidden")) return;
+    }
     messageDetails.classList.add("hidden");
     form.classList.remove("hidden");
+    setEditMessageInput(messageDetails.textContent);
   }
 
   const deleteMessage = async (e, messageId) => {
