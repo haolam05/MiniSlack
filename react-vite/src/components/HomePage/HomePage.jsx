@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { formattedDate, formattedTime } from "../../utils/dateFormatter";
 import { formatUserChannel, userIsValid } from "../../utils/user";
 import { select } from "../../utils/dom";
 import { getAvatarUrl } from "../../utils/image";
 import { useModal } from "../../context/Modal";
 import Loading from "../Loading";
 import UserProfile from "../UserProfile";
+import Workspaces from "../Workspaces";
+import Channels from "../Channels";
+import Memeberships from "../Memberships";
+import Messages from "../Messages";
 import * as sessionActions from "../../redux/session";
 import * as workspaceActions from "../../redux/workspace";
 import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
-import { formattedDate, formattedTime } from "../../utils/dateFormatter";
 
 function HomePage() {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [messageInput, setMessageInput] = useState("");
   const user = useSelector(sessionActions.sessionUser);
   const workspaces = useSelector(workspaceActions.getWorkspaces);
   const channels = useSelector(channelActions.getChannels);
@@ -62,14 +67,18 @@ function HomePage() {
   const showChannelMessages = async e => {
     select(e);
     const headerName = getChannelMessagesHeader();
+    const selected = document.querySelector(".workspace-message.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
+    if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadChannelMessages(+e.target.id));
   }
 
   const showDirectMessages = async (e, id) => {
     select(e);
     const headerName = getDirectMessagesHeader();
+    const selected = document.querySelector(".workspace-channel.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
+    if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadDirectMessages(id, user.id));
   }
 
@@ -114,100 +123,35 @@ function HomePage() {
   return (
     <div id="home-page">
       <div id="sidebar">
-        <div id="workspaces">
-          <h2 className="subheading">
-            <span>Workspaces</span>
-            <i onClick={collapseWorkspaces} className="fa-solid fa-window-maximize"></i>
-          </h2>
-          <div className="workspaces-list-wrapper">
-            <div className="workspaces-list">
-              {workspaces.map(w => (
-                <div
-                  id={w.id}
-                  key={w.id}
-                  className="workspace"
-                  onClick={showChannelsAndMemberships}
-                >
-                  {w.name}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div id="workspaces" className="channels">
-          <h2 className="subheading">
-            <span>Channels</span>
-            <i onClick={collapseWorkspaces} className="fa-solid fa-window-maximize"></i>
-          </h2>
-          <div className="workspaces-list-wrapper">
-            <div className="workspaces-list">
-              {channels.map(c => (
-                <div
-                  id={c.id}
-                  key={c.id}
-                  className="workspace workspace-channel"
-                  onClick={showChannelMessages}
-                >
-                  {c.name}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div id="workspaces" className="direct-messages">
-          <h2 className="subheading">
-            <span>Direct Messages</span>
-            <i onClick={collapseWorkspaces} className="fa-solid fa-window-maximize"></i>
-          </h2>
-          <div className="workspaces-list-wrapper">
-            <div className="workspaces-list">
-              {memberships.map(m => (
-                <div
-                  id={m.id}
-                  key={m.id}
-                  className="workspace workspace-message"
-                  onClick={e => showDirectMessages(e, m.id)}
-                >
-                  <img onClick={e => showUserProfile(e, m)} src={getAvatarUrl(m.profile_image_url)} alt="avatar" /> {m.first_name} {m.last_name}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <Workspaces
+          workspaces={workspaces}
+          showChannelsAndMemberships={showChannelsAndMemberships}
+          collapseWorkspaces={collapseWorkspaces}
+        />
+        <Channels
+          channels={channels}
+          collapseWorkspaces={collapseWorkspaces}
+          showChannelMessages={showChannelMessages}
+        />
+        <Memeberships
+          memberships={memberships}
+          collapseWorkspaces={collapseWorkspaces}
+          showUserProfile={showUserProfile}
+          showDirectMessages={showDirectMessages}
+          getAvatarUrl={getAvatarUrl}
+        />
       </div>
       <div id="main-content">
-        <div className="messages-wrapper">
-          <div className="messages-details-wrapper">
-            <div className="message-header"></div>
-            {messages.map(m => (
-              <div
-                id={m.id}
-                key={m.id}
-                className={`message ${m.sender_id === user.id ? 'me' : ''}`}
-                onClick={showMessageTime}
-              >
-                <div className="message-details">
-                  {m.sender_id === user.id ? (
-                    <>
-                      <div>{m.message}</div>
-                      <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
-                      <div>{m.message}</div>
-                    </>
-                  )}
-                </div>
-                <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                  <div>{formattedDate(m.created_at)}</div>
-                  <div className="dot"><i className="fa-solid fa-circle"></i></div>
-                  <div>{formattedTime(m.created_at)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Messages
+          user={user}
+          messages={messages}
+          showMessageTime={showMessageTime}
+          getMessageAuthorImage={getMessageAuthorImage}
+          formattedDate={formattedDate}
+          formattedTime={formattedTime}
+          messageInput={messageInput}
+          setMessageInput={setMessageInput}
+        />
       </div>
     </div>
   );
