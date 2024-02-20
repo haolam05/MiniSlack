@@ -5,7 +5,7 @@ import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput }) {
   const dispatch = useDispatch();
 
   const disabledInputMessage = () => {
@@ -68,7 +68,13 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
               {m.sender_id === user.id ? (
                 <>
                   <div>{m.message}</div>
-                  <EditMessageForm m={m} messageActions={messageActions} dispatch={dispatch} messageInput={messageInput} setMessageInput={setMessageInput} />
+                  <EditMessageForm
+                    m={m}
+                    messageActions={messageActions}
+                    dispatch={dispatch}
+                    editMessageInput={editMessageInput}
+                    setEditMessageInput={setEditMessageInput}
+                  />
                   <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
                 </>
               ) : (

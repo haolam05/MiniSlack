@@ -23,6 +23,7 @@ function HomePage() {
   const { setModalContent, closeModal } = useModal();
   const [isLoaded, setIsLoaded] = useState(false);
   const [messageInput, setMessageInput] = useState("");
+  const [editMessageInput, setEditMessageInput] = useState("");
   const user = useSelector(sessionActions.sessionUser);
   const workspaces = useSelector(workspaceActions.getWorkspaces);
   const channels = useSelector(channelActions.getChannels);
@@ -93,8 +94,23 @@ function HomePage() {
     if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
+  const hideEditMessageForm = e => {
+    const message = e.target.closest(".message");
+    if (message) {
+      const messageDetails = message.querySelector(".message-details>div");
+      const form = message.querySelector(".edit-message-form");
+      if (!form.classList.contains("hidden") && !message.children[1].classList.contains("hidden")) {
+        form.classList.add("hidden");
+        messageDetails.classList.remove("hidden");
+        setEditMessageInput("");
+      }
+    }
+  }
+
   const showMessageTime = e => {
     e.stopPropagation();
+    hideEditMessageForm(e);
+
     const timeEl = e.target.querySelector(".message-time");
     if (timeEl) {
       timeEl.classList.toggle("hidden");
@@ -158,6 +174,8 @@ function HomePage() {
           messageInput={messageInput}
           setMessageInput={setMessageInput}
           scrollToNewMessage={scrollToNewMessage}
+          editMessageInput={editMessageInput}
+          setEditMessageInput={setEditMessageInput}
         />
       </div>
     </div>

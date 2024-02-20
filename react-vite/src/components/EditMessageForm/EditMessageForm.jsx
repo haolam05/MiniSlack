@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
-function EditMessageForm({ m, messageActions, dispatch }) {
-  const [messageInput, setMessageInput] = useState(m.message);
+function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEditMessageInput }) {
+  useEffect(() => {
+    setEditMessageInput(m.message);
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     const messageId = +e.target.closest(".message")?.id || null;
-    const messageInput = e.target.parentElement.querySelector("textarea")?.textContent || "";
     const userReceiver = document.querySelector(".workspace-message.selected");
     const channelReceiver = document.querySelector(".workspace-channel.selected");
     const workspace = document.querySelector(".workspace.selected");
@@ -15,20 +16,20 @@ function EditMessageForm({ m, messageActions, dispatch }) {
     const messageDetails = e.target.closest(".message-details").querySelector('div');
 
     if (!userReceiver && !channelReceiver) return;
-    if (!workspace || !messageInput.length) return;
+    if (!workspace || !editMessageInput.length) return;
 
     let payload;
 
     if (userReceiver) {
       payload = {
-        message: messageInput,
+        message: editMessageInput,
         is_private: true,
         workspace_id: +workspace.id,
         receiver_id: +userReceiver.id
       }
     } else {
       payload = {
-        message: messageInput,
+        message: editMessageInput,
         is_private: false,
         workspace_id: +workspace.id,
         channel_id: +channelReceiver.id
@@ -37,7 +38,7 @@ function EditMessageForm({ m, messageActions, dispatch }) {
     await dispatch(messageActions.updateMessageThunk(messageId, payload));
     form.classList.add("hidden");
     messageDetails.classList.remove("hidden");
-    messageDetails.textContent = messageInput;
+    messageDetails.textContent = editMessageInput;
   }
 
   return (
@@ -45,8 +46,8 @@ function EditMessageForm({ m, messageActions, dispatch }) {
       <textarea
         spellCheck="false"
         className="edit-message-textarea"
-        value={messageInput}
-        onChange={(e => setMessageInput(e.target.value))}
+        value={editMessageInput}
+        onChange={(e => setEditMessageInput(e.target.value))}
       ></textarea>
       <i onClick={handleSubmit} className="fa-regular fa-paper-plane"></i>
     </form>

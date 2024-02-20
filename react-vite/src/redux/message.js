@@ -112,7 +112,6 @@ export default function messageReducer(state = initialState, action) {
         ...state,
         messages: {
           ...messages
-          // ...action.messages.reduce((s, m) => (s[m.id] = m), {})
         }
       }
     }
