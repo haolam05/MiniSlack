@@ -53,6 +53,10 @@ export const createMessageThunk = payload => async dispatch => {
   dispatch(createMessage(data));
 }
 
+export const deleteMessageThunk = messageId => async dispatch => {
+
+}
+
 
 // Custom selectors
 export const getMessages = createSelector(

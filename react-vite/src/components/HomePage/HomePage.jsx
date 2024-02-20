@@ -97,14 +97,8 @@ function HomePage() {
   const getDirectMessagesHeader = () => {
     const receiver = document.querySelector(".workspace-message.selected");
     if (receiver) {  // private messages
-      if (receiver.childNodes) {
-        const childNodes = receiver.childNodes;
-        let firstName = '';
-        let lastName = '';
-        if (childNodes[2]) firstName += childNodes[2].textContent;
-        if (childNodes[4]) lastName += childNodes[4].textContent;
-        return `${firstName} ${lastName}`;
-      }
+      const span = receiver.querySelector("span");
+      if (span) return span.textContent;
     }
   }
 
