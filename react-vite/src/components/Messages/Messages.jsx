@@ -81,12 +81,21 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
                 </>
               )}
             </div>
-            <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-              <div>{formattedDate(m.created_at)}</div>
-              <div className="dot"><i className="fa-solid fa-circle"></i></div>
-              <div>{formattedTime(m.created_at)}</div>
-              <div><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
-            </div>
+            {m.sender_id === user.id ? (
+              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
+                <div>{formattedDate(m.created_at)}</div>
+                <div className="dot"><i className="fa-solid fa-circle"></i></div>
+                <div>{formattedTime(m.created_at)}</div>
+                <div className="message-settings"><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
+              </div>
+            ) : (
+              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
+                <div className="message-settings"><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
+                <div>{formattedDate(m.created_at)}</div>
+                <div className="dot"><i className="fa-solid fa-circle"></i></div>
+                <div>{formattedTime(m.created_at)}</div>
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -235,3 +235,21 @@
   align-items: center;
   gap: 15px;
 }
+
+.message-settings {
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+.message.me .message-settings {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+.message-settings i {
+  font-size: 8pt;
+  padding-bottom: 5px;
+}
