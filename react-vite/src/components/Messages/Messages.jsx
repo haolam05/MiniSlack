@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import MessageTime from "../MessageTime";
+import MessageSettings from "../MessageSettings";
 import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput }) {
@@ -83,17 +85,13 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             </div>
             {m.sender_id === user.id ? (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <div>{formattedDate(m.created_at)}</div>
-                <div className="dot"><i className="fa-solid fa-circle"></i></div>
-                <div>{formattedTime(m.created_at)}</div>
-                <div className="message-settings"><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
+                <MessageSettings />
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <div className="message-settings"><span><i className="fa-solid fa-gear"></i></span><span><i className="fa-solid fa-trash-can"></i></span></div>
-                <div>{formattedDate(m.created_at)}</div>
-                <div className="dot"><i className="fa-solid fa-circle"></i></div>
-                <div>{formattedTime(m.created_at)}</div>
+                <MessageSettings />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
               </div>
             )}
           </div>
