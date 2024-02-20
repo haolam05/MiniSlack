@@ -15,7 +15,7 @@ const CreateChannelFormModal = () => {
     const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         disabledSubmitButton();
 
         const channel = {
