@@ -24,7 +24,13 @@ function HomePage() {
   const messages = useSelector(messageActions.getMessages);
   const memberships = useSelector(membershipActions.getMemberships);
 
+  const clearMessageHeader = () => {
+    const messageHeader = document.querySelector(".message-header");
+    if (messageHeader) messageHeader.textContent = "";
+  }
+
   useEffect(() => {
+    clearMessageHeader();
     const loadData = async () => {
       await dispatch(sessionActions.restoreSession);
       if (userIsValid(user)) {
