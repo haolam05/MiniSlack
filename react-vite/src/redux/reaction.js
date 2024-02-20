@@ -29,6 +29,10 @@ const deleteReaction = reaction => {
 }
 
 //Thunk:
-
+export const loadReactionsThunk = (messageId) => async dispatch => {
+    const res = await csrfFetch(`/api/messages/${messageId}/reactions`);
+    const data = await res.json();
+    if (!res.ok) return
+}
 
 //Reducer
