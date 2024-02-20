@@ -14,7 +14,7 @@ const loadWorkspacesAction = workspaces => ({
   workspaces
 });
 
-const createWorkspace = workspace => {
+const createWorkspaceAction = workspace => {
   return {
     type: CREATE_WORKSPACE,
     workspace
@@ -35,7 +35,15 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
   dispatch(loadWorkspacesAction(data.JoinedWorkspaces));
 }
 
-
+export const createWorkspaceThunk = (workspace) => async dispatch => {
+  const res = await csrfFetch(`/api/workspaces/`, {
+      method: "POST",
+      body: JSON.stringify(workspace)
+  });
+  const data = await res.json();
+  if (!res.ok) return {errors: data}
+  dispatch(createWorkspaceAction(data))
+}
 
 
 // Custom selectors
@@ -54,6 +62,15 @@ function workspaceReducer(state = initialState, action) {
       const allWorkspace = {}
       action.workspaces.forEach(wo => allWorkspace[wo.id] = wo)
       return {...state, workspaces: allWorkspace}
+    }
+    case CREATE_WORKSPACE: {
+      return {
+        ...state,
+        workspaces: {
+          ...state.workspaces,
+          [action.workspace.id]: action.workspace
+        }
+      }
     }
 
     case RESET:
