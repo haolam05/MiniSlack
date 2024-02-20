@@ -277,7 +277,7 @@ Update an existing user. (Only first name and last name can be updated)
 * Require Authorization: true
 * Request
   * Method: POST
-  * URL: /api/workspaces/
+  * URL: /api/auth/udpate
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -337,6 +337,87 @@ Update an existing user. (Only first name and last name can be updated)
       "password": [
         "Password was incorrect."
       ]
+    }
+    ```
+### Update a User's password
+
+Update a user's password
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: POST
+  * URL: /api/auth/password
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "password": "old_password",
+      "new_password": "new_password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully updated your password. Please log in again."
+    }
+    ```
+* Error response: Validation error - password length
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "new_password": [
+          "Password must be at least 6 characters."
+      ]
+    }
+    ```
+* Error response: Bad request
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "password": [
+        "Password was incorrect."
+      ]
+    }
+    ```
+### Delete a User
+
+Delete a user profile.
+
+* Require Authentication: true
+* Require Authorization: true
+* Request
+  * Method: DELETE
+  * URL: /api/auth/delete
+  * Headers:
+    * Content-Type: application/json
+  * Body: None
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted account"
     }
     ```
   
