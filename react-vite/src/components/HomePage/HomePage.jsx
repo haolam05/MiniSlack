@@ -49,6 +49,7 @@ function HomePage() {
     select(e);
     await dispatch(channelActions.loadChannels(+e.target.id));
     await dispatch(membershipActions.loadMemberships(+e.target.id));
+    await dispatch(messageActions.reset());
   }
 
   const showChannelMessages = async e => {
