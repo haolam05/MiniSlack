@@ -16,7 +16,7 @@
 #home-page #main-content {
   box-shadow: var(--box-shadow);
   position: relative;
-  padding: 45px;
+  padding: 20px 45px;
   display: grid;
   grid-template-columns: 10fr 1fr;
 }
@@ -103,10 +103,14 @@
   flex-direction: column;
   gap: 20px;
   box-shadow: var(--box-shadow);
-  height: 900px;
+  height: 800px;
   border-radius: 10px;
   margin-right: 20px;
   padding: 10px;
+  padding-top: 0;
+  scrollbar-color: var(--gray) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .message {
@@ -120,12 +124,12 @@
   flex-direction: column;
   gap: 5px;
   max-width: 60%;
-  line-break: anywhere;
+  line-break: auto;
+  text-align: justify;
   word-wrap: break-word;
 }
 
 .message.me {
-  text-align: right;
   background-color: var(--my-message-background);
   align-self: flex-end;
 }
@@ -169,6 +173,12 @@
 
 .message-header {
   text-align: center;
-  padding-bottom: 15px;
   border-bottom: 1px solid var(--white);
+  position: sticky;
+  top: 0;
+  background-color: var(--home-page-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }

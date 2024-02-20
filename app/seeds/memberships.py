@@ -30,7 +30,7 @@ def seed_memberships():
           "workspace_name": "hao-nick-nicky"
       },
       {
-          "username": "nickylei",
+          "username": "nickyli",
           "workspace_name": "hao-nick-nicky"
       },
       {

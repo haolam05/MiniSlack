@@ -9,48 +9,111 @@ def seed_messages():
     name_to_ids = Workspace.name_to_ids()
 
     messages = [
-       {
-          "is_private": True,
-          "message": "Hi, my name is Hao",
-          "sender_id": username_to_ids["haolam"],
-          "receiver_id": username_to_ids["nickleger"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
-       {
-          "is_private": True,
-          "message": "Nice to meet you 😀",
-          "sender_id": username_to_ids["haolam"],
-          "receiver_id": username_to_ids["nickleger"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
-       {
-          "is_private": True,
-          "message": "Do I know you???",
-          "sender_id": username_to_ids["nickleger"],
-          "receiver_id": username_to_ids["haolam"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
-       {
-          "is_private": False,
-          "message": "Hey guys, let's start by introduce ourselves...",
-          "sender_id": username_to_ids["haolam"],
-          "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
-       {
-          "is_private": False,
-          "message": "My name is Nicky.",
-          "sender_id": username_to_ids["nickylei"],
-          "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
-       {
-          "is_private": False,
-          "message": "I'm Nick",
-          "sender_id": username_to_ids["nickleger"],
-          "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-          "workspace_id": name_to_ids["hao-nick-nicky"]
-       },
+        {
+            "is_private": True,
+            "message": "Hi, my name is Hao",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickleger"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Nice to meet you 😀",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickleger"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Do I know you???",
+            "sender_id": username_to_ids["nickleger"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Hi, my name is Hao",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickyli"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Nice to meet you 😀",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickyli"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Do I know you???",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "What do you want? Get out of my face :)",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickyli"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live?",
+            "sender_id": username_to_ids["haolam"],
+            "receiver_id": username_to_ids["nickyli"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "Seen ✅✅✅✅",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": True,
+            "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "Hey guys, let's start by introduce ourselves...",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "My name is Nicky.",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
+        {
+            "is_private": False,
+            "message": "I'm Nick",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
+            "workspace_id": name_to_ids["hao-nick-nicky"]
+        },
     ]
 
     [db.session.add(Message(**message)) for message in messages]

@@ -1,3 +1,4 @@
+from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from ..models import db, User
 
@@ -16,10 +17,10 @@ def seed_users():
         },
         {
             "first_name": "Nicky",
-            "last_name": "Lei",
-            "username": "nickylei",
+            "last_name": "Li",
+            "username": "nickyli",
             "password": "password2",
-            "email": "nickylei@user.io",
+            "email": "nickyli@user.io",
             "profile_image_url": location + "avatar2.png"
         },
         {

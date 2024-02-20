@@ -14,7 +14,7 @@ def seed_reactions():
         },
         {
             "encoded_text": "✅",
-            "user_id": username_to_ids["nickylei"],
+            "user_id": username_to_ids["nickyli"],
             "message_id": 4 #  Hey guys, let's start by introduce ourselves...
         },
         {

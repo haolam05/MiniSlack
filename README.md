@@ -337,9 +337,9 @@ Creates a new user, logs them in as the current user, and returns the current us
           {
           "id": 2,
           "first_name": "Nicky",
-          "last_name": "Lei",
-          "username": "nickylei",
-          "email": "nickylei@user.io",
+          "last_name": "Li",
+          "username": "nickyli",
+          "email": "nickyli@user.io",
           "profile_image_url": "image.amazon.url",
           "is_deleted": false
           }
@@ -942,8 +942,8 @@ Create a Message
     * Content-Type: application/json
   * Body:
    ```json
-    { 
-      "message": "Workspace couldn't be found" 
+    {
+      "message": "Workspace couldn't be found"
     }
     ```
 * Error response (channel message): Channel not found
@@ -952,8 +952,8 @@ Create a Message
     * Content-Type: application/json
   * Body:
    ```json
-    { 
-      "message": "Channel couldn't be found" 
+    {
+      "message": "Channel couldn't be found"
     }
     ```
 * Error response (private message): Receiver not found
@@ -1134,8 +1134,8 @@ Delete a message. Only the message owner can delete a message.
                 "sender_id": 1,
                 "workspace_id": 1
             }
-        ] 
-      } 
+        ]
+      }
     ```
 ### Get all reactions of a message specified by id
 
@@ -1253,4 +1253,3 @@ Delete a message. Only the message owner can delete a message.
       "message": "Reaction couldn't be found"
     }
     ```
-  
