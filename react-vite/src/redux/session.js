@@ -86,6 +86,10 @@ export const updateUser = user => async dispatch => {
   const data = await response.json();
   if (!response.ok) return { errors: data };
   dispatch(setUser(data));
+  dispatch(workspaceActions.reset());
+  dispatch(channelActions.reset());
+  dispatch(messageActions.reset());
+  dispatch(membershipActions.reset());
 };
 
 export const updateUserPassword = user => async dispatch => {
