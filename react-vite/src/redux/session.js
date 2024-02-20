@@ -1,5 +1,8 @@
 import { csrfFetch } from "./csrf";
 import * as workspaceActions from "./workspace";
+import * as channelActions from "./channel";
+import * as messageActions from "./message";
+import * as membershipActions from "./membership";
 
 
 // Actions
@@ -98,6 +101,9 @@ export const updateUserPassword = user => async dispatch => {
   if (!response.ok) return { errors: data };
   dispatch(removeUser());
   dispatch(workspaceActions.reset());
+  dispatch(channelActions.reset());
+  dispatch(messageActions.reset());
+  dispatch(membershipActions.reset());
 };
 
 export const deleteUser = () => async dispatch => {
@@ -108,6 +114,9 @@ export const deleteUser = () => async dispatch => {
   if (response.ok) {
     dispatch(removeUser());
     dispatch(workspaceActions.reset());
+    dispatch(channelActions.reset());
+    dispatch(messageActions.reset());
+    dispatch(membershipActions.reset());
   }
 };
 
@@ -115,6 +124,9 @@ export const logout = () => async dispatch => {
   await csrfFetch("/api/auth/logout");
   dispatch(removeUser());
   dispatch(workspaceActions.reset());
+  dispatch(channelActions.reset());
+  dispatch(messageActions.reset());
+  dispatch(membershipActions.reset());
 };
 
 
