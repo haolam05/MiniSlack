@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import * as messageActions from "../../redux/message";
-import { useEffect } from "react";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput }) {
   const dispatch = useDispatch();
