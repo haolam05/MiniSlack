@@ -73,20 +73,23 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     if (data?.errors) return;
     const reactionId = data.id;
     const messaegId = data.message_id;
-    reactionEl.addEventListener("click", e2 => deleteReaction(e2, messaegId, reactionId));
+    const userId = data.user_id;
+    reactionEl.addEventListener("click", e2 => deleteReaction(e2, messaegId, userId, reactionId));
   }
 
-  const deleteReaction = async (e, messageId, reactionId) => {
+  const deleteReaction = async (e, messageId, ownerId, reactionId) => {
     e.stopPropagation();
-    e.target.remove();
-    await deleteReactionApi(messageId, reactionId);
+    if (ownerId === user.id) {
+      e.target.remove();
+      await deleteReactionApi(messageId, reactionId);
+    }
   }
 
   function ShowReactions({ m }) {
     if (m.reactions && m.reactions.length) {
       return m.reactions.map(r => {
         return <div
-          onClick={e => deleteReaction(e, m.id, r.id)}
+          onClick={e => deleteReaction(e, m.id, r.user_id, r.id)}
           key={r.id}
           className={`reaction${r.user_id === user.id ? '' : ' not-me'}`}
         >

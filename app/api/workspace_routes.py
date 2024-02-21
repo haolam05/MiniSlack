@@ -170,7 +170,7 @@ def memberships(id):
     if current_user not in workspace.users and current_user != workspace.owner:
         return redirect("/api/auth/forbidden")
 
-    members = [member.to_dict() for member in workspace.users]
+    members = [member.to_dict() for member in workspace.users if member.is_deleted == False]
 
     return { "Members": members }, 200
 
