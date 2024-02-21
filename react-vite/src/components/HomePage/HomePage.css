@@ -367,3 +367,28 @@
 .reaction.not-me {
   cursor: not-allowed;
 }
+
+.more-icons {
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 14pt;
+
+}
+
+.more-icons:hover {
+  color: var(--red);
+}
+
+.current-emojis {
+  display: flex;
+  gap: 5px;
+  max-width: 200px;
+  max-height: 200px;
+  flex-wrap: wrap;
+  padding-right: 10px;
+  scrollbar-color: var(--gray) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

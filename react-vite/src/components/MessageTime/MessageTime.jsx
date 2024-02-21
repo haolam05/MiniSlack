@@ -1,4 +1,35 @@
+import { useState } from "react";
+import { useModal } from "../../context/Modal";
+
 function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }) {
+  const { setModalContent } = useModal();
+  const [showAllEmojis, setShowAllEmojis] = useState(false);
+
+  const showEmojisHelper = icons => {
+    return icons.map(emoji => {
+      const codePoint = "0x" + emoji.codePoint.split(" ")[0];
+      return (
+        <div
+          id={codePoint}
+          className="emoji"
+          key={emoji.slug}
+          onClick={e => {
+            const reactions = e.target.closest(".message").querySelector(".reactions");
+            if (reactions) {
+              const reaction = document.createElement('div');
+              reaction.classList.add("reaction");
+              reaction.textContent = String.fromCodePoint(codePoint);
+              reactions.append(reaction);
+              createReaction(reaction, m, e.target.id);
+            }
+          }}
+        >
+          {String.fromCodePoint(codePoint)}
+        </div>
+      );
+    })
+  }
+
   return (
     <>
       <div className="message-time-dot">
@@ -30,28 +61,20 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
             if (dot) dot.classList.remove("hidden");
           }
         }}>
-          {emojis.slice(0, 5).map(emoji => {
-            const codePoint = "0x" + emoji.codePoint.split(" ")[0];
-            return (
-              <div
-                id={codePoint}
-                className="emoji"
-                key={emoji.slug}
-                onClick={e => {
-                  const reactions = e.target.closest(".message").querySelector(".reactions");
-                  if (reactions) {
-                    const reaction = document.createElement('div');
-                    reaction.classList.add("reaction");
-                    reaction.textContent = String.fromCodePoint(codePoint);
-                    reactions.append(reaction);
-                    createReaction(reaction, m, e.target.id);
-                  }
-                }}
-              >
-                {String.fromCodePoint(codePoint)}
-              </div>
-            );
-          })}
+          {showAllEmojis ? (
+            <div className="current-emojis">{showEmojisHelper(emojis)}</div>
+          ) : (
+            <div className="current-emojis">{showEmojisHelper(emojis.slice(0, 5))}</div>
+          )}
+          <p className="more-icons" onClick={e => {
+            if (!showAllEmojis && e.target.textContent === '+') {
+              e.target.textContent = '-'
+              setShowAllEmojis(true);
+            } else if (showAllEmojis && e.target.textContent === '-') {
+              e.target.textContent = '+';
+              setShowAllEmojis(false);
+            }
+          }}>+</p>
         </div>
       </div>
       <div className="msg-date">{formattedDate(m.created_at)}</div>
