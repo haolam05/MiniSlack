@@ -31,6 +31,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: var(--home-page-background);
+}
+
 p {
   text-shadow: none;
   font-style: italic;
@@ -40,6 +44,11 @@ p {
 img {
   width: 100%;
   height: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin: 40px;
 }
 
 .btn-submit {

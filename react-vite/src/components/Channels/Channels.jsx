@@ -16,7 +16,8 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     await dispatch(channelActions.deleteChannelThunk(channelId));
     setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>)
     channel.remove();
-    document.querySelector(".message-header").textContent = "";
+    const header = document.querySelector(".message-header");
+    if (header) header.textContent = "";
   }
 
   return (

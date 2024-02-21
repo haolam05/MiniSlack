@@ -4,9 +4,10 @@ import * as messageActions from "./message";
 
 // Action
 const GET_CHANNELS = "channels/GET_CHANNELS";
-const ADD_CHANNELS = "channels/addChannels";
-const RESET = 'channels/RESET';
+const ADD_CHANNELS = "channels/ADD_CHANNELS";
+const UPDATE_CHANNEL = "channels/UPDATE_CHANNEL"
 const DELETE_CHANNEL = "channels/DELETE_CHANNEL"
+const RESET = 'channels/RESET';
 
 
 // POJO action creators
@@ -17,6 +18,11 @@ const getChannelsAction = channels => ({
 
 const addChannelsAction = channel => ({
   type: ADD_CHANNELS,
+  channel
+});
+
+const updateChannelAction = channel => ({
+  type: UPDATE_CHANNEL,
   channel
 });
 
@@ -37,6 +43,18 @@ export const loadChannels = workspaceId => async dispatch => {
   if (!res.ok) return { errors: data };
   dispatch(getChannelsAction(data.Channels));
   dispatch(messageActions.reset());
+}
+
+export const updateChannelThunk = (channelId, payload) => async dispatch => {
+  const res = await csrfFetch(`/api/channels/${channelId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      ...payload
+    })
+  });
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
+  dispatch(updateChannelAction(data));
 }
 
 export const deleteChannelThunk = channelId => async dispatch => {
@@ -87,9 +105,18 @@ export default function channelReducer(state = initialState, action) {
         }
       }
     }
+    case UPDATE_CHANNEL: {
+      return {
+        ...state,
+        channels: {
+          ...state.channels,
+          [action.channel.id]: action.channel
+        }
+      }
+    }
     case DELETE_CHANNEL: {
       const allChannels = { ...state.channels };
-      delete allChannels[action.workspaceId];
+      delete allChannels[action.channelId];
       return { ...state, channels: allChannels }
     }
     case RESET:

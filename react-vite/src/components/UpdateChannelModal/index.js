@@ -1,3 +1,3 @@
-import UpdatePasswordFormModal from "../UpdatePasswordFormModal";
+import UpdatedChannelModal from "./UpdateChannelModal";
 
-export default UpdatePasswordFormModal;
+export default UpdatedChannelModal

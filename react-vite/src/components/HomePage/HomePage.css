@@ -463,7 +463,8 @@
 }
 
 .edit-workspace-form button,
-.create-workspace-form button {
+.create-workspace-form button,
+.edit-channel-form button {
   background-color: var(--submit-button-background);
   border: none;
   border-radius: 10px;
