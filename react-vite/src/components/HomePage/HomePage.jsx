@@ -58,7 +58,8 @@ function HomePage() {
     }
   }
 
-  const showUserProfile = (_e, member) => {
+  const showUserProfile = (e, member) => {
+    e.stopPropagation();
     setModalContent(<UserProfile user={member} setModalContent={setModalContent} closeModal={closeModal} showSettings={false} />);
   }
 
