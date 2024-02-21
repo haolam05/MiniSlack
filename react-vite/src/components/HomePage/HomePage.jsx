@@ -51,7 +51,7 @@ function HomePage() {
 
   const scrollToNewMessage = () => {
     const chatWindow = document.querySelector(".messages-details-wrapper");
-    const messageElHeight = 79; // px
+    const messageElHeight = 84; // px
     if (chatWindow && Math.abs(chatWindow.scrollHeight - messageElHeight - (chatWindow.clientHeight + chatWindow.scrollTop) <= 2)) {
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
@@ -119,9 +119,13 @@ function HomePage() {
       timeEl.classList.toggle("hidden");
     } else {
       const parentEl = e.target.closest(".message");
-      const children = parentEl.children;
-      if (children[1]) children[1].classList.toggle("hidden");
+      if (parentEl) {
+        const children = parentEl.children;
+        if (children[1]) children[1].classList.toggle("hidden");
+      }
     }
+    const reactions = document.querySelector(".reaction-emojis-list");
+    if (reactions) reactions.classList.toggle("hidden");
   }
 
   const getDirectMessagesHeader = () => {

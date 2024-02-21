@@ -110,7 +110,7 @@ def delete_user():
 def get_channel_messages():
     """Get all the direct messages of the current user"""
     user_id = current_user.id
-    direct_messages = [m.to_dict() for m in Message.query.all() if m.is_private and (m.sender_id == user_id or m.receiver_id == user_id)]
+    direct_messages = [m.to_dict(reactions=True) for m in Message.query.all() if m.is_private and (m.sender_id == user_id or m.receiver_id == user_id)]
     return { "Messages": direct_messages }, 200
 
 

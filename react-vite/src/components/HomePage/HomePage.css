@@ -213,7 +213,7 @@
 
 .emojis {
   position: relative;
-  bottom: 90px;
+  bottom: 105px;
   left: 10px;
   background-color: transparent;
   border-radius: 5px;
@@ -225,7 +225,7 @@
 
 #message-input button {
   position: relative;
-  bottom: 90px;
+  bottom: 110px;
   left: 10px;
   background-color: transparent;
   border-radius: 5px;
@@ -248,8 +248,8 @@
   background-color: var(--gray);
   border-radius: 10px;
   position: relative;
-  bottom: 370px;
-  left: 40px;
+  bottom: 405px;
+  left: 15px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -268,6 +268,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.reaction-icons {
+  display: flex;
+  gap: 3px;
+  background-color: var(--home-page-background);
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.reaction-icons div {
+  font-size: 10pt;
+  font-style: normal;
 }
 
 #message-input button>i {
@@ -331,11 +344,56 @@
   color: var(--red);
 }
 
+.delete-workspace-btn {
+  color: brown;
+  font-size: 10px;
+}
+
 #create-message-form {
   position: relative;
 }
 
 .messages-wrapper {
   position: relative;
-  ;
+}
+
+.message-time-dot i {
+  font-size: 10pt;
+  margin-right: 5px;
+  margin-left: 55px;
+}
+
+.reactions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.reaction.not-me {
+  cursor: not-allowed;
+}
+
+.more-icons {
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 14pt;
+
+}
+
+.more-icons:hover {
+  color: var(--red);
+}
+
+.current-emojis {
+  display: flex;
+  gap: 5px;
+  max-width: 200px;
+  max-height: 200px;
+  flex-wrap: wrap;
+  padding-right: 10px;
+  scrollbar-color: var(--gray) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }

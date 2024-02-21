@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import { createReactionApi, deleteReactionApi } from "../../utils/reactions";
 import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
+import EmojisList from "../EmojsList";
 import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis }) {
@@ -66,6 +68,37 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     }
   }
 
+  const createReaction = async (reactionEl, m, reaction) => {
+    const data = await createReactionApi(m.id, String.fromCodePoint(reaction));
+    if (data?.errors) return;
+    const reactionId = data.id;
+    const messaegId = data.message_id;
+    const userId = data.user_id;
+    reactionEl.addEventListener("click", e2 => deleteReaction(e2, messaegId, userId, reactionId));
+  }
+
+  const deleteReaction = async (e, messageId, ownerId, reactionId) => {
+    e.stopPropagation();
+    if (ownerId === user.id) {
+      e.target.remove();
+      await deleteReactionApi(messageId, reactionId);
+    }
+  }
+
+  function ShowReactions({ m }) {
+    if (m.reactions && m.reactions.length) {
+      return m.reactions.map(r => {
+        return <div
+          onClick={e => deleteReaction(e, m.id, r.user_id, r.id)}
+          key={r.id}
+          className={`reaction${r.user_id === user.id ? '' : ' not-me'}`}
+        >
+          {r.encoded_text}
+        </div>
+      })
+    }
+  }
+
   return (
     <div className="messages-wrapper">
       <div className="messages-details-wrapper" onClick={hideEmojisList}>
@@ -99,14 +132,15 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             </div>
             {m.sender_id === user.id ? (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
                 <MessageSettings setEditMessageInput={setEditMessageInput} />
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
               </div>
             )}
+            <div className="reactions"><ShowReactions m={m} /></div>
           </div>
         ))}
       </div>
@@ -122,25 +156,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
           <button disabled={disabledInputMessage()} type="submit"><i className="fa-regular fa-paper-plane"></i></button>
         </form>
       </div>
-      <div className="emojis-list hidden">
-        {emojis && (
-          <div className="icon-emojis">
-            {emojis.map(emoji => {
-              const codePoint = "0x" + emoji.codePoint.split(" ")[0];
-              return (
-                <div
-                  id={codePoint}
-                  className="emoji"
-                  key={emoji.slug}
-                  onClick={e => setMessageInput(prev => prev + String.fromCodePoint(e.target.id))}
-                >
-                  {String.fromCodePoint(codePoint)}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <EmojisList emojis={emojis} setMessageInput={setMessageInput} />
     </div>
   );
 }
