@@ -272,15 +272,25 @@
 
 .reaction-icons {
   display: flex;
-  gap: 3px;
+  gap: 5px;
+  flex-wrap: wrap;
+  text-align: justify;
   background-color: var(--home-page-background);
   border-radius: 10px;
   padding: 10px 15px;
 }
 
 .reaction-icons div {
-  font-size: 10pt;
   font-style: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reaction-icons .emoji {
+  width: 20px;
+  height: 20px;
+  font-size: 12pt;
 }
 
 #message-input button>i {
