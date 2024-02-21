@@ -1,3 +1,7 @@
+import DeleteWorkspaceModal from "../EditWorkspaceModal/DeleteWorkspaceModal";
+import UpdatedWorkspaceModal from "../EditWorkspaceModal/UpdateWorkspaceModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+
 function Workspaces({ workspaces, collapseWorkspaces, showChannelsAndMemberships, }) {
   return (
     <div id="workspaces">
@@ -7,7 +11,7 @@ function Workspaces({ workspaces, collapseWorkspaces, showChannelsAndMemberships
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
-          {workspaces.map(w => (
+          {workspaces.map(w => (<>
             <div
               id={w.id}
               key={w.id}
@@ -16,7 +20,20 @@ function Workspaces({ workspaces, collapseWorkspaces, showChannelsAndMemberships
             >
               {w.name}
             </div>
-          ))}
+            <div>
+              <OpenModalButton
+                buttonText={<i className="fa-solid fa-gear"></i>}
+                modalComponent={<UpdatedWorkspaceModal workspace={w} />}
+              />
+            </div>
+            <div>
+              <OpenModalButton
+                buttonText={<i className="fa-solid fa-trash-can delete-workspace-btn"></i>}
+                // buttonId="delete-workspace-btn"
+                modalComponent={<DeleteWorkspaceModal workspaceId={w.id} />}
+              />
+            </div>
+            </>))}
         </div>
       </div>
     </div>
