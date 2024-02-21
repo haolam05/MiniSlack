@@ -1,10 +1,17 @@
+import { useModal } from "../../context/Modal";
+import { deleteChannelThunk } from "../../redux/channel";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
+
+
+
 function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
-  
-  
-  
-  
+const {closeModal} = useModal()
+
+  const deleteChannel = () => {
+    
+  }
+
   return (
     <div id="workspaces" className="channels">
       <h2 className="subheading">
@@ -24,13 +31,17 @@ function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
               <div>
               <div>
                 <OpenModalButton
-                  buttonText="delete"
-                  modalComponent={<ConfirmDeleteFormModal />}
+                  buttonText={<i className="fa-solid fa-trash-can"></i>}
+                  modalComponent={<ConfirmDeleteFormModal 
+                    text="Are you sure you want to delete this channel?"
+                    deleteCb={deleteChannel}
+                    cancelDeleteCb={closeModal}
+                  />}
                 />
               </div>
               <div>
                 <OpenModalButton
-                  buttonText="update"
+                  buttonText= {<i className="fa-solid fa-gear"></i>}
                   modalComponent={<ConfirmDeleteFormModal />}
                 />
               </div>
