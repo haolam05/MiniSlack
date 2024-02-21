@@ -317,6 +317,10 @@
   padding-right: 40px;
 }
 
+.edit-message-form .fa-paper-plane {
+  width: fit-content;
+}
+
 .edit-message-form i {
   position: relative;
   left: 210px;
