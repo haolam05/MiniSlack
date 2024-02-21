@@ -51,7 +51,7 @@ function HomePage() {
 
   const scrollToNewMessage = () => {
     const chatWindow = document.querySelector(".messages-details-wrapper");
-    const messageElHeight = 79; // px
+    const messageElHeight = 84; // px
     if (chatWindow && Math.abs(chatWindow.scrollHeight - messageElHeight - (chatWindow.clientHeight + chatWindow.scrollTop) <= 2)) {
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
