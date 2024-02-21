@@ -119,8 +119,10 @@ function HomePage() {
       timeEl.classList.toggle("hidden");
     } else {
       const parentEl = e.target.closest(".message");
-      const children = parentEl.children;
-      if (children[1]) children[1].classList.toggle("hidden");
+      if (parentEl) {
+        const children = parentEl.children;
+        if (children[1]) children[1].classList.toggle("hidden");
+      }
     }
     const reactions = document.querySelector(".reaction-emojis-list");
     if (reactions) reactions.classList.toggle("hidden");

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import { createReactionApi, deleteReactionApi } from "../../utils/reactions";
 import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
@@ -67,9 +68,31 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     }
   }
 
+  const createReaction = async (reactionEl, m, reaction) => {
+    const data = await createReactionApi(m.id, String.fromCodePoint(reaction));
+    if (data?.errors) return;
+    const reactionId = data.id;
+    const messaegId = data.message_id;
+    reactionEl.addEventListener("click", e2 => deleteReaction(e2, messaegId, reactionId));
+  }
+
+  const deleteReaction = async (e, messageId, reactionId) => {
+    e.stopPropagation();
+    e.target.remove();
+    await deleteReactionApi(messageId, reactionId);
+  }
+
   function ShowReactions({ m }) {
     if (m.reactions && m.reactions.length) {
-      return m.reactions.map(r => <div key={r.id} className="reaction">{r.encoded_text}</div>)
+      return m.reactions.map(r => {
+        return <div
+          onClick={e => deleteReaction(e, m.id, r.id)}
+          key={r.id}
+          className={`reaction${r.user_id === user.id ? '' : ' not-me'}`}
+        >
+          {r.encoded_text}
+        </div>
+      })
     }
   }
 
@@ -106,12 +129,12 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             </div>
             {m.sender_id === user.id ? (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
                 <MessageSettings setEditMessageInput={setEditMessageInput} />
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
               </div>
             )}
             <div className="reactions"><ShowReactions m={m} /></div>

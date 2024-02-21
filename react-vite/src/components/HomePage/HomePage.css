@@ -363,3 +363,7 @@
   justify-content: flex-end;
   flex-wrap: wrap;
 }
+
+.reaction.not-me {
+  cursor: not-allowed;
+}

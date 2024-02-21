@@ -1,13 +1,4 @@
-import { useDispatch } from "react-redux";
-import * as reactionActions from "../../redux/reaction";
-
-function MessageTime({ formattedDate, formattedTime, m, emojis }) {
-  const dispatch = useDispatch();
-
-  const createReaction = async reaction => {
-    dispatch(reactionActions.sendReactionThunk(m.id, String.fromCodePoint(reaction)));
-  }
-
+function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }) {
   return (
     <>
       <div className="message-time-dot">
@@ -53,8 +44,8 @@ function MessageTime({ formattedDate, formattedTime, m, emojis }) {
                     reaction.classList.add("reaction");
                     reaction.textContent = String.fromCodePoint(codePoint);
                     reactions.append(reaction);
+                    createReaction(reaction, m, e.target.id);
                   }
-                  createReaction(e.target.id)
                 }}
               >
                 {String.fromCodePoint(codePoint)}
