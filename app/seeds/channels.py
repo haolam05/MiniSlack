@@ -15,7 +15,7 @@ def seed_channels():
         },
         {
             "name": "homework discussion",
-            "owner_id": username_to_ids["haolam"],
+            "owner_id": username_to_ids["nickyli"],
             "workspace_id": workspace_name_to_ids["aA Union"]
         },
         {
@@ -30,7 +30,7 @@ def seed_channels():
         },
         {
             "name": "random",
-            "owner_id": username_to_ids["haolam"],
+            "owner_id": username_to_ids["nickyli"],
             "workspace_id": workspace_name_to_ids["hao-nick-nicky"]
         },
         {

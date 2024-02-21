@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { csrfFetch } from "./csrf";
+import * as messageActions from "./message";
 
 // Action
 const GET_CHANNELS = "channels/GET_CHANNELS";
@@ -9,19 +10,20 @@ const DELETE_CHANNEL = "channels/DELETE_CHANNEL"
 
 
 // POJO action creators
-const getChannelsAction = channels => {
-  return {
-    type: GET_CHANNELS,
-    channels
-  }
-}
+const getChannelsAction = channels => ({
+  type: GET_CHANNELS,
+  channels
+});
 
-const addChannelsAction = channel => {
-  return {
-    type: ADD_CHANNELS,
-    channel
-  }
-}
+const addChannelsAction = channel => ({
+  type: ADD_CHANNELS,
+  channel
+});
+
+const deleteChannelAction = channelId => ({
+  type: DELETE_CHANNEL,
+  channelId
+});
 
 export const reset = () => ({
   type: RESET
@@ -34,10 +36,17 @@ export const loadChannels = workspaceId => async dispatch => {
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(getChannelsAction(data.Channels));
+  dispatch(messageActions.reset());
 }
 
-export const deleteChannelThunk = () => async dispatch => {
-  console.log('inside delete channel thunk')
+export const deleteChannelThunk = channelId => async dispatch => {
+  const res = await csrfFetch(`/api/channels/${channelId}`, {
+    method: 'DELETE'
+  });
+  const data = res.json();
+  if (!res.ok) return { errors: data };
+  dispatch(deleteChannelAction(channelId));
+  dispatch(messageActions.reset());
 }
 
 export const addChannelsThunk = (workspaceId, channel) => async dispatch => {
@@ -77,6 +86,11 @@ export default function channelReducer(state = initialState, action) {
           ...action.channels
         }
       }
+    }
+    case DELETE_CHANNEL: {
+      const allChannels = { ...state.channels };
+      delete allChannels[action.workspaceId];
+      return { ...state, channels: allChannels }
     }
     case RESET:
       return { ...state, channels: {} };

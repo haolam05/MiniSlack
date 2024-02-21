@@ -12,12 +12,11 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
 
   const deleteWorkspace = async (_e, workspaceId) => {
     await dispatch(workspaceActions.deleteWorkspaceThunk(workspaceId));
-    closeModal();
+    setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>)
   }
 
   const createWorkspace = async () => {
-    setModalContent(<WorkspaceFormModal />)
-    // await dispatch(workspaceActions.createWorkspaceThunk());
+    await setModalContent(<WorkspaceFormModal />)
   }
 
   return (

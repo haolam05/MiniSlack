@@ -1,15 +1,21 @@
 import { useModal } from "../../context/Modal";
-import { deleteChannelThunk } from "../../redux/channel";
+import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import * as channelActions from "../../redux/channel";
 
+function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
+  const dispatch = useDispatch();
+  const { closeModal, setModalContent } = useModal()
 
+  const deleteChannel = async (e, channelId) => {
+    const channel = document.querySelector(`.channel-${channelId}`);
+    if (!channel) return;
 
-function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
-  const { closeModal } = useModal()
-
-  const deleteChannel = () => {
-
+    await dispatch(channelActions.deleteChannelThunk(channelId));
+    setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>)
+    channel.remove();
+    document.querySelector(".message-header").textContent = "";
   }
 
   return (
@@ -24,26 +30,30 @@ function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
             <div
               id={c.id}
               key={c.id}
-              className="workspace workspace-channel"
+              className={`workspace workspace-channel channel-${c.id}`}
               onClick={showChannelMessages}
             >
-              {c.name}
-              <div>
-                <div>
-                  <OpenModalButton
-                    buttonText={<i className="fa-solid fa-trash-can"></i>}
-                    modalComponent={<ConfirmDeleteFormModal
-                      text="Are you sure you want to delete this channel?"
-                      deleteCb={deleteChannel}
-                      cancelDeleteCb={closeModal}
-                    />}
-                  />
-                </div>
-                <div>
-                  <OpenModalButton
-                    buttonText={<i className="fa-solid fa-gear"></i>}
-                    modalComponent={<ConfirmDeleteFormModal />}
-                  />
+              <div className="channel-details">
+                <div>{c.name}</div>
+                <div className={`channel-btns${c.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
+                  <div className="update-channel-btn">
+                    <OpenModalButton
+                      buttonText={<i className="fa-solid fa-gear"></i>}
+                      modalComponent={<></>}
+                    />
+                  </div>
+                  <div className="delete-channel-btn">
+                    <OpenModalButton
+                      buttonText={<i className="fa-solid fa-trash-can delete-channel-btn"></i>}
+                      modalComponent={
+                        <ConfirmDeleteFormModal
+                          text="Are you sure you want to delete this channel?"
+                          deleteCb={e => deleteChannel(e, c.id)}
+                          cancelDeleteCb={closeModal}
+                        />
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>

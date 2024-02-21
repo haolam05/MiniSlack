@@ -409,7 +409,8 @@
   overflow-y: scroll;
 }
 
-.workspace-details {
+.workspace-details,
+.channel-details {
   flex-grow: 1;
   display: flex;
   gap: 25px;
@@ -422,18 +423,21 @@
   word-wrap: break-word;
 }
 
-.workspace-details .btn-accent {
+.workspace-details .btn-accent,
+.channel-details .btn-accent {
   background-color: transparent;
   border: none;
 }
 
-.workspace-details .btn-accent>i {
+.workspace-details .btn-accent>i,
+.channel-details .btn-accent>i {
   background-color: transparent;
   color: var(--white);
   font-size: 10pt;
 }
 
-.workspace-btns {
+.workspace-btns,
+.channel-btns {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -441,7 +445,9 @@
 }
 
 .workspace-btns.me .fa-trash-can:hover,
-.workspace-btns.me .fa-gear:hover {
+.workspace-btns.me .fa-gear:hover,
+.channel-btns.me .fa-trash-can:hover,
+.channel-btns.me .fa-gear:hover {
   color: var(--red);
 }
 
@@ -462,4 +468,18 @@
   border: none;
   border-radius: 10px;
   padding: 10px 40px;
+}
+
+.workspace-channel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.workspace-channel>div {
+  margin-right: 10px;
+  display: flex;
+}
+
+.workspace-channel>div>span {
+  margin-left: 10px;
 }
