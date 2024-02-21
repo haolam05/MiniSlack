@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 const GET_CHANNELS = "channels/GET_CHANNELS";
 const ADD_CHANNELS = "channels/addChannels";
 const RESET = 'channels/RESET';
+const DELETE_CHANNEL = "channels/DELETE_CHANNEL"
 
 
 // POJO action creators
@@ -33,6 +34,10 @@ export const loadChannels = workspaceId => async dispatch => {
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(getChannelsAction(data.Channels));
+}
+
+export const deleteChannelThunk = () => async dispatch => {
+  console.log('inside delete channel thunk')
 }
 
 export const addChannelsThunk = (workspaceId, channel) => async dispatch => {
