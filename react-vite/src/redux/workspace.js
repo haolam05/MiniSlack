@@ -1,5 +1,8 @@
 import { createSelector } from "reselect";
 import { csrfFetch } from "./csrf";
+import * as channelActions from "./channel";
+import * as membershipActions from "./membership";
+import * as messageActions from "./message";
 
 // Actions
 const LOAD_WORKSPACES = 'worksapce/LOAD_WORKSPACES';
@@ -72,13 +75,16 @@ export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => 
   dispatch(editWorkspaceAction(data));
 }
 
-export const deleteWorkspaceThunk = (workspaceId) => async dispatch => {
+export const deleteWorkspaceThunk = workspaceId => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}`, {
     method: "DELETE"
   });
   const data = await res.json();
   if (!res.ok) return { errors: data }
-  dispatch(deleteWorkspaceAction(workspaceId))
+  dispatch(channelActions.reset());
+  dispatch(messageActions.reset());
+  dispatch(membershipActions.reset());
+  dispatch(deleteWorkspaceAction(workspaceId));
 }
 
 // Custom selectors

@@ -1,8 +1,19 @@
-import DeleteWorkspaceModal from "../EditWorkspaceModal/DeleteWorkspaceModal";
+import { useModal } from "../../context/Modal";
+import { useDispatch } from "react-redux";
+import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import UpdatedWorkspaceModal from "../EditWorkspaceModal/UpdateWorkspaceModal";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import OpenModalButton from "../OpenModalButton";
+import * as workspaceActions from "../../redux/workspace";
 
 function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMemberships }) {
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
+
+  const deleteWorkspace = async (_e, workspaceId) => {
+    await dispatch(workspaceActions.deleteWorkspaceThunk(workspaceId));
+    closeModal();
+  }
+
   return (
     <div id="workspaces">
       <h2 className="subheading">
@@ -20,7 +31,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
             >
               <div className="workspace-details">
                 <div>{w.name}</div>
-                <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`}>
+                <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
                   <div className="update-workspace-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-gear"></i>}
@@ -30,8 +41,13 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
                   <div className="delete-workspace-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-trash-can delete-workspace-btn"></i>}
-                      // buttonId="delete-workspace-btn"
-                      modalComponent={<DeleteWorkspaceModal workspaceId={w.id} />}
+                      modalComponent={
+                        <ConfirmDeleteFormModal
+                          text="Are you sure you want to delete this workspace?"
+                          deleteCb={e => deleteWorkspace(e, w.id)}
+                          cancelDeleteCb={closeModal}
+                        />
+                      }
                     />
                   </div>
                 </div>

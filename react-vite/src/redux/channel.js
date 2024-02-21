@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf";
 // Action
 const GET_CHANNELS = "channels/GET_CHANNELS";
 const ADD_CHANNELS = "channels/addChannels";
-const RESET = 'workspaces/RESET';
+const RESET = 'channels/RESET';
 
 
 // POJO action creators
@@ -74,7 +74,7 @@ export default function channelReducer(state = initialState, action) {
       }
     }
     case RESET:
-      return initialState;
+      return { ...state, channels: {} };
     default:
       return state;
   }

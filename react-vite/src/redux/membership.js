@@ -49,7 +49,7 @@ export default function membershipReducer(state = initialState, action) {
       }
     }
     case RESET:
-      return initialState;
+      return { ...state, memberships: {} };
     default:
       return state;
   }

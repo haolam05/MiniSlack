@@ -128,7 +128,7 @@ export default function messageReducer(state = initialState, action) {
       delete newState.messages[action.messageId];
       return newState;
     case RESET:
-      return initialState;
+      return { ...state, messages: {} };
     default:
       return state;
   }
