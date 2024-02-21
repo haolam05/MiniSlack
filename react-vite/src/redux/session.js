@@ -6,8 +6,9 @@ import * as membershipActions from "./membership";
 
 
 // Actions
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const SET_USER = 'session/SET_USER';
+const REMOVE_USER = 'session/REMOVE_USER';
+const ADD_EMOJIS = 'session/ADD_EMOJIS';
 
 
 // POJO action creators
@@ -18,6 +19,11 @@ const setUser = user => ({
 
 const removeUser = () => ({
   type: REMOVE_USER
+});
+
+const addEmojis = emojis => ({
+  type: ADD_EMOJIS,
+  emojis
 });
 
 
@@ -132,13 +138,22 @@ export const logout = () => async dispatch => {
   dispatch(membershipActions.reset());
 };
 
+export const loadEmojis = () => async (dispatch, getState) => {
+  if (getState().session.emojis !== null) return;
+  const res = await csrfFetch("/api/auth/emojis");
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
+  dispatch(addEmojis(data));
+}
+
 
 // Custom selectors
 export const sessionUser = state => state.session.user;
+export const getEmojis = state => state.session.emojis;
 
 
 // Reducer
-const initialState = { user: null };
+const initialState = { user: null, emojis: null };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
@@ -146,6 +161,8 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case ADD_EMOJIS:
+      return { ...state, emojis: action.emojis }
     default:
       return state;
   }
