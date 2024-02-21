@@ -464,7 +464,8 @@
 
 .edit-workspace-form button,
 .create-workspace-form button,
-.edit-channel-form button {
+.edit-channel-form button,
+.create-channel-form button {
   background-color: var(--submit-button-background);
   border: none;
   border-radius: 10px;
@@ -483,4 +484,33 @@
 
 .workspace-channel>div>span {
   margin-left: 10px;
+}
+
+#channel-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.channel-information {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+
+.channel-info-label div {
+  color: coral
+}
+
+.channel-information p {
+  margin-top: 10px;
+  font-style: italic;
+  line-break: anywhere;
+}
+
+.channel-details div {
+  line-break: anywhere;
+  word-wrap: break-word;
 }

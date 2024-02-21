@@ -12,6 +12,7 @@ import Workspaces from "../Workspaces";
 import Channels from "../Channels";
 import Memeberships from "../Memberships";
 import Messages from "../Messages";
+import ChannelInfo from "../ChannelInfo";
 import * as sessionActions from "../../redux/session";
 import * as workspaceActions from "../../redux/workspace";
 import * as channelActions from "../../redux/channel";
@@ -81,13 +82,22 @@ function HomePage() {
     await dispatch(messageActions.reset());
   }
 
-  const showChannelMessages = async e => {
+  const showChannelMessages = async (e, c) => {
     select(e);
     const channel = e.target.closest(".workspace-channel");
     if (!channel) return;
     const headerName = getChannelMessagesHeader();
     const selected = document.querySelector(".workspace-message.selected");
-    if (headerName) document.querySelector(".message-header").textContent = headerName;
+    // if (headerName) document.querySelector(".message-header").textContent = headerName;
+    if (headerName) {
+      const messageHeader = document.querySelector(".message-header");
+      messageHeader.innerHTML = `<div style="display: flex; gap: 10px; align-items: center;">
+        <span>${headerName}</span>
+        <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info"></i></span>
+      </div>
+      `;
+      messageHeader.querySelector("#channel-info").addEventListener('click', () => setModalContent(<ChannelInfo headerName={headerName} c={c} />));
+    }
     if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadChannelMessages(+channel.id));
     const chatWindow = document.querySelector(".messages-details-wrapper");

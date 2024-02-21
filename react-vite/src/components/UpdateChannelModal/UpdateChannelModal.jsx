@@ -28,6 +28,11 @@ function UpdatedChannelModal({ channel }) {
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>);
+    const messageHeader = document.querySelector(".message-header");
+    const currentChannel = document.querySelector(".workspace-channel.selected");
+    if (!messageHeader || !currentChannel) return;
+    messageHeader.textContent = "";
+    currentChannel.classList.remove("selected");
   }
 
   if (!channel) return;

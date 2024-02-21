@@ -4,7 +4,7 @@ import * as messageActions from "./message";
 
 // Action
 const GET_CHANNELS = "channels/GET_CHANNELS";
-const ADD_CHANNELS = "channels/ADD_CHANNELS";
+const ADD_CHANNEL = "channels/ADD_CHANNEL";
 const UPDATE_CHANNEL = "channels/UPDATE_CHANNEL"
 const DELETE_CHANNEL = "channels/DELETE_CHANNEL"
 const RESET = 'channels/RESET';
@@ -16,8 +16,8 @@ const getChannelsAction = channels => ({
   channels
 });
 
-const addChannelsAction = channel => ({
-  type: ADD_CHANNELS,
+const createChannelsAction = channel => ({
+  type: ADD_CHANNEL,
   channel
 });
 
@@ -67,8 +67,8 @@ export const deleteChannelThunk = channelId => async dispatch => {
   dispatch(messageActions.reset());
 }
 
-export const addChannelsThunk = (workspaceId, channel) => async dispatch => {
-  const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels/`, {
+export const createChannelThunk = (workspaceId, channel) => async dispatch => {
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels`, {
     method: "POST",
     body: JSON.stringify({
       ...channel
@@ -76,7 +76,8 @@ export const addChannelsThunk = (workspaceId, channel) => async dispatch => {
   });
   const data = await res.json();
   if (!res.ok) return { errors: data };
-  dispatch(addChannelsAction(data));
+  dispatch(createChannelsAction(data));
+
 }
 
 
@@ -97,11 +98,12 @@ export default function channelReducer(state = initialState, action) {
       action.channels.forEach(channel => allChannels[channel.id] = channel);
       return { ...state, channels: allChannels }
     }
-    case ADD_CHANNELS: {
+    case ADD_CHANNEL: {
       return {
         ...state,
         channels: {
-          ...action.channels
+          ...state.channels,
+          [action.channel.id]: action.channel
         }
       }
     }

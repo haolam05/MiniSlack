@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import UpdatedChannelModal from "../UpdateChannelModal";
+import ChannelFormModal from "../ChannelFormModal";
 import * as channelActions from "../../redux/channel";
 
 function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
   const dispatch = useDispatch();
   const { closeModal, setModalContent } = useModal()
 
-  const deleteChannel = async (e, channelId) => {
+  const deleteChannel = async (_e, channelId) => {
     const channel = document.querySelector(`.channel-${channelId}`);
     if (!channel) return;
 
@@ -20,11 +21,18 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     if (header) header.textContent = "";
   }
 
+  const createChannel = async () => {
+    await setModalContent(<ChannelFormModal />);
+    const currentDm = document.querySelector(".workspace-message.selected");
+    if (currentDm) currentDm.classList.remove("selected");
+  }
+
   return (
     <div id="workspaces" className="channels">
       <h2 className="subheading">
         <span>Channels</span>
         <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces}></i>
+        {user?.user !== null && <i className="fa-solid fa-square-plus" onClick={createChannel} ></i>}
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
@@ -33,7 +41,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
               id={c.id}
               key={c.id}
               className={`workspace workspace-channel channel-${c.id}`}
-              onClick={showChannelMessages}
+              onClick={e => showChannelMessages(e, c)}
             >
               <div className="channel-details">
                 <div>{c.name}</div>
