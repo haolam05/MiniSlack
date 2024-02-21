@@ -122,6 +122,8 @@ function HomePage() {
       const children = parentEl.children;
       if (children[1]) children[1].classList.toggle("hidden");
     }
+    const reactions = document.querySelector(".reaction-emojis-list");
+    if (reactions) reactions.classList.toggle("hidden");
   }
 
   const getDirectMessagesHeader = () => {

@@ -3,6 +3,7 @@ import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
+import EmojisList from "../EmojsList";
 import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis }) {
@@ -99,12 +100,12 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             </div>
             {m.sender_id === user.id ? (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} />
                 <MessageSettings setEditMessageInput={setEditMessageInput} />
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} />
               </div>
             )}
           </div>
@@ -122,25 +123,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
           <button disabled={disabledInputMessage()} type="submit"><i className="fa-regular fa-paper-plane"></i></button>
         </form>
       </div>
-      <div className="emojis-list hidden">
-        {emojis && (
-          <div className="icon-emojis">
-            {emojis.map(emoji => {
-              const codePoint = "0x" + emoji.codePoint.split(" ")[0];
-              return (
-                <div
-                  id={codePoint}
-                  className="emoji"
-                  key={emoji.slug}
-                  onClick={e => setMessageInput(prev => prev + String.fromCodePoint(e.target.id))}
-                >
-                  {String.fromCodePoint(codePoint)}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <EmojisList emojis={emojis} setMessageInput={setMessageInput} />
     </div>
   );
 }

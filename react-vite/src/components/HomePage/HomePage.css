@@ -213,7 +213,7 @@
 
 .emojis {
   position: relative;
-  bottom: 90px;
+  bottom: 105px;
   left: 10px;
   background-color: transparent;
   border-radius: 5px;
@@ -225,7 +225,7 @@
 
 #message-input button {
   position: relative;
-  bottom: 90px;
+  bottom: 110px;
   left: 10px;
   background-color: transparent;
   border-radius: 5px;
@@ -248,8 +248,8 @@
   background-color: var(--gray);
   border-radius: 10px;
   position: relative;
-  bottom: 370px;
-  left: 40px;
+  bottom: 405px;
+  left: 15px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -269,6 +269,38 @@
   align-items: center;
   justify-content: center;
 }
+
+.reaction-icons {
+  display: flex;
+  gap: 3px;
+  background-color: var(--home-page-background);
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.reaction-icons div {
+  font-size: 10pt;
+  font-style: normal;
+}
+
+/* .reaction-emojis-list .icon-emojis {
+  width: 300px;
+}
+
+.reaction-emojis-list .icon-emojis div {
+  font-style: normal;
+  font-size: 12pt;
+}
+
+.reaction-emojis-list {
+  position: absolute;
+  bottom: -65px;
+  right: 225px;
+}
+
+.reaction-emojis-list div {
+
+} */
 
 #message-input button>i {
   font-size: 17pt;
@@ -337,5 +369,10 @@
 
 .messages-wrapper {
   position: relative;
-  ;
+}
+
+.message-time-dot i {
+  font-size: 10pt;
+  margin-right: 5px;
+  margin-left: 55px;
 }
