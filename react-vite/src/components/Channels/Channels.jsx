@@ -1,4 +1,10 @@
+import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
 function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
+  
+  
+  
+  
   return (
     <div id="workspaces" className="channels">
       <h2 className="subheading">
@@ -15,6 +21,20 @@ function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
               onClick={showChannelMessages}
             >
               {c.name}
+              <div>
+              <div>
+                <OpenModalButton
+                  buttonText="delete"
+                  modalComponent={<ConfirmDeleteFormModal />}
+                />
+              </div>
+              <div>
+                <OpenModalButton
+                  buttonText="update"
+                  modalComponent={<ConfirmDeleteFormModal />}
+                />
+              </div>
+              </div>
             </div>
           ))}
         </div>
@@ -22,5 +42,8 @@ function Channels({ collapseWorkspaces, channels, showChannelMessages }) {
     </div>
   );
 }
+
+{/* <span><i className="fa-solid fa-gear"></i></span>
+<span><i className="fa-solid fa-trash-can"></i></span> */}
 
 export default Channels;
