@@ -163,7 +163,7 @@ function HomePage() {
           collapseWorkspaces={collapseWorkspaces}
         />
         <Channels
-          channels={channels}
+          channels={sortDesc(channels)}
           collapseWorkspaces={collapseWorkspaces}
           showChannelMessages={showChannelMessages}
         />

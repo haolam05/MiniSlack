@@ -50,5 +50,6 @@ class Channel(db.Model):
             "topic": self.topic,
             "description": self.description,
             "owner_id": self.owner_id,
-            "workspace_id": self.workspace_id
+            "workspace_id": self.workspace_id,
+            "created_at": self.created_at
         }
