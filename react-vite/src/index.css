@@ -178,3 +178,17 @@ form .btn-primary.enabled:hover {
 .btn:hover {
   text-decoration: underline;
 }
+
+.workspace-channel {
+  border: 2px solid pink;
+  display: flex;
+  justify-content: space-between;
+}
+
+.workspace-channel > div {
+  margin-right: 10px;
+  display: flex;
+}
+.workspace-channel > div > span {
+  margin-left: 10px;
+}
