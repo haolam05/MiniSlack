@@ -42,16 +42,17 @@ export const loadChannelMessages = channeId => async dispatch => {
   dispatch(addMessages(data.Messages));
 }
 
-export const loadDirectMessages = (...ids) => async dispatch => {
+export const loadDirectMessages = (id1, id2, workspaceId) => async dispatch => {
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
 
   let messages;
-  if (ids[0] === ids[1]) {
-    messages = data.Messages.filter(m => m.sender_id === m.receiver_id);
+  if (id1 === id2) {
+    messages = data.Messages.filter(m => m.sender_id === m.receiver_id && m.workspace_id === workspaceId);
   } else {
-    messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id) && m.sender_id !== m.receiver_id);
+    const ids = [id1, id2];
+    messages = data.Messages.filter(m => ids.includes(m.sender_id) && ids.includes(m.receiver_id) && m.sender_id !== m.receiver_id && m.workspace_id === workspaceId);
   }
 
   dispatch(addMessages(messages));

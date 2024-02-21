@@ -12,7 +12,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
               id={m.id}
               key={m.id}
               className="workspace workspace-message"
-              onClick={e => showDirectMessages(e, m.id)}
+              onClick={e => showDirectMessages(e, m.id, m.workspace_id)}
             >
               <img
                 onClick={e => showUserProfile(e, m)}

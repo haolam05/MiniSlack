@@ -73,6 +73,8 @@ function HomePage() {
     select(e);
     const workspace = e.target.closest(".workspace");
     if (!workspace) return;
+    const selectedDm = document.querySelector(".workspace-message.selected");
+    if (selectedDm) selectedDm.classList.remove("selected");
     await dispatch(channelActions.loadChannels(+workspace.id));
     await dispatch(membershipActions.loadMemberships(+workspace.id));
     await dispatch(messageActions.reset());
@@ -91,13 +93,13 @@ function HomePage() {
     if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
-  const showDirectMessages = async (e, id) => {
+  const showDirectMessages = async (e, id, workspaceId) => {
     select(e);
     const headerName = getDirectMessagesHeader();
     const selected = document.querySelector(".workspace-channel.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
-    await dispatch(messageActions.loadDirectMessages(id, user.id));
+    await dispatch(messageActions.loadDirectMessages(id, user.id, workspaceId));
     const chatWindow = document.querySelector(".messages-details-wrapper");
     if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }

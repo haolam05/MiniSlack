@@ -5,50 +5,54 @@ from ..models.db import environment, SCHEMA
 
 def seed_memberships():
     memberships = [
-      {
-          "username": "haolam",
-          "workspace_name": "aA Union"
-      },
-      {
-          "username": "robin",
-          "workspace_name": "aA Union"
-      },
-      {
-          "username": "zoro",
-          "workspace_name": "aA Union"
-      },
-      {
-          "username": "sanji",
-          "workspace_name": "aA Union"
-      },
-      {
-          "username": "haolam",
-          "workspace_name": "hao-nick-nicky"
-      },
-      {
-          "username": "nickleger",
-          "workspace_name": "hao-nick-nicky"
-      },
-      {
+        {
+            "username": "haolam",
+            "workspace_name": "aA Union"
+        },
+        {
           "username": "nickyli",
-          "workspace_name": "hao-nick-nicky"
-      },
-      {
-          "username": "haolam",
-          "workspace_name": "hao-nick"
-      },
-      {
-          "username": "mihawk",
-          "workspace_name": "hao-nicky"
-      },
-      {
-          "username": "haolam",
-          "workspace_name": "hao-nicky"
-      },
-      {
-          "username": "haolam",
-          "workspace_name": "nick-nicky"
-      }
+          "workspace_name": "aA Union"
+        },
+        {
+            "username": "robin",
+            "workspace_name": "aA Union"
+        },
+        {
+            "username": "zoro",
+            "workspace_name": "aA Union"
+        },
+        {
+            "username": "sanji",
+            "workspace_name": "aA Union"
+        },
+        {
+            "username": "haolam",
+            "workspace_name": "hao-nick-nicky"
+        },
+        {
+            "username": "nickleger",
+            "workspace_name": "hao-nick-nicky"
+        },
+        {
+            "username": "nickyli",
+            "workspace_name": "hao-nick-nicky"
+        },
+        {
+            "username": "haolam",
+            "workspace_name": "hao-nick"
+        },
+        {
+            "username": "mihawk",
+            "workspace_name": "hao-nicky"
+        },
+        {
+            "username": "haolam",
+            "workspace_name": "hao-nicky"
+        },
+        {
+            "username": "haolam",
+            "workspace_name": "nick-nicky"
+        }
     ]
 
     for m in memberships:
