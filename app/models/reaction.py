@@ -11,7 +11,7 @@ class Reaction(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     encoded_text = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.Date, default=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     message_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("messages.id")), nullable=False)

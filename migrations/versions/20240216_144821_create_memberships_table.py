@@ -24,8 +24,8 @@ def upgrade():
     op.create_table('memberships',
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('workspace_id', sa.Integer(), nullable=False),
-        sa.Column('created_at', sa.Date(), nullable=True),
-        sa.Column('updated_at', sa.Date(), nullable=True),
+        sa.Column('created_at', sa.DateTime(), nullable=True),
+        sa.Column('updated_at', sa.DateTime(), nullable=True),
         sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
         sa.ForeignKeyConstraint(['workspace_id'], ['workspaces.id'], ),
         sa.PrimaryKeyConstraint('user_id', 'workspace_id')

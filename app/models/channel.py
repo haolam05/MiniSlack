@@ -14,8 +14,8 @@ class Channel(db.Model):
     name = db.Column(db.String(50), nullable=False)
     topic = db.Column(db.String)
     description = db.Column(db.Text)
-    created_at = db.Column(db.Date, default=datetime.now)
-    updated_at = db.Column(db.Date, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")), nullable=False)

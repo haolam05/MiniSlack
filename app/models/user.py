@@ -20,8 +20,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, nullable=False, unique=True)
     profile_image_url = db.Column(db.String)
     is_deleted = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.Date, default=datetime.now)
-    updated_at = db.Column(db.Date, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
 
     """ one-to-many """

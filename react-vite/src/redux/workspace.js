@@ -51,6 +51,9 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
   const data = await response.json();
   if (!response.ok) return { errors: data };
   dispatch(loadWorkspacesAction(data.JoinedWorkspaces));
+  dispatch(channelActions.reset());
+  dispatch(membershipActions.reset());
+  dispatch(messageActions.reset());
 }
 
 export const createWorkspaceThunk = workspace => async dispatch => {
@@ -61,9 +64,9 @@ export const createWorkspaceThunk = workspace => async dispatch => {
     })
   });
   const data = await res.json();
-  console.log(data)
   if (!res.ok) return { errors: data };
   dispatch(createWorkspaceAction(data));
+
 }
 
 export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => {
@@ -93,7 +96,7 @@ export const deleteWorkspaceThunk = workspaceId => async dispatch => {
 // Custom selectors
 export const getWorkspaces = createSelector(
   state => state.workspaces.workspaces,
-  workspaces => Object.values(workspaces)
+  workspaces => Object.values(workspaces).sort((a, b) => b.created_at - a.created_at)
 )
 
 

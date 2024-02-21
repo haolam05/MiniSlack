@@ -5,6 +5,7 @@ import { formatUserChannel, userIsValid } from "../../utils/user";
 import { select } from "../../utils/dom";
 import { getAvatarUrl } from "../../utils/image";
 import { useModal } from "../../context/Modal";
+import { sortDesc } from "../../utils/sort";
 import Loading from "../Loading";
 import UserProfile from "../UserProfile";
 import Workspaces from "../Workspaces";
@@ -157,7 +158,7 @@ function HomePage() {
       <div id="sidebar">
         <Workspaces
           user={user}
-          workspaces={workspaces}
+          workspaces={sortDesc(workspaces)}
           showChannelsAndMemberships={showChannelsAndMemberships}
           collapseWorkspaces={collapseWorkspaces}
         />

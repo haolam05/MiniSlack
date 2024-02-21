@@ -24,7 +24,7 @@ def upgrade():
     op.create_table('reactions',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('encoded_text', sa.String(), nullable=False),
-        sa.Column('created_at', sa.Date(), nullable=True),
+        sa.Column('created_at', sa.DateTime(), nullable=True),
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('message_id', sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(['message_id'], ['messages.id'], ),
