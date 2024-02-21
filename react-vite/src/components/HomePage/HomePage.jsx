@@ -70,18 +70,22 @@ function HomePage() {
 
   const showChannelsAndMemberships = async e => {
     select(e);
-    await dispatch(channelActions.loadChannels(+e.target.id));
-    await dispatch(membershipActions.loadMemberships(+e.target.id));
+    const workspace = e.target.closest(".workspace");
+    if (!workspace) return;
+    await dispatch(channelActions.loadChannels(+workspace.id));
+    await dispatch(membershipActions.loadMemberships(+workspace.id));
     await dispatch(messageActions.reset());
   }
 
   const showChannelMessages = async e => {
     select(e);
+    const channel = e.target.closest(".workspace-channel");
+    if (!channel) return;
     const headerName = getChannelMessagesHeader();
     const selected = document.querySelector(".workspace-message.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
-    await dispatch(messageActions.loadChannelMessages(+e.target.id));
+    await dispatch(messageActions.loadChannelMessages(+channel.id));
     const chatWindow = document.querySelector(".messages-details-wrapper");
     if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
@@ -138,7 +142,7 @@ function HomePage() {
 
   const getChannelMessagesHeader = () => {
     const channel = document.querySelector(".workspace-channel.selected");
-    if (channel) return formatUserChannel(channel.textContent);
+    if (channel) return formatUserChannel(channel.innerText);
   }
 
   const getMessageAuthorImage = m => {
@@ -152,6 +156,7 @@ function HomePage() {
     <div id="home-page">
       <div id="sidebar">
         <Workspaces
+          user={user}
           workspaces={workspaces}
           showChannelsAndMemberships={showChannelsAndMemberships}
           collapseWorkspaces={collapseWorkspaces}

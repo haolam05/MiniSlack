@@ -63,11 +63,13 @@ export const createWorkspaceThunk = workspace => async dispatch => {
 export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}`, {
     method: "PUT",
-    body: JSON.stringify(workspace)
+    body: JSON.stringify({
+      ...workspace
+    })
   });
   const data = await res.json();
   if (!res.ok) return { errors: data }
-  dispatch(editWorkspaceAction(data))
+  dispatch(editWorkspaceAction(data));
 }
 
 export const deleteWorkspaceThunk = (workspaceId) => async dispatch => {

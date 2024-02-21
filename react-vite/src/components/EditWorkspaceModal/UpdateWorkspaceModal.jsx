@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editWorkspaceThunk } from "../../redux/workspace";
 import { useModal } from "../../context/Modal";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import * as workspaceActions from "../../redux/workspace";
 
-const UpdatedWorkspaceModal = (workspace) => {
-
+const UpdatedWorkspaceModal = workspace => {
   const dispatch = useDispatch();
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const [name, setName] = useState(workspace.workspace.name);
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const newName = {name: name}
-    const data = await dispatch(editWorkspaceThunk(workspace.workspace.id, newName));
+    disabledSubmitButton();
+
+    const newName = { name: name }
+
+    const data = await dispatch(workspaceActions.editWorkspaceThunk(workspace.workspace.id, newName));
     if (data?.errors) {
-      setErrors(data.errors);
-      return null;
+      enabledSubmitButton();
+      return setErrors(data.errors);
     }
+    setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>)
     closeModal();
   }
 
@@ -25,22 +29,29 @@ const UpdatedWorkspaceModal = (workspace) => {
 
   return (
     <>
-      <h2>Change Workspace Name</h2>
-      {errors && <p className="modal-errors">{errors.name}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>Current Name: {workspace.workspace.name}</div>
-        <label>New Name:</label>
+      <h2 className="workspace-edit-form-header">
+        <div className="subheading">Change Workspace Name</div>
+        <p className="caption">{workspace.workspace?.name}</p>
+      </h2>
+      <form className="edit-workspace-form" onSubmit={handleSubmit}>
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           value={name}
+          spellCheck={false}
           onChange={e => setName(e.target.value)}
         />
-        <button disabled={name?.length <4}>Submit</button>
+        {errors && <p className="modal-errors">{errors.name}</p>}
+        <button
+          type="submit"
+          disabled={name?.length < 4}
+          className={name?.length < 4 ? "disabled" : ""}
+        >
+          Submit
+        </button>
       </form>
     </>
   )
 }
-
-
 
 export default UpdatedWorkspaceModal;

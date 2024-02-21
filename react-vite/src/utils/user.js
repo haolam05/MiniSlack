@@ -3,5 +3,8 @@ export const userIsValid = user => {
 }
 
 export const formatUserChannel = channel => {
-  if (channel) return channel[0].toUpperCase() + channel.slice(1).toLowerCase();
+  if (channel) {
+    const name = channel[0].toUpperCase() + channel.slice(1).toLowerCase();
+    return name.split("\n")[0];
+  }
 }

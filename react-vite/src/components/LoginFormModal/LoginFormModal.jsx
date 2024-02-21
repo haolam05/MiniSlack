@@ -44,6 +44,7 @@ function LoginFormModal() {
         <label>Email</label>
         <input
           type="text"
+          spellCheck={false}
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
@@ -52,6 +53,7 @@ function LoginFormModal() {
         <label>Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={password}
           onChange={e => setPassword(e.target.value)}
           required

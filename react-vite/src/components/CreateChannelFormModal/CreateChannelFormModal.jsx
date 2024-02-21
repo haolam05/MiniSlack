@@ -24,7 +24,7 @@ const CreateChannelFormModal = () => {
             description
         }
 
-        const data = await dispatch(addChannelsThunk( 1, channel));
+        const data = await dispatch(addChannelsThunk(1, channel));
 
         if (data?.errors) {
             enabledSubmitButton();
@@ -45,6 +45,7 @@ const CreateChannelFormModal = () => {
                 <label>Name</label>
                 <input
                     type="text"
+                    spellCheck={false}
                     value={name}
                     onChange={e => setName(e.target.value)}
                     required
@@ -53,12 +54,14 @@ const CreateChannelFormModal = () => {
                 <label>Topic</label>
                 <input
                     type="text"
+                    spellCheck={false}
                     value={topic}
                     onChange={e => setTopic(e.target.value)}
                 />
                 <label>Description</label>
                 <input
                     type="text"
+                    spellCheck={false}
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />

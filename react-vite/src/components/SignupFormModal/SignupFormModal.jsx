@@ -67,6 +67,7 @@ function SignupFormModal() {
         <label>First Name</label>
         <input
           type="text"
+          spellCheck={false}
           value={firstName}
           onChange={e => setFirstName(e.target.value)}
           required
@@ -75,6 +76,7 @@ function SignupFormModal() {
         <label>Last Name</label>
         <input
           type="text"
+          spellCheck={false}
           value={lastName}
           onChange={e => setLastName(e.target.value)}
           required
@@ -83,6 +85,7 @@ function SignupFormModal() {
         <label>Email</label>
         <input
           type="text"
+          spellCheck={false}
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
@@ -91,6 +94,7 @@ function SignupFormModal() {
         <label>Username</label>
         <input
           type="text"
+          spellCheck={false}
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
@@ -99,6 +103,7 @@ function SignupFormModal() {
         <label>Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -107,6 +112,7 @@ function SignupFormModal() {
         <label>Confirm Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={confirmPassword}
           onChange={e => setConfirmPassword(e.target.value)}
           required

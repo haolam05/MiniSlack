@@ -49,7 +49,7 @@ export const CreateMessage = () => {
     }
 
     const invalidInput = () => {
-        return  message.length < 1
+        return message.length < 1
     }
 
     return (
@@ -57,17 +57,18 @@ export const CreateMessage = () => {
             <form
                 onSubmit={e => handleSubmit(e)}
             >
-            <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Message"
-            />
-            <button
-                type="submit"
-                className={`btn-submit ${invalidInput() ? 'disabled' : ''}`}
-                disabled={invalidInput()}
-            >Send</button>
+                <input
+                    type="text"
+                    spellCheck={false}
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Message"
+                />
+                <button
+                    type="submit"
+                    className={`btn-submit ${invalidInput() ? 'disabled' : ''}`}
+                    disabled={invalidInput()}
+                >Send</button>
             </form>
         </div>
     )

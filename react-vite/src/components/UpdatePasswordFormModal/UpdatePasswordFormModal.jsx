@@ -45,6 +45,7 @@ function UpdatePasswordFormModal({ user }) {
         <label>Current Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -53,6 +54,7 @@ function UpdatePasswordFormModal({ user }) {
         <label>New Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={newPassword}
           onChange={e => setNewPassword(e.target.value)}
           required

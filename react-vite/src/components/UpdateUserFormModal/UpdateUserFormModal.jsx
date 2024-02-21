@@ -58,6 +58,7 @@ function UpdateUserFormModal({ user }) {
         <label>First Name</label>
         <input
           type="text"
+          spellCheck={false}
           value={firstName}
           onChange={e => setFirstName(e.target.value)}
           required
@@ -66,6 +67,7 @@ function UpdateUserFormModal({ user }) {
         <label>Last Name</label>
         <input
           type="text"
+          spellCheck={false}
           value={lastName}
           onChange={e => setLastName(e.target.value)}
           required
@@ -74,6 +76,7 @@ function UpdateUserFormModal({ user }) {
         <label>Email</label>
         <input
           type="text"
+          spellCheck={false}
           value={user.email}
           className="disabled"
           disabled
@@ -82,6 +85,7 @@ function UpdateUserFormModal({ user }) {
         <label>Username</label>
         <input
           type="text"
+          spellCheck={false}
           value={user.username}
           disabled
         />
@@ -89,6 +93,7 @@ function UpdateUserFormModal({ user }) {
         <label>Password</label>
         <input
           type="password"
+          spellCheck={false}
           value={password}
           onChange={e => setPassword(e.target.value)}
           required

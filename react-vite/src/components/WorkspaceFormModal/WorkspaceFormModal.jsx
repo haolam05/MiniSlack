@@ -39,6 +39,7 @@ const WorkspaceFormModal = () => {
           name
           <input
             type="text"
+            spellCheck={false}
             value={name}
             onChange={e => setName(e.target.value)}
           >

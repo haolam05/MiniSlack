@@ -11,6 +11,7 @@
   --text-shadow-dark: rgb(126, 126, 95) 1px 0 10px;
   --my-message-background: #0084ff;
   --other-message-background: #323436;
+  --submit-button-background: rgb(91, 109, 91);
   --gray: #808080;
   --dark-gray: #999999;
   --light-gray: #CCCCCC;
@@ -45,7 +46,7 @@ img {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(91, 109, 91);
+  background-color: var(--submit-button-background);
   box-shadow: -2px -2px 1px var(--gray);
   color: var(--white);
   margin-top: 20px;
@@ -185,10 +186,11 @@ form .btn-primary.enabled:hover {
   justify-content: space-between;
 }
 
-.workspace-channel > div {
+.workspace-channel>div {
   margin-right: 10px;
   display: flex;
 }
-.workspace-channel > div > span {
+
+.workspace-channel>div>span {
   margin-left: 10px;
 }
