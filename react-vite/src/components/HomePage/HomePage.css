@@ -456,7 +456,8 @@
   color: var(--red);
 }
 
-.edit-workspace-form button {
+.edit-workspace-form button,
+.create-workspace-form button {
   background-color: var(--submit-button-background);
   border: none;
   border-radius: 10px;

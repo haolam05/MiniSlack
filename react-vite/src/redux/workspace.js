@@ -56,11 +56,14 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
 export const createWorkspaceThunk = workspace => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/`, {
     method: "POST",
-    body: JSON.stringify(workspace)
+    body: JSON.stringify({
+      ...workspace
+    })
   });
   const data = await res.json();
-  if (!res.ok) return { errors: data }
-  dispatch(createWorkspaceAction(data))
+  console.log(data)
+  if (!res.ok) return { errors: data };
+  dispatch(createWorkspaceAction(data));
 }
 
 export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => {

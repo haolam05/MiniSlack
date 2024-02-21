@@ -6,7 +6,7 @@ import * as workspaceActions from "../../redux/workspace";
 
 const UpdatedWorkspaceModal = workspace => {
   const dispatch = useDispatch();
-  const { closeModal, setModalContent } = useModal();
+  const { setModalContent } = useModal();
   const [name, setName] = useState(workspace.workspace.name);
   const [errors, setErrors] = useState({});
 
@@ -22,7 +22,6 @@ const UpdatedWorkspaceModal = workspace => {
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>)
-    closeModal();
   }
 
   if (!workspace) return;

@@ -123,10 +123,11 @@ export default function messageReducer(state = initialState, action) {
           [action.message.id]: action.message
         }
       }
-    case REMOVE_MESSAGE:
+    case REMOVE_MESSAGE: {
       const newState = { ...state };
       delete newState.messages[action.messageId];
       return newState;
+    }
     case RESET:
       return { ...state, messages: {} };
     default:

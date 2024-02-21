@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useModal } from "../../context/Modal";
 
 function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }) {
-  const { setModalContent } = useModal();
   const [showAllEmojis, setShowAllEmojis] = useState(false);
 
   const showEmojisHelper = icons => {

@@ -3,7 +3,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     <div id="workspaces" className="direct-messages">
       <h2 className="subheading">
         <span>Direct Messages</span>
-        <i onClick={collapseWorkspaces} className="fa-solid fa-window-maximize"></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces}></i>
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">

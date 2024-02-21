@@ -1,61 +1,50 @@
-// import { useState } from "react"
-// // import {useSelector} from "react-redux"
-// import './WorkspaceFormModal.css'
-// import Cookies from 'js-cookie'
-
+import { useState } from "react"
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import { useModal } from "../../context/Modal";
+import { useDispatch } from "react-redux";
+import * as workspaceActions from "../../redux/workspace";
 
 const WorkspaceFormModal = () => {
-  // const stateData = useSelector(state => state.session.user)
+  const dispatch = useDispatch();
+  const { setModalContent } = useModal();
+  const [name, setName] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const [name, setName] = useState('')
+  const handleSubmit = async e => {
+    e.preventDefault();
+    disabledSubmitButton();
 
-  const submitForm = async (e) => {
-    e.preventDefault()
-    const payload = {
-      name
+    const data = await dispatch(workspaceActions.createWorkspaceThunk({ name }));
+
+    if (data?.errors) {
+      enabledSubmitButton();
+      return setErrors(data.errors);
     }
 
-    try {
-      await fetch('/api/workspace', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name })
-      })
-    } catch (e) {
-      let trueE = await e.json()
-    }
-
+    setModalContent(<h2 className="subheading alert-success">Successfully Created</h2>);
   }
 
 
-  return (
-    <div id="create-workspace-form-container">
-      <form
-        onSubmit={e => submitForm(e)}
+  return (<>
+    <h2 className="subheading">New Workspace</h2>
+    <form className="create-workspace-form" onSubmit={handleSubmit}>
+      <label>Name</label>
+      <input
+        type="text"
+        spellCheck={false}
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      {errors && <p className="modal-errors">{errors.name}</p>}
+      <button
+        type="submit"
+        className={name.length < 4 ? "disabled" : ""}
+        disabled={name.length < 4}
       >
-        <label>
-          name
-          <input
-            type="text"
-            spellCheck={false}
-            value={name}
-            onChange={e => setName(e.target.value)}
-          >
-          </input>
-        </label>
-        <button
-          type="submit"
-        >
-          Create Workspace
-        </button>
-      </form>
-
-    </div>
-  )
-
+        Submit
+      </button>
+    </form>
+  </>)
 }
-
 
 export default WorkspaceFormModal;

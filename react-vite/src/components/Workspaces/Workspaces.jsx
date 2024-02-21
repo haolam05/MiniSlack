@@ -3,22 +3,29 @@ import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import UpdatedWorkspaceModal from "../EditWorkspaceModal/UpdateWorkspaceModal";
 import OpenModalButton from "../OpenModalButton";
+import WorkspaceFormModal from "../WorkspaceFormModal";
 import * as workspaceActions from "../../redux/workspace";
 
 function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMemberships }) {
   const dispatch = useDispatch();
-  const { closeModal } = useModal();
+  const { setModalContent, closeModal } = useModal();
 
   const deleteWorkspace = async (_e, workspaceId) => {
     await dispatch(workspaceActions.deleteWorkspaceThunk(workspaceId));
     closeModal();
   }
 
+  const createWorkspace = async () => {
+    setModalContent(<WorkspaceFormModal />)
+    // await dispatch(workspaceActions.createWorkspaceThunk());
+  }
+
   return (
     <div id="workspaces">
       <h2 className="subheading">
         <span>Workspaces</span>
-        <i onClick={collapseWorkspaces} className="fa-solid fa-window-maximize"></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces}></i>
+        <i className="fa-solid fa-square-plus" onClick={createWorkspace}></i>
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
