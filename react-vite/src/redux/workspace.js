@@ -8,6 +8,7 @@ const CREATE_WORKSPACE = "workspace/CREATE_WORKSPACE";
 const EDIT_WORKSPACE = "workspace/EDIT_WORKSPACE";
 const DELETE_WORKSPACE = "workspace/DELETE_WORKSPACE";
 
+
 // POJO action creators
 const loadWorkspacesAction = workspaces => ({
   type: LOAD_WORKSPACES,
@@ -51,11 +52,11 @@ export const loadWorkspaces = () => async (dispatch, getState) => {
 
 export const createWorkspaceThunk = workspace => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/`, {
-      method: "POST",
-      body: JSON.stringify(workspace)
+    method: "POST",
+    body: JSON.stringify(workspace)
   });
   const data = await res.json();
-  if (!res.ok) return {errors: data}
+  if (!res.ok) return { errors: data }
   dispatch(createWorkspaceAction(data))
 }
 
@@ -65,16 +66,16 @@ export const editWorkspaceThunk = (workspaceId, workspace) => async dispatch => 
     body: JSON.stringify(workspace)
   });
   const data = await res.json();
-  if (!res.ok) return {errors: data}
+  if (!res.ok) return { errors: data }
   dispatch(editWorkspaceAction(data))
 }
 
 export const deleteWorkspaceThunk = (workspaceId) => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}`, {
-      method: "DELETE"
+    method: "DELETE"
   });
   const data = await res.json();
-  if (!res.ok) return {errors: data}
+  if (!res.ok) return { errors: data }
   dispatch(deleteWorkspaceAction(workspaceId))
 }
 
@@ -93,7 +94,7 @@ function workspaceReducer(state = initialState, action) {
     case LOAD_WORKSPACES: {
       const allWorkspaces = {}
       action.workspaces.forEach(wo => allWorkspaces[wo.id] = wo)
-      return {...state, workspaces: allWorkspaces}
+      return { ...state, workspaces: allWorkspaces }
     }
     case CREATE_WORKSPACE: {
       return {
@@ -114,9 +115,9 @@ function workspaceReducer(state = initialState, action) {
       }
     }
     case DELETE_WORKSPACE: {
-      const allWorkspaces = {...state.workspaces};
+      const allWorkspaces = { ...state.workspaces };
       delete allWorkspaces[action.workspaceId];
-      return { ...state, workspaces: allWorkspaces}
+      return { ...state, workspaces: allWorkspaces }
     }
     case RESET:
       return initialState;
