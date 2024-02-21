@@ -1,5 +1,4 @@
 from datetime import datetime
-from sqlalchemy.orm import validates
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
@@ -43,8 +42,8 @@ class Message(db.Model):
         return True
 
 
-    def to_dict(self):
-        return {
+    def to_dict(self, reactions=False):
+        result = {
             "id": self.id,
             "is_private": self.is_private,
             "message": self.message,
@@ -54,3 +53,10 @@ class Message(db.Model):
             "workspace_id": self.workspace_id,
             "created_at": self.created_at
         }
+
+        if reactions:
+            result["reactions"] = []
+            for reaction in self.reactions:
+                result["reactions"].append(reaction.to_dict())
+
+        return result

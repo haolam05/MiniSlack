@@ -1,19 +1,11 @@
 import { csrfFetch } from "./csrf";
 
-//Action type:
-const LOAD_REACTIONS = "reactions/loadReactions";
+// Actions
 const SEND_REACTION = "reactions/sendReaction";
 const DELETE_REACTION = "reaction/deleteReaction";
 
 
-//Action creator:
-const loadReactionsAction = reactions => {
-  return {
-    type: LOAD_REACTIONS,
-    reactions
-  }
-}
-
+// POJO action creator
 const sendReactionAction = reaction => {
   return {
     type: SEND_REACTION,
@@ -28,18 +20,14 @@ const deleteReactionAction = reactionId => {
   }
 }
 
-//Thunk:
-export const loadReactionsThunk = (messageId) => async dispatch => {
-  const res = await csrfFetch(`/api/messages/${messageId}/reactions/`);
-  const data = await res.json();
-  if (!res.ok) return { errors: data }
-  dispatch(loadReactionsAction(data.Reactions))
-}
 
+// Thunk action creators
 export const sendReactionThunk = (messageId, reaction) => async dispatch => {
-  const res = await csrfFetch(`/api/messages/${messageId}/reactions/`, {
+  const res = await csrfFetch(`/api/messages/${messageId}/reactions`, {
     method: "POST",
-    body: JSON.stringify(reaction)
+    body: JSON.stringify({
+      encoded_text: reaction
+    })
   });
   const data = await res.json();
   if (!res.ok) return { errors: data }
@@ -55,15 +43,18 @@ export const deleteReactionThunk = (messageId, reactionId) => async dispatch => 
   dispatch(deleteReactionAction(reactionId))
 }
 
-//Reducer
+
+// Custom selectors
+export const getReactions = () => {
+  state => state.reactions,
+    reactions => Object.values(reactions)
+}
+
+
+// Reducer
 const initialState = { reactions: {} };
 export default function reactionReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_REACTIONS: {
-      const allReactions = {};
-      action.reactions.forEach(re => allReactions[re.id] = re);
-      return { ...state, reactions: allReactions }
-    }
     case SEND_REACTION: {
       return {
         ...state,

@@ -67,6 +67,12 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     }
   }
 
+  function ShowReactions({ m }) {
+    if (m.reactions && m.reactions.length) {
+      return m.reactions.map(r => <div key={r.id} className="reaction">{r.encoded_text}</div>)
+    }
+  }
+
   return (
     <div className="messages-wrapper">
       <div className="messages-details-wrapper" onClick={hideEmojisList}>
@@ -108,6 +114,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
                 <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} />
               </div>
             )}
+            <div className="reactions"><ShowReactions m={m} /></div>
           </div>
         ))}
       </div>

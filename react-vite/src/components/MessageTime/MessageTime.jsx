@@ -1,25 +1,15 @@
+import { useDispatch } from "react-redux";
+import * as reactionActions from "../../redux/reaction";
+
 function MessageTime({ formattedDate, formattedTime, m, emojis }) {
+  const dispatch = useDispatch();
+
+  const createReaction = async reaction => {
+    dispatch(reactionActions.sendReactionThunk(m.id, String.fromCodePoint(reaction)));
+  }
+
   return (
     <>
-      {/* <div className="reaction-emojis-list">
-        {emojis && (
-          <div className="icon-emojis">
-            {emojis.map(emoji => {
-              const codePoint = "0x" + emoji.codePoint.split(" ")[0];
-              return (
-                <div
-                  id={codePoint}
-                  className="emoji"
-                  key={emoji.slug}
-                // onClick={e => setMessageInput(prev => prev + String.fromCodePoint(e.target.id))}
-                >
-                  {String.fromCodePoint(codePoint)}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div> */}
       <div className="message-time-dot">
         <i
           className="fa-solid fa-face-smile"
@@ -56,6 +46,16 @@ function MessageTime({ formattedDate, formattedTime, m, emojis }) {
                 id={codePoint}
                 className="emoji"
                 key={emoji.slug}
+                onClick={e => {
+                  const reactions = e.target.closest(".message").querySelector(".reactions");
+                  if (reactions) {
+                    const reaction = document.createElement('div');
+                    reaction.classList.add("reaction");
+                    reaction.textContent = String.fromCodePoint(codePoint);
+                    reactions.append(reaction);
+                  }
+                  createReaction(e.target.id)
+                }}
               >
                 {String.fromCodePoint(codePoint)}
               </div>

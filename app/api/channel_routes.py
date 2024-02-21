@@ -73,6 +73,6 @@ def get_channel_messages(id):
         return redirect("/api/auth/forbidden")
 
     messages = Message.query.filter(Message.channel_id == id).all()
-    messages = [message.to_dict() for message in messages]
+    messages = [message.to_dict(reactions=True) for message in messages]
 
     return { "Messages": messages }, 200
