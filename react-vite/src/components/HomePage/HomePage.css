@@ -278,3 +278,8 @@
 .edit-message-form i:hover {
   color: var(--red);
 }
+
+.delete-workspace-btn {
+  color: brown;
+  font-size: 10px;
+}
