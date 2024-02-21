@@ -99,7 +99,7 @@ Returns the information about the current user that is logged in.
 
 ### Log In a User
 
-Logs in a current user with valid credentials and returns the current user's
+Logs in a user with valid credentials and returns the current user's
 information.
 
 * Require Authentication: false
@@ -148,7 +148,9 @@ information.
           "Email provided not found."
       ]
     }
+
     or
+
     {
       "password": [
         "Password was incorrect."
@@ -157,7 +159,7 @@ information.
     ```
 ### Log Out a User
 
-Logs out current user.
+Logs out the current user, ending their session.
 
 * Require Authentication: True
 * Request
@@ -274,7 +276,7 @@ Creates a new user, logs them in as the current user, and returns the current us
 Update an existing user. (Only first name and last name can be updated)
 
 * Require Authentication: true
-* Require Authorization: true
+* Require Authorization: True. (Current user data can only be updated by the current user)
 * Request
   * Method: POST
   * URL: /api/auth/udpate
@@ -343,8 +345,8 @@ Update an existing user. (Only first name and last name can be updated)
 
 Update a user's password
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Current user data can only be updated by the current user)
 * Request
   * Method: POST
   * URL: /api/auth/password
@@ -400,8 +402,8 @@ Update a user's password
 
 Delete a user profile.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Only the current user can delete their account)
 * Request
   * Method: DELETE
   * URL: /api/auth/delete
@@ -425,7 +427,8 @@ Delete a user profile.
 ## WORKSPACES
 ### Get all workspaces joined or owned by the current signed in user
 
-* Require Authentication: true
+* Require Authentication: True
+* Require Authorization: True. (This route returns only the current user's workspaces)
 * Request
   * Method: GET
   * URL: /api/workspaces/
@@ -458,8 +461,8 @@ Delete a user profile.
     ```
 ### Get workspace by id
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the workspace owner or a member of the workspace)
 * Request
   * Method: GET
   * URL: /api/workspaces/:id
@@ -584,8 +587,8 @@ Creates a new workspace.
 
 Update an existing workspace.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the workspace owner)
 * Request
   * Method: POST
   * URL: /api/workspaces/
@@ -656,8 +659,8 @@ Update an existing workspace.
 
 Delete an existing workspace by id.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the workspace owner)
 * Request
   * Method: DELETE
   * URL: /api/workspaces/:id
@@ -688,10 +691,10 @@ Delete an existing workspace by id.
 
 ### Get all channels by workspace id
 
-Returns all channelrs that belonged to a workspace specifed by id. Only owner and members of workspace can see.
+Returns all channels that belong to a workspace specifed by id.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True (Must be the owner or a member of the workspace)
 * Request
   * Method: GET
   * URL: /api/workspaces/:workspaceId/channels
@@ -730,10 +733,10 @@ Returns all channelrs that belonged to a workspace specifed by id. Only owner an
 
 ### Create a new channel by workspace id
 
-Create a new channel for a workspace. Any workspace's member can create a channel.
+Create a new channel for a workspace
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the owner or a member of the workspace)
 * Request
   * Method: POST
   * URL: /api/workspaces/:workspaceId/channels
@@ -806,10 +809,10 @@ Create a new channel for a workspace. Any workspace's member can create a channe
 
 ### Create a new membership by workspace id
 
-Create a new membership for a workspace. Only workspace's owner can invite others.
+Create a new membership for a workspace.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Only workspace's owner can invite others to a workspace)
 * Request
   * Method: POST
   * URL: /api/workspaces/:workspaceId/memberships
@@ -864,8 +867,8 @@ Create a new membership for a workspace. Only workspace's owner can invite other
 
 Returns all members that belonged to a workspace specifed by id
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the owner or member of the workspace)
 * Request
   * Method: GET
   * URL: /api/workspaces/:workspaceId/memberships
@@ -904,12 +907,12 @@ Returns all members that belonged to a workspace specifed by id
     }
     ```
 
-### Delete a membership from a Workspace
+### Delete a member of a Workspace
 
-Delete a membership for a workspace. Only workspace's owner can remove member. User can leaves the workspace..
+Delete a member of a workspace.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the owner of the workspace. A member of the workspace can leave, which is essentially the same)
 * Request
   * Method: DELETE
   * URL: /api/workspaces/:workspaceId/memberships/:userId
@@ -959,8 +962,8 @@ Delete a membership for a workspace. Only workspace's owner can remove member. U
 
 ### Get all messages for a channel by channel id
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the owner or member of the workspace)
 * Request
   * Method: GET
   * URL: /api/channels/:id/messages
@@ -1017,10 +1020,11 @@ Delete a membership for a workspace. Only workspace's owner can remove member. U
     }
     ```
 
+### Create a message
 Create a Message
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Author must be the owner or member of the workspace)
 * Request
   * Method: POST
   * URL: /api/messages/
@@ -1124,8 +1128,8 @@ Create a Message
 
 Update an existing message.
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (Must be the author of the message)
 * Request
   * Method: PUT
   * URL: /api/messages/:id
@@ -1209,10 +1213,10 @@ Update an existing message.
 
 ### Delete a Message
 
-Delete a message. Only the message owner can delete a message.
+Delete a message
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True (Must be the author of the message)
 * Request
   * Method: DELETE
   * URL: /api/messages/:messageId
@@ -1243,8 +1247,8 @@ Delete a message. Only the message owner can delete a message.
 
 ### Get all direct messages of the current user
 
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True. (A user can only see their own direct messages)
 * Request
   * Method: GET
   * URL: /api/auth/messages
@@ -1292,7 +1296,7 @@ Delete a message. Only the message owner can delete a message.
     ```
 ### Get all reactions of a message specified by id
 
-* Require Authentication: true
+* Require Authentication: True
 * Request
   * Method: GET
   * URL: /messages/:messageID/reactions
@@ -1330,8 +1334,8 @@ Delete a message. Only the message owner can delete a message.
     ```
 
 ### Create a new reaction for a message specified by id
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True (Must be the owner or a member of a workspace to add a reaction to a channel message. Must be sender or receiver of a private message to add a reaction)
 * Request
   * Method: POST
   * URL: /messages/:messageID/reactions
@@ -1368,8 +1372,8 @@ Delete a message. Only the message owner can delete a message.
     }
     ```
 ### Delete a reaction for a message specified by id
-* Require Authentication: true
-* Require Authorization: true
+* Require Authentication: True
+* Require Authorization: True (Must be the author of the reaction)
 * Request
   * Method: DELETE
   * URL: /messages/:messageID/reactions/:reactionID
