@@ -29,6 +29,7 @@ function HomePage() {
   const channels = useSelector(channelActions.getChannels);
   const messages = useSelector(messageActions.getMessages);
   const memberships = useSelector(membershipActions.getMemberships);
+  const emojis = useSelector(sessionActions.getEmojis);
 
   const clearMessageHeader = () => {
     const messageHeader = document.querySelector(".message-header");
@@ -38,7 +39,8 @@ function HomePage() {
   useEffect(() => {
     clearMessageHeader();
     const loadData = async () => {
-      await dispatch(sessionActions.restoreSession);
+      await dispatch(sessionActions.restoreSession());
+      await dispatch(sessionActions.loadEmojis());
       if (userIsValid(user)) {
         await dispatch(workspaceActions.loadWorkspaces());
       }
@@ -49,8 +51,8 @@ function HomePage() {
 
   const scrollToNewMessage = () => {
     const chatWindow = document.querySelector(".messages-details-wrapper");
-    const messageElementHeight = 79; // px
-    if (chatWindow && chatWindow.clientHeight + chatWindow.scrollTop + messageElementHeight === chatWindow.scrollHeight) {
+    const messageElHeight = 79; // px
+    if (chatWindow && Math.abs(chatWindow.scrollHeight - messageElHeight - (chatWindow.clientHeight + chatWindow.scrollTop) <= 2)) {
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
   }
@@ -177,6 +179,7 @@ function HomePage() {
           scrollToNewMessage={scrollToNewMessage}
           editMessageInput={editMessageInput}
           setEditMessageInput={setEditMessageInput}
+          emojis={emojis}
         />
       </div>
     </div>

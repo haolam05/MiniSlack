@@ -5,7 +5,7 @@ import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis }) {
   const dispatch = useDispatch();
 
   const disabledInputMessage = () => {
@@ -53,9 +53,22 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     enabledSubmitButton();
   }
 
+  const showEmojisList = async e => {
+    e.stopPropagation();
+    if (!disabledInputMessage()) {
+      document.querySelector(".emojis-list").classList.remove("hidden");
+    }
+  }
+
+  const hideEmojisList = e => {
+    if (!e.target.closest(".emojis-list")) {
+      document.querySelector(".emojis-list").classList.add("hidden");
+    }
+  }
+
   return (
     <div className="messages-wrapper">
-      <div className="messages-details-wrapper">
+      <div className="messages-details-wrapper" onClick={hideEmojisList}>
         <div className="message-header"></div>
         {messages.map(m => (
           <div
@@ -97,16 +110,36 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
           </div>
         ))}
       </div>
-      <div id="message-input">
-        <form onSubmit={handleSubmit}>
+      <div id="message-input" onClick={hideEmojisList}>
+        <form onSubmit={handleSubmit} id="create-message-form">
           <textarea
             spellCheck="false"
             value={messageInput}
             disabled={disabledInputMessage()}
             onChange={e => setMessageInput(e.target.value)}
           />
+          <div className="emojis"><i onClick={showEmojisList} className="fa-solid fa-face-smile"></i></div>
           <button disabled={disabledInputMessage()} type="submit"><i className="fa-regular fa-paper-plane"></i></button>
         </form>
+      </div>
+      <div className="emojis-list hidden">
+        {emojis && (
+          <div className="icon-emojis">
+            {emojis.map(emoji => {
+              const codePoint = "0x" + emoji.codePoint.split(" ")[0];
+              return (
+                <div
+                  id={codePoint}
+                  className="emoji"
+                  key={emoji.slug}
+                  onClick={e => setMessageInput(prev => prev + String.fromCodePoint(e.target.id))}
+                >
+                  {String.fromCodePoint(codePoint)}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

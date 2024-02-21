@@ -128,6 +128,7 @@
   max-width: 80%;
   line-break: auto;
   text-align: left;
+  line-break: anywhere;
   word-wrap: break-word;
 }
 
@@ -203,27 +204,70 @@
   border-bottom-right-radius: 10px;
   margin-right: 20px;
   height: 80px;
-  padding: 10px;
-  padding-right: 40px;
+  padding: 10px 50px;
   resize: none;
   scrollbar-color: var(--gray) transparent;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
-#message-input textarea:focus {
-  outline: none;
-}
-
-#message-input button {
+.emojis {
   position: relative;
-  bottom: 50px;
+  bottom: 90px;
+  left: 10px;
   background-color: transparent;
   border-radius: 5px;
   padding: 5px;
   border: none;
   text-align: right;
-  padding-right: 40px;
+  width: fit-content;
+}
+
+#message-input button {
+  position: relative;
+  bottom: 90px;
+  left: 10px;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+  text-align: right;
+  width: fit-content;
+}
+
+.emojis>i {
+  font-size: 17pt;
+  cursor: pointer;
+}
+
+.emojis>i:hover {
+  color: var(--red);
+}
+
+.icon-emojis {
+  background-color: var(--gray);
+  border-radius: 10px;
+  position: relative;
+  bottom: 370px;
+  left: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  scrollbar-color: var(--home-page-background) transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 200px;
+  width: 350px;
+}
+
+.icon-emojis div {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #message-input button>i {
@@ -281,4 +325,13 @@
 
 .edit-message-form i:hover {
   color: var(--red);
+}
+
+#create-message-form {
+  position: relative;
+}
+
+.messages-wrapper {
+  position: relative;
+  ;
 }
