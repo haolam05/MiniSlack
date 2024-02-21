@@ -2,6 +2,7 @@ import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import UpdatedChannelModal from "../UpdateChannelModal";
 import * as channelActions from "../../redux/channel";
 
 function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
@@ -39,7 +40,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
                   <div className="update-channel-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-gear"></i>}
-                      modalComponent={<></>}
+                      modalComponent={<UpdatedChannelModal channel={c} />}
                     />
                   </div>
                   <div className="delete-channel-btn">

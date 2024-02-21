@@ -2,37 +2,37 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
-import * as workspaceActions from "../../redux/workspace";
+import * as channelActions from "../../redux/channel";
 
-const UpdatedWorkspaceModal = workspace => {
+function UpdatedChannelModal({ channel }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
-  const [name, setName] = useState(workspace.workspace.name);
+  const [name, setName] = useState(channel.channel.name);
   const [errors, setErrors] = useState({});
-
+  console.log(channel)
   const handleSubmit = async e => {
     e.preventDefault();
     disabledSubmitButton();
 
-    const newName = { name: name }
+    // const newName = { name: name }
 
-    const data = await dispatch(workspaceActions.editWorkspaceThunk(workspace.workspace.id, newName));
-    if (data?.errors) {
-      enabledSubmitButton();
-      return setErrors(data.errors);
-    }
-    setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>)
+    // const data = await dispatch(channelActions.editchannelThunk(channel.channel.id, newName));
+    // if (data?.errors) {
+    //   enabledSubmitButton();
+    //   return setErrors(data.errors);
+    // }
+    // setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>)
   }
 
-  if (!workspace) return;
+  // if (!channel) return;
 
   return (
     <>
-      <h2 className="workspace-edit-form-header">
-        <div className="subheading">Edit Workspace</div>
-        <p className="caption">{workspace.workspace?.name}</p>
+      <h2 className="channel-edit-form-header">
+        <div className="subheading">Edit channel</div>
+        <p className="caption">{channel.channel?.name}</p>
       </h2>
-      <form className="edit-workspace-form" onSubmit={handleSubmit}>
+      <form className="edit-channel-form" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -53,4 +53,4 @@ const UpdatedWorkspaceModal = workspace => {
   )
 }
 
-export default UpdatedWorkspaceModal;
+export default UpdatedChannelModal;
