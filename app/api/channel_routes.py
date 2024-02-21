@@ -9,7 +9,7 @@ channel_routes = Blueprint("channels", __name__)
 @channel_routes.route("/<int:id>", methods=['PUT'])
 @login_required
 def update_channel(id):
-    """Update a channel of a workspace. Only channel's owner can edit the channel."""
+    """Update a channel of a workspace. Only channel's owner or workspace's owner(that channel belongs to) can edit the channel."""
     form = ChannelForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -19,7 +19,7 @@ def update_channel(id):
         if not channel:
             return { "message": "Channel couldn't be found" }, 404
 
-        if current_user != channel.owner:
+        if current_user != channel.owner and current_user != channel.workspace.owner:
             return redirect("/api/auth/forbidden")
 
         new_name = form.data["name"] != channel.name
