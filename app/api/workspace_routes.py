@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Workspace, Channel, User
+from ..models import  db, Workspace, Channel, User, Message
 from ..forms import WorkspaceForm, ChannelForm, MembershipForm
 
 workspace_routes = Blueprint("workspaces", __name__)
@@ -229,3 +229,24 @@ def delete_membership(workspace_id, user_id):
     db.session.commit()
 
     return { "message": f"Successfully removed {user.email} from {workspace.name} workspace" }
+
+
+@workspace_routes.route("/<int:id>/all-memberships")
+def get_all_memberships(id):
+    """Returns all members(include deleted members) from the workspace (only if the member has ever sent a message)"""
+    workspace = Workspace.query.get(id)
+    active_members = workspace.users
+
+    member_ids = [m.id for m in active_members]
+    for message in Message.query.filter(Message.workspace_id == id):
+        sender_id = message.sender_id
+        receiver_id = message.receiver_id
+
+        if sender_id not in member_ids:
+            member_ids.append(sender_id)
+
+        if receiver_id and receiver_id not in member_ids:
+            member_ids.append(receiver_id)
+
+    members = [{**User.query.get(member_id).to_dict(), "workspace_id": id} for member_id in member_ids]
+    return members, 200

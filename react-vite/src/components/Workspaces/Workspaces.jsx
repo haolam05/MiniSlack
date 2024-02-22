@@ -24,6 +24,21 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
     setModalContent(<InviteMemberFormModal workspaceId={workspaceId} />)
   }
 
+  const leaveWorkspace = async workspaceId => {
+    await dispatch(workspaceActions.deleteMembershipThunk(workspaceId, user.id));
+    setModalContent(<h2 className="subheading alert-success">Successfully Deleted Workspace</h2>);
+  }
+
+  const showDeleteMembershipModal = workspaceId => { // user leaves workspace
+    setModalContent(
+      <ConfirmDeleteFormModal
+        text="Are you sure you want to leave this workspace?"
+        deleteCb={() => leaveWorkspace(workspaceId)}
+        cancelDeleteCb={closeModal}
+      />
+    );
+  }
+
   return (
     <div id="workspaces">
       <h2 className="subheading">
@@ -43,29 +58,37 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
             >
               <div className="workspace-details">
                 <div>{w.name}</div>
-                <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
-                  <div className="invite-member" onClick={() => inviteMember(w.id)}>
-                    <i className="fa-solid fa-share-from-square"></i>
+                {w.owner_id === user.id ? (
+                  <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
+                    <div className="invite-member" onClick={() => inviteMember(w.id)}>
+                      <i className="fa-solid fa-share-from-square"></i>
+                    </div>
+                    <div className="update-workspace-btn">
+                      <OpenModalButton
+                        buttonText={<i className="fa-solid fa-gear"></i>}
+                        modalComponent={<UpdatedWorkspaceModal workspace={w} />}
+                      />
+                    </div>
+                    <div className="delete-workspace-btn">
+                      <OpenModalButton
+                        buttonText={<i className="fa-solid fa-trash-can delete-workspace-btn"></i>}
+                        modalComponent={
+                          <ConfirmDeleteFormModal
+                            text="Are you sure you want to delete this workspace?"
+                            deleteCb={e => deleteWorkspace(e, w.id)}
+                            cancelDeleteCb={closeModal}
+                          />
+                        }
+                      />
+                    </div>
                   </div>
-                  <div className="update-workspace-btn">
-                    <OpenModalButton
-                      buttonText={<i className="fa-solid fa-gear"></i>}
-                      modalComponent={<UpdatedWorkspaceModal workspace={w} />}
-                    />
+                ) : (
+                  <div className={`workspace-btns`} onClick={e => e.stopPropagation()}>
+                    <div className="delete-member" onClick={() => showDeleteMembershipModal(w.id)}>
+                      <i className="fa-solid fa-person-walking-arrow-right"></i>
+                    </div>
                   </div>
-                  <div className="delete-workspace-btn">
-                    <OpenModalButton
-                      buttonText={<i className="fa-solid fa-trash-can delete-workspace-btn"></i>}
-                      modalComponent={
-                        <ConfirmDeleteFormModal
-                          text="Are you sure you want to delete this workspace?"
-                          deleteCb={e => deleteWorkspace(e, w.id)}
-                          cancelDeleteCb={closeModal}
-                        />
-                      }
-                    />
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           ))}

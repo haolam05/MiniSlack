@@ -447,9 +447,21 @@
 
 .workspace-btns.me .fa-trash-can:hover,
 .workspace-btns.me .fa-gear:hover,
+.workspace-btns .fa-user-slash,
+.fa-person-walking-arrow-right:hover,
+/* .workspace-btns .fa-user-slash:hover, */
 .channel-btns.me .fa-trash-can:hover,
 .channel-btns.me .fa-gear:hover {
   color: var(--red);
+}
+
+.workspace-btns.me .fa-trash-can,
+.workspace-btns.me .fa-gear,
+/* .workspace-btns .fa-user-slash, */
+.fa-person-walking-arrow-right,
+.channel-btns.me .fa-trash-can,
+.channel-btns.me .fa-gear {
+  font-size: 10pt;
 }
 
 .workspace-edit-form-header {

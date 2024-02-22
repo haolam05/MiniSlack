@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import { createReactionApi, deleteReactionApi } from "../../utils/reactions";
 import MessageTime from "../MessageTime";
@@ -9,6 +10,7 @@ import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis }) {
   const dispatch = useDispatch();
+  const { setModalContent } = useModal();
 
   const disabledInputMessage = () => {
     if (user && user.user === null) {
@@ -54,7 +56,8 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
       }
     }
 
-    await dispatch(messageActions.createMessageThunk(payload));
+    const data = await dispatch(messageActions.createMessageThunk(payload));
+    if (data?.errors) setModalContent(<h2 className="subheading modal-errors">User is no longer a member of the workspace</h2>)
     setMessageInput("");
     scrollToNewMessage();
     enabledSubmitButton();

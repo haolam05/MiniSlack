@@ -26,11 +26,17 @@ export const reset = () => ({
 
 
 // Thunk action creators
+// export const loadMemberships = workspaceId => async dispatch => {
+//   const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships`);
+//   const data = await res.json();
+//   if (!res.ok) return { errors: data };
+//   dispatch(addMemberships(data.Members));
+// }
 export const loadMemberships = workspaceId => async dispatch => {
-  const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships`);
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}/all-memberships`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
-  dispatch(addMemberships(data.Members));
+  dispatch(addMemberships(data));
 }
 
 
