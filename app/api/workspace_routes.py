@@ -235,6 +235,13 @@ def delete_membership(workspace_id, user_id):
 def get_all_memberships(id):
     """Returns all members(include deleted members) from the workspace (only if the member has ever sent a message)"""
     workspace = Workspace.query.get(id)
+
+    if not workspace:
+        return { "message": "Workspace couldn't be found" }, 404
+
+    if current_user not in workspace.users and current_user != workspace.owner:
+        return redirect("/api/auth/forbidden")
+
     active_members = workspace.users
 
     member_ids = [m.id for m in active_members]
