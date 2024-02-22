@@ -31,6 +31,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
           {workspaces.map(w => (
             <div
               id={w.id}
+              data-workspace-owner-id={w.owner_id}
               key={w.id}
               className="workspace"
               onClick={showChannelsAndMemberships}

@@ -27,6 +27,13 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     if (currentDm) currentDm.classList.remove("selected");
   }
 
+  const channelSettingClasses = c => {
+    const workspace = document.querySelector(".workspace.selected");
+    if (!workspace) return;
+    const workspaceOwnerId = workspace.dataset.workspaceOwnerId;
+    return c.owner_id === user.id || +workspaceOwnerId === user.id ? ' me' : ' hidden';
+  }
+
   return (
     <div id="workspaces" className="channels">
       <h2 className="subheading">
@@ -45,7 +52,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
             >
               <div className="channel-details">
                 <div>{c.name}</div>
-                <div className={`channel-btns${c.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
+                <div className={`channel-btns${channelSettingClasses(c)}`} onClick={e => e.stopPropagation()}>
                   <div className="update-channel-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-gear"></i>}
