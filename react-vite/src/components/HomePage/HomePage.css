@@ -519,6 +519,7 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  cursor: not-allowed;
 }
 
 .channel-information {
