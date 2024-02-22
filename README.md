@@ -96,6 +96,45 @@ Returns the information about the current user that is logged in.
       "user": null
     }
     ```
+### Get a User by ID
+
+Returns information about a user.
+
+* Require Authentication: True
+* Request
+  * Method: GET
+  * URL: /api/auth/:id
+  * Body: none
+
+* Successful Response when there is a logged in user
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": "zoro@user.io",
+      "first_name": "Zoro",
+      "id": 5,
+      "is_deleted": false,
+      "last_name": "Roronoa",
+      "profile_image_url": "https://slack2024.s3.us-west-2.amazonaws.com/public/avatar5.png",
+      "username": "zoro"
+    }
+    ```
+
+* Successful Response when there is no logged in user
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "user": null
+    }
+    ```
 
 ### Log In a User
 
