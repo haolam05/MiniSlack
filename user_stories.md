@@ -18,9 +18,9 @@
     * A user is able to enter their email and password on a clearly laid out form. The user also has an option to login as a demo user.
     * A user will be logged in upon successful completion of the sign-up form or by clicking 'login as demo user' <br />
     * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
-    * When a user enters invalid data on the log-in form, 
-    the form will display validation errors. 
-   
+    * When a user enters invalid data on the log-in form,
+    the form will display validation errors.
+
 ### Demo User
 
 * As mentioned above, unregistered and unauthorized users can login as a demo user via the link at the bottom of the login form.
@@ -38,7 +38,7 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
 
 * As a logged in user, I want to be able to view all workspaces of which I own or just as a member.
   * When on the `/workspaces` page:
-    * A user can see the workspaces of which they own or are a member. 
+    * A user can see the workspaces of which they own or are a member.
     * When a users clicks on a workspace card, the page will redirect to `/workspaces/:workspaceId`, where they're able to see channels and dms
 
 ### Create New Workspaces
@@ -51,12 +51,12 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
     * successful login redirects the user to the new workspace (`/workspaces/:workspaceId`)
 
 ### Updating Workspaces
-* An 'edit workspace' button appears below each workspace on the `/workspaces` page that the user owns. <br /> 
+* An 'edit workspace' button appears below each workspace on the `/workspaces` page that the user owns. <br />
     * Clicking the button opens a modal that shows the workspace title, channels, and members
     * The user can edit the title, add/remove channels, add/remove members
 
 ### Deleting Workspaces
-* A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br /> 
+* A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br />
     * confirmation modal??
     * Clicking the button deletes the workspace
 
@@ -89,14 +89,14 @@ at the bottom of the channel list
 ### Send Messages
 * A logged-in user can send a direct message or message in channel to workspace of which the belong
   * Clicking on a channel or direct message will open the channel or message conversation on the main part of the page
-  * The bottom of the page will show a text area for the user to type a message. The textarea has a send icon; clicking the icon or pressing enter sends the message to the conversation
+  * The bottom of the page will show a text area for the user to type a message. The textarea has a send icon; clicking the icon sends the message to the conversation
 
 ### Edit Messages
-* If a user hovers over a message that they authored, an edit button appears.
+* If a user click on a message that they authored, an edit button appears.
   * Clicking the edit button will allow them to edit their message
 
 ### Delete Messages
-* If a user hovers over a message that they authored, a delete button appears.
+* If a user click on a message that they authored, a delete button appears.
   * Clicking the delete button will allow them to delete their message
 
 ## Reactions
