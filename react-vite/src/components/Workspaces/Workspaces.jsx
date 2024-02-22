@@ -20,7 +20,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
     setModalContent(<WorkspaceFormModal />)
   }
 
-  const inviteMember = (workspaceId) => {
+  const inviteMember = workspaceId => {
     setModalContent(<InviteMemberFormModal workspaceId={workspaceId} />)
   }
 

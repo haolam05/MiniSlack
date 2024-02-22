@@ -55,7 +55,7 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
 
 
 ### Deleting Workspaces
-* A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br /> 
+* A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br />
     * confirmation modal??
     * Clicking the button deletes the workspace
 
@@ -88,14 +88,14 @@ at the bottom of the channel list
 ### Send Messages
 * A logged-in user can send a direct message or message in channel to workspace of which the belong
   * Clicking on a channel or direct message will open the channel or message conversation on the main part of the page
-  * The bottom of the page will show a text area for the user to type a message. The textarea has a send icon; clicking the icon or pressing enter sends the message to the conversation
+  * The bottom of the page will show a text area for the user to type a message. The textarea has a send icon; clicking the icon sends the message to the conversation
 
 ### Edit Messages
-* If a user hovers over a message that they authored, an edit button appears.
+* If a user click on a message that they authored, an edit button appears.
   * Clicking the edit button will allow them to edit their message
 
 ### Delete Messages
-* If a user hovers over a message that they authored, a delete button appears.
+* If a user click on a message that they authored, a delete button appears.
   * Clicking the delete button will allow them to delete their message
 
 ## Reactions

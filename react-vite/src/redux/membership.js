@@ -47,10 +47,12 @@ const initialState = { memberships: {} };
 export default function membershipReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_MEMBERSHIPS: {
+      const allMemberships = {};
+      action.memberships.forEach(m => allMemberships[m.id] = m)
       return {
         ...state,
         memberships: {
-          ...action.memberships
+          ...allMemberships
         }
       }
     }
