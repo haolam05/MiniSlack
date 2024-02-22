@@ -7,53 +7,52 @@
 * Unregistered and unauthorized users are able to sign up for the website via a sign-up form.
   * A user accesses the sign-up form by clicking the profile button on the left side of the page, then clicking the sign up button, at which point a modal appears:
     * A user is able to enter their first name, last name, email, username, password, and profile image (optional) on a clearly laid out form.
-    * A user will be logged in upon successful completion of the sign-up form, seamlessly accessing the site's functionality
+    * A user will be logged in upon successfully completing the sign-up form
     * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
-    * When a user enters invalid data on the sign-up form, the website will display validation errors in the form, and also repopulate the form with the valid entries. <br />
+    * When a user enters invalid data on the sign-up form, the app will display validation errors in the form, and also repopulate the form with the valid entries. <br />
 
 ### Log in
 
-* Registered but unauthorized users may log into the website via a log-in form.
+* Registered but unauthorized users may log into the website via a login form.
   * A user accesses the sign-up form by clicking the profile button on the left side of the page, then clicking the Log in button, at which point a modal appears:
-    * A user is able to enter their email and password on a clearly laid out form. The user also has an option to login as a demo user.
+    * A user is able to enter their email and password on a clearly laid out form. The user also has an option to login as demo user 1 or demo user 2.
     * A user will be logged in upon successful completion of the sign-up form or by clicking 'login as demo user' <br />
     * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
     * When a user enters invalid data on the log-in form, 
-    the form will display validation errors. 
+    the form will display validation errors below field where the error occured. 
    
 ### Demo User
 
-* As mentioned above, unregistered and unauthorized users can login as a demo user via the link at the bottom of the login form.
+* As mentioned above, unregistered and unauthorized users can login as a demo user via the link at the bottom of the login form; two demo user options are available.
 Clicking the link logs the user in as a guest so they can use the site as a standard user.
 
 ### Log Out
 
-* Logged in users can log out via an easy to find log out button on the navigation bar.
-    * The log out button is in the nav bar, which appears on all pages of the site. Upon logout, the user is redirected to the <br />
-    sign in page.
+* Logged-in users can end their session by clicking the user profile button at the top-left side of the page, then by clicking the Log Out button.
+  * Once the user has logged out, the user's workspace, channel, and direct message data are cleared from the UI.
 
 ## Workspaces
 
 ### View Workspaces
 
-* As a logged in user, I want to be able to view all workspaces of which I own or just as a member.
-  * When on the `/workspaces` page:
-    * A user can see the workspaces of which they own or are a member. 
-    * When a users clicks on a workspace card, the page will redirect to `/workspaces/:workspaceId`, where they're able to see channels and dms
+* Logged-in users' workspaces appear in the workspaces container on the top left of the screen; the container shows only workspaces that user is a member of or owns. 
+  * Selecting a workspace causes associated data to display (channels, direct messages). Further explanation in following sections
 
 ### Create New Workspaces
 
-* Logged in users can create a new workspace.
-  * When a user clicks on the "CREATE A NEW WORKSPACE" button, they are redirected to `/workspaces/new` page:
-    * the `/workspaces/new` page has a simple form that prompts the user to input a workspace name, a first channel, <br />
-    and a list of member emails
-      * an invalid sign-up form shows validation errors in the form but also repopulates the form with valid data
-    * successful login redirects the user to the new workspace (`/workspaces/:workspaceId`)
+* Logged-in users can create a new workspace by clicking the 'plus' icon above the Workspaces container; clicking the icon opens a modal, prompting the user to enter a workspace name.
+ * If the user has not entered a workspace name of at least 4 characters, the submit button is disabled.
+ * If the user enters a workspace name that already exists, they will see a validation error and be given the option to re-submit
+ * A successfully created workspace will appear in the workspace container alongside preexisting workspaces
+
 
 ### Updating Workspaces
-* An 'edit workspace' button appears below each workspace on the `/workspaces` page that the user owns. <br /> 
-    * Clicking the button opens a modal that shows the workspace title, channels, and members
-    * The user can edit the title, add/remove channels, add/remove members
+* Logged-in users will see three icons alongside their owned workspaces in the workspacec container: an arrow, a gear, and a trash can. 
+  * Clicking the arrow icon opens a modal, prompting the user to invite another to the workspace by entering their email. 
+    * If the email field is empty or does not contain data with valid email syntax, the send button is disabled.
+    * If an email is submitted that is not in the database, a validation error will appear in the form and the user will be allowed to edit and re-submit.
+    * If a valid email is entered, a new user will be added to the workspace. The new user's profile appears in the Direct Messages container. (The new user can "reject" the invite by leaving workspace)
+
 
 ### Deleting Workspaces
 * A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br /> 
