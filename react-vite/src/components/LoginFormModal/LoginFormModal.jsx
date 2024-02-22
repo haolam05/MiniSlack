@@ -63,6 +63,7 @@ function LoginFormModal() {
         <input
           type="text"
           spellCheck={false}
+          placeholder="user@example.com"
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
@@ -72,6 +73,7 @@ function LoginFormModal() {
         <input
           type="password"
           spellCheck={false}
+          placeholder="At least 6 characters"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required

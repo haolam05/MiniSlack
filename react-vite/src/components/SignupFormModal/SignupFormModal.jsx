@@ -55,8 +55,7 @@ function SignupFormModal() {
       !lastName.length ||
       !email.length ||
       username.length < 4 ||
-      password.length < 6 ||
-      confirmPassword !== password
+      password.length < 6
     );
   }
 
@@ -68,6 +67,7 @@ function SignupFormModal() {
         <input
           type="text"
           spellCheck={false}
+          placeholder="Required"
           value={firstName}
           onChange={e => setFirstName(e.target.value)}
           required
@@ -77,6 +77,7 @@ function SignupFormModal() {
         <input
           type="text"
           spellCheck={false}
+          placeholder="Required"
           value={lastName}
           onChange={e => setLastName(e.target.value)}
           required
@@ -86,6 +87,7 @@ function SignupFormModal() {
         <input
           type="text"
           spellCheck={false}
+          placeholder="user@example.com"
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
@@ -95,6 +97,7 @@ function SignupFormModal() {
         <input
           type="text"
           spellCheck={false}
+          placeholder="At least 4 characters"
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
@@ -104,6 +107,7 @@ function SignupFormModal() {
         <input
           type="password"
           spellCheck={false}
+          placeholder="At least 6 characters"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -113,6 +117,7 @@ function SignupFormModal() {
         <input
           type="password"
           spellCheck={false}
+          placeholder="At least 6 characters"
           value={confirmPassword}
           onChange={e => setConfirmPassword(e.target.value)}
           required
