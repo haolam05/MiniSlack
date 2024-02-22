@@ -8,7 +8,7 @@ import EditMessageForm from "../EditMessageForm";
 import EmojisList from "../EmojsList";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
 
@@ -133,7 +133,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
                 </>
               ) : (
                 <>
-                  <div className="message-image"><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
+                  <div className="message-image" title={getMessageAuthorName(m)}><img src={getMessageAuthorImage(m)} alt="avatar" /></div>
                   <div>{m.message}</div>
                 </>
               )}

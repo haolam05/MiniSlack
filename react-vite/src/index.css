@@ -169,13 +169,16 @@ form .btn-primary.enabled:hover {
   color: var(--red);
 }
 
+
 .demo-user {
-  text-align: center;
+  text-align: left;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .demo-user:hover {
-  text-decoration: underline;
+  color: var(--red);
+  /* text-decoration: underline; */
 }
 
 .btn {
