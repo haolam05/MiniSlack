@@ -108,7 +108,6 @@ export const createMembershipThunk = (workspaceId, payload, addToReduxStore) => 
   if (!res2.ok) return { errors: data2 }
   if (addToReduxStore) {
     const memberships = getState().memberships;
-    console.log(memberships, '🐼🐼🐼')
     if (!memberships[data2.user_id]) {
       dispatch(membershipActions.addMembership({ ...data2, "workspace_id": data.workspace_id }));
     }
@@ -127,7 +126,7 @@ export const leaveMembershipThunk = (workspaceId, userId) => async dispatch => {
   dispatch(messageActions.reset());
 }
 
-export const deleteMembershipThunk = (workspaceId, userId) => async _dispatch => {
+export const deleteMembershipThunk = (workspaceId, userId) => async () => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships/${userId}`, {
     method: "DELETE"
   });

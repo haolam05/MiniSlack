@@ -26,7 +26,9 @@ function MessageSettings({ setEditMessageInput }) {
     const data = await dispatch(messageActions.deleteMessageThunk(messageId));
     if (data?.errors) return;
     const message = e.target.closest(".message.me");
-    if (message) message.classList.add("hidden");
+    if (message) {
+      message.classList.add("hidden");
+    }
     closeModal();
   }
 

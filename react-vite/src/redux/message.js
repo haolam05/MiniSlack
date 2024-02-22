@@ -43,7 +43,6 @@ export const loadChannelMessages = channeId => async dispatch => {
 }
 
 export const loadDirectMessages = (id1, id2, workspaceId) => async dispatch => {
-  console.log(id1, id2, workspaceId)
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
