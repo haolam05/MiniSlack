@@ -88,7 +88,6 @@ function HomePage() {
     if (!channel) return;
     const headerName = getChannelMessagesHeader();
     const selected = document.querySelector(".workspace-message.selected");
-    // if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (headerName) {
       const messageHeader = document.querySelector(".message-header");
       messageHeader.innerHTML = `<div style="display: flex; gap: 10px; align-items: center;">

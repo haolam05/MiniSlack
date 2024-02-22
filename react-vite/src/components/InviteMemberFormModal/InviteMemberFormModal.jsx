@@ -14,14 +14,17 @@ function InviteMemberFormModal({ workspaceId }) {
     e.preventDefault();
     disabledSubmitButton();
 
+    const selectedWorkspace = document.querySelector(".workspace.selected");
+    const addToReduxStore = +selectedWorkspace.id === workspaceId;
+
     const payload = { email };
-    const data = await dispatch(workspaceActions.createMembershipThunk(workspaceId, payload));
-    console.log(data, '🐷🐷🐷🐷');
+    const data = await dispatch(workspaceActions.createMembershipThunk(workspaceId, payload, addToReduxStore));
+
     if (data?.errors) {
       enabledSubmitButton();
       return setErrors(data.errors);
     }
-    setModalContent(<h2 className="subheading alert-success">Successfully Sent Invitation</h2>);
+    setModalContent(<h2 className="subheading alert-success">Succfessully Sent Invitation</h2>);
   };
 
   const inputIsInvalid = () => {
@@ -37,7 +40,12 @@ function InviteMemberFormModal({ workspaceId }) {
       <h2 className="subheading">Send Invitation</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+        <input
+          type="email"
+          value={email}
+          placeholder="example@user.io"
+          onChange={e => setEmail(e.target.value)}
+        />
         {errors.email && <p className="modal-errors">{errors.email}</p>}
         <button
           type="submit"
