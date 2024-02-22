@@ -530,7 +530,7 @@
 }
 
 .channel-info-label div {
-  color: rgb(173, 173, 218);
+  color: var(--purple);
 }
 
 .channel-information p {
@@ -567,4 +567,11 @@
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
+  box-shadow: var(--box-shadow);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.demo-users .text {
+  color: var(--purple);
 }

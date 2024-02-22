@@ -87,7 +87,7 @@ function LoginFormModal() {
           Submit
         </button>
         <div className="demo-users">
-          <p>Login as demo user: </p>
+          <p className="text">Login as demo user: </p>
           <p type="submit" onClick={e => handleSubmit(e, true, false)} className="demo-user">user 1</p>
           <p type="submit" onClick={e => handleSubmit(e, false, true)} className="demo-user">user 2</p>
         </div>
