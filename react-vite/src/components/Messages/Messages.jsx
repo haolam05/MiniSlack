@@ -11,12 +11,17 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
   const dispatch = useDispatch();
 
   const disabledInputMessage = () => {
-    if (user && user.user === null) return true;
+    if (user && user.user === null) {
+      setMessageInput("");
+      return true;
+    }
     const userReceiver = document.querySelector(".workspace-message.selected");
     const channelReceiver = document.querySelector(".workspace-channel.selected");
     const workspace = document.querySelector(".workspace.selected");
-    if (!workspace) return true;
-    if (!userReceiver && !channelReceiver) return true;
+    if (!workspace || (!userReceiver && !channelReceiver)) {
+      setMessageInput("");
+      return true;
+    }
     return false;
   }
 
@@ -152,8 +157,18 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             disabled={disabledInputMessage()}
             onChange={e => setMessageInput(e.target.value)}
           />
-          <div className="emojis"><i onClick={showEmojisList} className="fa-solid fa-face-smile"></i></div>
-          <button disabled={disabledInputMessage()} type="submit"><i className="fa-regular fa-paper-plane"></i></button>
+          <div className="emojis">
+            <i onClick={showEmojisList} className={`fa-solid fa-face-smile${disabledInputMessage() ? " disabled" : ""}`}>
+            </i>
+          </div>
+          <button
+            disabled={disabledInputMessage()}
+            type="submit"
+            className={disabledInputMessage() ? "disabled" : ""}
+          >
+            <i className="fa-regular fa-paper-plane">
+            </i>
+          </button>
         </form>
       </div>
       <EmojisList emojis={emojis} setMessageInput={setMessageInput} />

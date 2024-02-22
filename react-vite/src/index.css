@@ -81,6 +81,7 @@ input[disabled]:hover {
   cursor: not-allowed;
 }
 
+.disabled:hover,
 select[disabled]:hover {
   cursor: not-allowed;
 }
