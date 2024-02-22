@@ -447,21 +447,35 @@
 
 .workspace-btns.me .fa-trash-can:hover,
 .workspace-btns.me .fa-gear:hover,
-.workspace-btns .fa-user-slash,
 .fa-person-walking-arrow-right:hover,
-/* .workspace-btns .fa-user-slash:hover, */
 .channel-btns.me .fa-trash-can:hover,
-.channel-btns.me .fa-gear:hover {
+.channel-btns.me .fa-gear:hover,
+.member-icon i:hover {
   color: var(--red);
 }
 
 .workspace-btns.me .fa-trash-can,
 .workspace-btns.me .fa-gear,
-/* .workspace-btns .fa-user-slash, */
 .fa-person-walking-arrow-right,
 .channel-btns.me .fa-trash-can,
-.channel-btns.me .fa-gear {
+.channel-btns.me .fa-gear,
+.member-icon-me i,
+.member-icon i {
   font-size: 10pt;
+}
+
+.membership-details-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+}
+
+.membership-image-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .workspace-edit-form-header {

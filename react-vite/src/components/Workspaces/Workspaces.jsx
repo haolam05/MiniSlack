@@ -25,8 +25,9 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
   }
 
   const leaveWorkspace = async workspaceId => {
-    await dispatch(workspaceActions.deleteMembershipThunk(workspaceId, user.id));
-    setModalContent(<h2 className="subheading alert-success">Successfully Deleted Workspace</h2>);
+    const data = await dispatch(workspaceActions.deleteMembershipThunk(workspaceId, user.id));
+    if (data?.errors) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>);
+    setModalContent(<h2 className="subheading alert-success">Successfully Leaved Workspace</h2>);
   }
 
   const showDeleteMembershipModal = workspaceId => { // user leaves workspace
