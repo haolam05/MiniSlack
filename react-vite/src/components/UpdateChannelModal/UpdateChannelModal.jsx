@@ -22,12 +22,22 @@ function UpdatedChannelModal({ channel }) {
       description
     }
 
+    const workspace = document.querySelector(".workspace.selected");
+    if (!workspace) return;
+
     const data = await dispatch(channelActions.updateChannelThunk(channel.id, payload));
     if (data?.errors) {
       enabledSubmitButton();
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully updated</h2>);
+
+    const channelEl = document.querySelector(".workspace-channel.selected");
+    if (channelEl) {
+      await dispatch(channelActions.loadChannels(+workspace.id));
+      channelEl.classList.remove("selected");
+      document.querySelector(".message-header").textContent = "";
+    }
   }
 
   if (!channel) return;
