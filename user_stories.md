@@ -19,7 +19,7 @@
     * A user will be logged in upon successful completion of the sign-up form or by clicking 'login as demo user' <br />
     * The sign-up form's submit button is disabled if the user hasn't entered data for a required field.
     * When a user enters invalid data on the log-in form, 
-    the form will display validation errors below field where the error occured. 
+    the form will display validation errors below the field where the error occured. 
    
 ### Demo User
 
@@ -52,28 +52,40 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
     * If the email field is empty or does not contain data with valid email syntax, the send button is disabled.
     * If an email is submitted that is not in the database, a validation error will appear in the form and the user will be allowed to edit and re-submit.
     * If a valid email is entered, a new user will be added to the workspace. The new user's profile appears in the Direct Messages container. (The new user can "reject" the invite by leaving workspace)
-
-
+  * Clicking the gear icon opens a modal, prompting the user to edit the workspace name. 
+    * If the name field is empty for does not contain at least 4 characters, the submit button is disabled.
+    * If the name entered is already in the database, a validation error will appear in the form and the user will be allowed to change the name and resubmit.
+    * If a valid name is entered, the new workspace name will appear throughout
+* A logged-in user inside a workspace that they own will see a profile icon with an 'x' next to alongside each user in the dm container.
+  * Clicking this icon will open a modal, asking the workspace owner if they would like to remove the member from the workspace. 
+    * Clicking 'no' closes the modal
+    * Clicking 'yes' removes the user from the worksapce and closes the modal. The deleted user data will persist throught the workspace, but that user will no longer have access. 
+  * Clicking the trash can icon opens a modal, asking they user if they would like to delete the workspace
+    * clicking 'no' closes the modal; the workspace remains
+    * clicking 'yes' deletes the workspace and all its associated data
+  
 ### Deleting Workspaces
-* A 'delete workspace' button appears below each workspace on the `/workspaces` page that the user owns . <br />
-    * confirmation modal??
-    * Clicking the button deletes the workspace
+* Logged-in users will see three icons alongside their owned workspaces in the workspacec container: an arrow, a gear, and a trash can. 
+  * Clicking the trash can icon opens a modal, asking they user if they would like to delete the workspace
+    * clicking 'no' closes the modal; the workspace remains
+    * clicking 'yes' deletes the workspace and all its associated data
 
 ## Channels
 
 ### View All Channels
-* Logged in users can view all channels in a workspace.
-* Channels appear on the left side of the page within a workspace
+* Channels belong to workspaces. If a user selects a workspace, they will see a list of its associated channels inside the Channels container on the middle-left side of the page.
+* Selecting a channel causes the channel thread to appear on page's main element.
 
 ### Create Channels
-* Logged in users can create a new channel by clicking the 'create new channel' <br/>
-at the bottom of the channel list
-  * clicking the button opens a modal with a simple form where the user enters a <br/>channel name
-  * if a channel is successfully created, the modal closes and the the new channel <br/>appears in the channel list
-  * an invalid form submit shows validation errors in the form but also repopulates <br/>the form with valid data
+* Within a workspace, logged-in users can create a new channel by clicking the '+' icon above the 'Channels' container.
+  * Clicking the '+' icon opens a modal, prompting the user to enter a name, topic (optional), and description (optional)
+    * If the name entered is already exists within the current workspace, a validation error will display in the form; the user can edit the name and re-submit
+    * If valid data are entered, the new channel will appear in the channel container
 
 ### Update Channels
-* Logged in users who own the workspace or the channel can edit the channel name via a button
+* Within a workspace, the workspace owner or channel creator can edit a channel by clicking the gear icon associated with the channel name. (The icon does not appear if the user is not authorized to edit)
+  * Clicking the gear icon opens a modal, prompting the user to edit the channel. The same validators for creating a new channel apply.
+    * If valid data are entered, the channel's update name will appear throughout
 
 ### Delete Channels
 * A channel owner or Workspace owner who is logged in can click the 'remove channel' button at the bottom of the channel list.
