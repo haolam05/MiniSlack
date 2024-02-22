@@ -160,8 +160,14 @@ function HomePage() {
   }
 
   const getMessageAuthorImage = m => {
-    const author = memberships.find(member => member.id === m.sender_id)
+    const author = memberships.find(member => member.id === m.sender_id);
     if (author) return getAvatarUrl(author.profile_image_url);
+  }
+
+  const getMessageAuthorName = m => {
+    const author = memberships.find(member => member.id === m.sender_id);
+    console.log(`${author.first_name} ${author.last_name}`)
+    if (author) return `${author.first_name} ${author.last_name}`
   }
 
   if (!isLoaded) return <Loading />
@@ -204,6 +210,7 @@ function HomePage() {
           editMessageInput={editMessageInput}
           setEditMessageInput={setEditMessageInput}
           emojis={emojis}
+          getMessageAuthorName={getMessageAuthorName}
         />
       </div>
     </div>
