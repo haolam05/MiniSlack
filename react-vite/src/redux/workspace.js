@@ -93,7 +93,7 @@ export const deleteWorkspaceThunk = workspaceId => async dispatch => {
   dispatch(deleteWorkspaceAction(workspaceId));
 }
 
-export const createMembershipThunk = (workspaceId, payload, addToReduxStore) => async dispatch => {
+export const createMembershipThunk = (workspaceId, payload, addToReduxStore) => async (dispatch, getState) => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships`, {
     method: "POST",
     body: JSON.stringify({
@@ -106,7 +106,12 @@ export const createMembershipThunk = (workspaceId, payload, addToReduxStore) => 
   const res2 = await csrfFetch(`/api/auth/${data.user_id}`);
   const data2 = await res2.json();
   if (!res2.ok) return { errors: data2 }
-  if (addToReduxStore) dispatch(membershipActions.addMembership(data2));
+  if (addToReduxStore) {
+    const memberships = getState().memberships;
+    if (!memberships[data2.user_id]) {
+      dispatch(membershipActions.addMembership(data2));
+    }
+  }
 }
 
 export const leaveMembershipThunk = (workspaceId, userId) => async dispatch => {

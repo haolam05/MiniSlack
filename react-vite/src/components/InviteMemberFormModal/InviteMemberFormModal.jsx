@@ -21,9 +21,9 @@ function InviteMemberFormModal({ workspaceId }) {
     const data = await dispatch(workspaceActions.createMembershipThunk(workspaceId, payload, addToReduxStore));
 
     if (data?.errors) {
-      enabledSubmitButton();
       return setErrors(data.errors);
     }
+    enabledSubmitButton();
     setModalContent(<h2 className="subheading alert-success">Succfessully Sent Invitation</h2>);
   };
 
@@ -43,6 +43,7 @@ function InviteMemberFormModal({ workspaceId }) {
         <input
           type="email"
           value={email}
+          spellCheck={false}
           placeholder="example@user.io"
           onChange={e => setEmail(e.target.value)}
         />
