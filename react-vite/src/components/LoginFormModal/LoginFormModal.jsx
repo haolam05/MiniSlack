@@ -17,30 +17,28 @@ function LoginFormModal() {
 
     let data;
 
-      if (loginAsDemoUser1) {
-        data = await dispatch(
-          sessionActions.login({
-            email: "haolam@user.io",
-            password:"password"
-          })
-        );
-      }
-      else if (loginAsDemoUser2) {
-        data = await dispatch(
-          sessionActions.login({
-            email: "nickyli@user.io",
-            password:"password2"
-          })
-        );
-      } else {
-        data = await dispatch(
-          sessionActions.login({
-            email,
-            password
-          })
-        )
-      }
-
+    if (loginAsDemoUser1) {
+      data = await dispatch(
+        sessionActions.login({
+          email: "haolam@user.io",
+          password: "password"
+        })
+      );
+    } else if (loginAsDemoUser2) {
+      data = await dispatch(
+        sessionActions.login({
+          email: "nickyli@user.io",
+          password: "password2"
+        })
+      );
+    } else {
+      data = await dispatch(
+        sessionActions.login({
+          email,
+          password
+        })
+      )
+    }
 
     if (data?.errors) {
       enabledSubmitButton();
@@ -86,8 +84,10 @@ function LoginFormModal() {
         >
           Submit
         </button>
-        <p type="submit" onClick={e => handleSubmit(e, true, false)} className="demo-user">Login as demo user 1</p>
-        <p type="submit" onClick={e => handleSubmit(e, false, true)} className="demo-user">Login as demo user 2</p>
+        <div className="demo-users">
+          <p type="submit" onClick={e => handleSubmit(e, true, false)} className="demo-user">Login as demo user 1</p>
+          <p type="submit" onClick={e => handleSubmit(e, false, true)} className="demo-user">Login as demo user 2</p>
+        </div>
       </form>
     </>
   );

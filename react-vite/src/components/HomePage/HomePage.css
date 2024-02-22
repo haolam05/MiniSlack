@@ -465,7 +465,8 @@
 .edit-workspace-form button,
 .create-workspace-form button,
 .edit-channel-form button,
-.create-channel-form button {
+.create-channel-form button,
+.invite-member-container button {
   background-color: var(--submit-button-background);
   border: none;
   border-radius: 10px;
@@ -525,4 +526,16 @@
 
 .invite-member i:hover {
   color: var(--red);
+}
+
+.invite-member-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.demo-users {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

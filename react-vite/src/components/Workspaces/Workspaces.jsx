@@ -4,6 +4,7 @@ import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import UpdatedWorkspaceModal from "../EditWorkspaceModal/UpdateWorkspaceModal";
 import OpenModalButton from "../OpenModalButton";
 import WorkspaceFormModal from "../WorkspaceFormModal";
+import InviteMemberFormModal from "../InviteMemberFormModal";
 import * as workspaceActions from "../../redux/workspace";
 
 function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMemberships }) {
@@ -15,8 +16,12 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
     setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>)
   }
 
-  const createWorkspace = async () => {
-    await setModalContent(<WorkspaceFormModal />)
+  const createWorkspace = () => {
+    setModalContent(<WorkspaceFormModal />)
+  }
+
+  const inviteMember = (workspaceId) => {
+    setModalContent(<InviteMemberFormModal workspaceId={workspaceId} />)
   }
 
   return (
@@ -39,7 +44,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
               <div className="workspace-details">
                 <div>{w.name}</div>
                 <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
-                  <div className="invite-member">
+                  <div className="invite-member" onClick={() => inviteMember(w.id)}>
                     <i className="fa-solid fa-share-from-square"></i>
                   </div>
                   <div className="update-workspace-btn">

@@ -93,6 +93,24 @@ export const deleteWorkspaceThunk = workspaceId => async dispatch => {
   dispatch(deleteWorkspaceAction(workspaceId));
 }
 
+export const createMembershipThunk = (workspaceId, payload) => async dispatch => {
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships`, {
+    method: "POST",
+    body: JSON.stringify({
+      ...payload
+    })
+  });
+  const data = await res.json();
+  console.log(data, '🐼🐼🐼🐼🐼🐼🐼🐼🐼🐼🐼')
+  if (!res.ok) return { errors: data };
+
+  const res2 = await csrfFetch(`/api/auth/${data.user_id}`);
+  const data2 = await res2.json();
+  if (!res2.ok) return { errors: data2 }
+  dispatch(membershipActions.addMembership(data2));
+}
+
+
 // Custom selectors
 export const getWorkspaces = createSelector(
   state => state.workspaces.workspaces,

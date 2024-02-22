@@ -17,6 +17,18 @@ def authenticate():
     return { 'user': None }, 200
 
 
+@auth_routes.route('/<int:id>')
+@login_required
+def get_current_user(id):
+    """Get the user by id"""
+    user = User.query.get(id)
+
+    if not user:
+        return { "message": "User couldn't be found" }, 404
+
+    return user.to_dict(), 200
+
+
 @auth_routes.route("/emojis")
 @login_required
 def get_emojis():

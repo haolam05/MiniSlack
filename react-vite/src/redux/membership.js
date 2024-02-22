@@ -2,7 +2,8 @@ import { createSelector } from "reselect";
 import { csrfFetch } from "./csrf";
 
 // Action
-const ADD_MEMBERSHIPS = " memberships/ADD_MEMBERSHIPS";
+const ADD_MEMBERSHIPS = "memberships/ADD_MEMBERSHIPS";
+const ADD_MEMBERSHIP = "memberships/ADD_MEMBERSHIP";
 const RESET = 'memberships/RESET';
 
 
@@ -13,6 +14,11 @@ const addMemberships = memberships => {
     memberships
   }
 }
+
+export const addMembership = membership => ({
+  type: ADD_MEMBERSHIP,
+  membership
+})
 
 export const reset = () => ({
   type: RESET
@@ -45,6 +51,15 @@ export default function membershipReducer(state = initialState, action) {
         ...state,
         memberships: {
           ...action.memberships
+        }
+      }
+    }
+    case ADD_MEMBERSHIP: {
+      return {
+        ...state,
+        memberships: {
+          ...state.memberships,
+          [action.membership.id]: action.membership
         }
       }
     }

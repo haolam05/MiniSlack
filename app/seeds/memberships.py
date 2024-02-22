@@ -10,8 +10,8 @@ def seed_memberships():
             "workspace_name": "aA Union"
         },
         {
-          "username": "nickyli",
-          "workspace_name": "aA Union"
+            "username": "nickyli",
+            "workspace_name": "aA Union"
         },
         {
             "username": "robin",

@@ -108,7 +108,7 @@ def delete_workspace(id):
 @workspace_routes.route("/<int:id>/channels")
 @login_required
 def channels(id):
-    """Returns all channelrs that belonged to a workspace specifed by id. Only owner and members of workspace can see."""
+    """Returns all channels that belonged to a workspace specifed by id. Only owner and members of workspace can see."""
     workspace = Workspace.query.get(id)
 
     if not workspace:
@@ -136,7 +136,7 @@ def create_channel(id):
         if not workspace:
             return { "message": "Workspace couldn't be found" }, 404
 
-        result = Channel.validate(form.data)
+        result = Channel.validate(form.data, id)
         if result != True:
             return result
 

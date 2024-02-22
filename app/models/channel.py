@@ -28,13 +28,15 @@ class Channel(db.Model):
 
 
     @classmethod
-    def validate(cls, data, new_name=True):
+    def validate(cls, data, workspace_id, new_name=True):
         if "name" not in data:
             return { "name": "Name is required" }, 400
         if len(data["name"]) < 4:
             return { "name": "Name must be at least 4 characters long" }, 400
-        if new_name and cls.query.filter(cls.name == data["name"]).one_or_none():
-            return { "name": "This name is already taken" }, 500
+        if new_name:
+            channel = cls.query.filter(cls.name == data["name"]).first()
+            if channel and channel.workspace_id == workspace_id:
+                return { "name": "This name is already taken" }, 500
         return True
 
 

@@ -17,7 +17,7 @@ def seed_workspaces():
         },
         {
             "name": "hao-nick",
-            "owner_id": username_to_ids["luffy"]
+            "owner_id": username_to_ids["haolam"]
         },
         {
             "name": "hao-nicky",
