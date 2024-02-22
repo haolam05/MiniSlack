@@ -39,6 +39,9 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
               <div className="workspace-details">
                 <div>{w.name}</div>
                 <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
+                  <div className="invite-member">
+                    <i className="fa-solid fa-share-from-square"></i>
+                  </div>
                   <div className="update-workspace-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-gear"></i>}

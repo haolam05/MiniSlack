@@ -14,7 +14,8 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     const channel = document.querySelector(`.channel-${channelId}`);
     if (!channel) return;
 
-    await dispatch(channelActions.deleteChannelThunk(channelId));
+    const isChannelMsg = channel.classList.contains("selected");
+    await dispatch(channelActions.deleteChannelThunk(channelId, isChannelMsg));
     setModalContent(<h2 className="subheading alert-success">Successfully deleted</h2>)
     channel.remove();
     const header = document.querySelector(".message-header");

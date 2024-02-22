@@ -57,14 +57,14 @@ export const updateChannelThunk = (channelId, payload) => async dispatch => {
   dispatch(updateChannelAction(data));
 }
 
-export const deleteChannelThunk = channelId => async dispatch => {
+export const deleteChannelThunk = (channelId, isChannelMsg) => async dispatch => {
   const res = await csrfFetch(`/api/channels/${channelId}`, {
     method: 'DELETE'
   });
   const data = res.json();
   if (!res.ok) return { errors: data };
   dispatch(deleteChannelAction(channelId));
-  dispatch(messageActions.reset());
+  if (isChannelMsg) dispatch(messageActions.reset());
 }
 
 export const createChannelThunk = (workspaceId, channel) => async dispatch => {
