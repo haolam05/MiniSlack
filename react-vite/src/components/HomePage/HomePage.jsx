@@ -165,7 +165,6 @@ function HomePage() {
 
   const getMessageAuthorName = m => {
     const author = memberships.find(member => member.id === m.sender_id);
-    console.log(`${author.first_name} ${author.last_name}`)
     if (author) return `${author.first_name} ${author.last_name}`
   }
 

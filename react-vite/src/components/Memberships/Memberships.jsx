@@ -20,7 +20,6 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     const data = await dispatch(workspaceActions.deleteMembershipThunk(+workspace.id, memberId));
     if (data?.errors) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>);
     setModalContent(<h2 className="subheading alert-success">Successfully Deleted Member</h2>);
-    document.querySelector(".message-header").textContent = "";
   }
 
   const showDeleteMembershipModal = (e, memberId) => { // remove member from workspace

@@ -121,7 +121,7 @@ export const leaveMembershipThunk = (workspaceId, userId) => async dispatch => {
   dispatch(messageActions.reset());
 }
 
-export const deleteMembershipThunk = (workspaceId, userId) => async _dispatch => {
+export const deleteMembershipThunk = (workspaceId, userId) => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships/${userId}`, {
     method: "DELETE"
   });
