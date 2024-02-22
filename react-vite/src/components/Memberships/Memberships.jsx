@@ -14,19 +14,21 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     return user.id === workspaceOwnerId;
   }
 
-  const deleteMember = async (workspaceId, memberId) => {
-    const data = await dispatch(workspaceActions.deleteMembershipThunk(workspaceId, memberId));
+  const deleteMember = async memberId => {
+    const workspace = document.querySelector(".workspace.selected");
+    if (!workspace) return;
+    const data = await dispatch(workspaceActions.deleteMembershipThunk(+workspace.id, memberId));
     if (data?.errors) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>);
     setModalContent(<h2 className="subheading alert-success">Successfully Deleted Member</h2>);
     document.querySelector(".message-header").textContent = "";
   }
 
-  const showDeleteMembershipModal = (e, workspaceId, memberId) => { // remove member from workspace
+  const showDeleteMembershipModal = (e, memberId) => { // remove member from workspace
     e.stopPropagation();
     setModalContent(
       <ConfirmDeleteFormModal
         text="Are you sure you want to remove this member from the workspace?"
-        deleteCb={() => deleteMember(workspaceId, memberId)}
+        deleteCb={() => deleteMember(memberId)}
         cancelDeleteCb={closeModal}
       />
     );
@@ -59,7 +61,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                 {m.id === user.id ? (
                   <span className="member-icon-me me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
-                  <span className="member-icon" onClick={e => showDeleteMembershipModal(e, m.workspace_id, m.id)}>{isWorkspaceOwner() && <i className="fa-solid fa-user-xmark"></i>}</span>
+                  <span className="member-icon" onClick={e => showDeleteMembershipModal(e, m.id)}>{isWorkspaceOwner() && <i className="fa-solid fa-user-xmark"></i>}</span>
                 )}
               </div>
             </div>

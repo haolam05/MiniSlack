@@ -15,7 +15,7 @@ function InviteMemberFormModal({ workspaceId }) {
     disabledSubmitButton();
 
     const selectedWorkspace = document.querySelector(".workspace.selected");
-    const addToReduxStore = +selectedWorkspace.id === workspaceId;
+    const addToReduxStore = +selectedWorkspace?.id === workspaceId;
 
     const payload = { email };
     const data = await dispatch(workspaceActions.createMembershipThunk(workspaceId, payload, addToReduxStore));
@@ -47,6 +47,7 @@ function InviteMemberFormModal({ workspaceId }) {
           onChange={e => setEmail(e.target.value)}
         />
         {errors.email && <p className="modal-errors">{errors.email}</p>}
+        {errors.message && <p className="modal-errors">{errors.message}</p>}
         <button
           type="submit"
           className={inputIsInvalid() ? "disabled" : ""}

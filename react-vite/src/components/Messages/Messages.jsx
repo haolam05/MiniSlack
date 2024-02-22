@@ -20,6 +20,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     const userReceiver = document.querySelector(".workspace-message.selected");
     const channelReceiver = document.querySelector(".workspace-channel.selected");
     const workspace = document.querySelector(".workspace.selected");
+    console.log(userReceiver, channelReceiver, workspace)
     if (!workspace || (!userReceiver && !channelReceiver)) {
       setMessageInput("");
       return true;
@@ -57,7 +58,10 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     }
 
     const data = await dispatch(messageActions.createMessageThunk(payload));
-    if (data?.errors) setModalContent(<h2 className="subheading modal-errors">User is no longer a member of the workspace</h2>)
+    if (data?.errors) {
+      enabledSubmitButton();
+      return setModalContent(<h2 className="subheading modal-errors">User is no longer a member of the workspace</h2>)
+    }
     setMessageInput("");
     scrollToNewMessage();
     enabledSubmitButton();

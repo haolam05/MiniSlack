@@ -109,7 +109,7 @@ export const createMembershipThunk = (workspaceId, payload, addToReduxStore) => 
   if (addToReduxStore) dispatch(membershipActions.addMembership(data2));
 }
 
-export const deleteMembershipThunk = (workspaceId, userId) => async dispatch => {
+export const leaveMembershipThunk = (workspaceId, userId) => async dispatch => {
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships/${userId}`, {
     method: "DELETE"
   });
@@ -119,6 +119,14 @@ export const deleteMembershipThunk = (workspaceId, userId) => async dispatch => 
   dispatch(membershipActions.reset());
   dispatch(channelActions.reset());
   dispatch(messageActions.reset());
+}
+
+export const deleteMembershipThunk = (workspaceId, userId) => async _dispatch => {
+  const res = await csrfFetch(`/api/workspaces/${workspaceId}/memberships/${userId}`, {
+    method: "DELETE"
+  });
+  const data = await res.json();
+  if (!res.ok) return { errors: data };
 }
 
 
