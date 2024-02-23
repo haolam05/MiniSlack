@@ -43,7 +43,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <div>
-        <button id="user-menu" onClick={toggleMenu}><FaUserCircle /></button>
+        <button title="Cilck here to login or sign up" id="user-menu" onClick={toggleMenu}><FaUserCircle /></button>
       </div>
       {showMenu && (
         <div id="user-buttons" ref={ulRef}>

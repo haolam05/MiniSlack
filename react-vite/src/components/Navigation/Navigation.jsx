@@ -39,7 +39,7 @@ function Navigation() {
         <li id="profile-buttons">
           <ProfileButton user={userIsValid(user) ? user : null} />
         </li>
-        <div onClick={showUserProfile} id="user-avatar">
+        <div onClick={showUserProfile} id="user-avatar" title="User Profile">
           {userIsValid(user) && <img src={getAvatarUrl(user.profile_image_url)} alt="avatar" />}
         </div>
       </ul>
