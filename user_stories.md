@@ -74,7 +74,6 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
 
 ### View All Channels
 * Channels belong to workspaces. If a user selects a workspace, they will see a list of its associated channels inside the Channels container on the middle-left side of the page.
-* Selecting a channel causes the channel thread to appear on page's main element.
 
 ### Create Channels
 * Within a workspace, logged-in users can create a new channel by clicking the '+' icon above the 'Channels' container.
@@ -85,37 +84,46 @@ Clicking the link logs the user in as a guest so they can use the site as a stan
 ### Update Channels
 * Within a workspace, the workspace owner or channel creator can edit a channel by clicking the gear icon associated with the channel name. (The icon does not appear if the user is not authorized to edit)
   * Clicking the gear icon opens a modal, prompting the user to edit the channel. The same validators for creating a new channel apply.
-    * If valid data are entered, the channel's update name will appear throughout
+    * If valid data are entered, the channel's updated name will appear throughout
 
 ### Delete Channels
-* A channel owner or Workspace owner who is logged in can click the 'remove channel' button at the bottom of the channel list.
-  * Clicking the button opens a modal with a list of channels and a 'delete' button. The user can select channels to delete. Clicking the 'delete' button closes the modal and deletes the channel from the channel list.
+* Within a workspace, the workspace owner or channel creator can delete a channel by clicking the trash can icon associated with the channel name. (The icon does not appear if the user is not authorized to delete)
+  * Clicking the trashcan icon opens a modal with two buttons, yes (delete) and no (keep).
+    * Clicking 'yes' deletes the channel and its associated data.
+    * Clicking 'no' closes the modal; the channel remains.
 
 ## Messages
 
 ### View All Messages
-* A logged-in user's messages are oraganized via channels and direct messages on the left side of the page.
+* A logged-in user's messages are oraganized via channels and direct messages on the left side of the page; channels and direct messages exist within a workspace. 
   * Clicking on a channel or direct message will open the channel or message conversation on the main part of the page
 
-### Send Messages
-* A logged-in user can send a direct message or message in channel to workspace of which the belong
+### Create (Send) Messages
+* Within a workspace, a logged-in user can send a channel message or direct message
   * Clicking on a channel or direct message will open the channel or message conversation on the main part of the page
-  * The bottom of the page will show a text area for the user to type a message. The textarea has a send icon; clicking the icon sends the message to the conversation
+  * The bottom of the page will show a text area for the user to type a message. The textarea has an emoji icon and a send icon (paper plane). Clicking the emoji icon opens a list of emojis that the user can add to to their message; clicking the send icon adds the message to the conversation
 
 ### Edit Messages
-* If a user click on a message that they authored, an edit button appears.
-  * Clicking the edit button will allow them to edit their message
+* Within a channel or direct-message conversation, a user can edit a message they authored by clicking the message
+  * Clicking the message expands the message container; a gear icon appears below the user's avatar in the expanded container.
+    * Clicking the gear icon expands the message container further and places the current message text into an active textarea. The user can then edit the message and submit their edits by clicking the send icon (paper plane). 
 
 ### Delete Messages
-* If a user click on a message that they authored, a delete button appears.
-  * Clicking the delete button will allow them to delete their message
+* Within a channel or direct-message conversation, a user can delete a message they authored by clicking the message.
+  * Clicking the message expands the message container; a gear trash can icon appears below the user's avatar in the expanded container.
+    * Clicking the trash can icon opens a modal with two buttons, yes (delete) and no (keep).
+      * Clicking 'yes' deletes the message a
+      * Clicking 'no' closes the modal; the message remains
 
 ## Reactions
 
 ### View All Reactions
-* If a logged-in user who is a member of a workspace clicks on the reaction icon on the message,
+* Reactions exist on a message. A logged-in user can view reactions any place a message exist -- i.e., in a channel or direct message
 
-### Send Reactions
-* If a logged-in user who is a member of a workspace clicks on the reaction icon on a message, they will add a reaction to the message
+### Create Reactions
+* A logged-in user can create a reaction by clicking any message on the screen, including their own.
+  * Clicking the message expands the message container; a smiley-face icon appears in the bottom left of the container.
+    * Clicking the smiley-face icon opens an emoji container. 
+      * Clicking an emoji in the container adds that emoji as a reaction. Users can add any number of reactions. Clicking the plus icon in the emoji container shows more emoji options.
 ### Delete Reactions
-* If a logged-in user who is a member of a workspace clicks on the reaction icon on a message they have already reacted to, they will delete their reaction
+* A logged-in user can delete their own reaction by clicking it. Other users' reactions are not clickable.
