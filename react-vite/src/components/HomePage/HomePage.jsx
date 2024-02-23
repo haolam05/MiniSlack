@@ -54,16 +54,16 @@ function HomePage() {
         if (message.is_private) {
           const member = document.querySelector(".workspace-message.selected");
           if (message.receiver_id === user.id && member && +member.id === message.sender_id) {
-            dispatch(messageActions.addMessage(message));
-            document.querySelector(".new-message").classList.remove("hidden");
-            setNewMessageNotification(true);
+            dispatch(messageActions.addMessageThunk(message));
+            document.querySelector(".new-message").classList?.remove("hidden");
+            setNewMessageNotification(message.sender_id !== message.receiver_id);
           }
         } else {
           const channel = document.querySelector(".workspace-channel.selected");
           if (channel && +channel.id === message.channel_id && message.sender_id !== user?.id) {
-            dispatch(messageActions.addMessage(message));
+            dispatch(messageActions.addMessageThunk(message));
             document.querySelector(".new-message").classList.remove("hidden");
-            if (message.sender_id !== message.receiver_id) setNewMessageNotification(true);
+            setNewMessageNotification(true);
           }
         }
       });

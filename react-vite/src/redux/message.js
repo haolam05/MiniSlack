@@ -91,6 +91,11 @@ export const deleteMessageThunk = messageId => async dispatch => {
   dispatch(removeMessage(messageId));
 }
 
+export const addMessageThunk = message => async (dispatch, getState) => {
+  if (getState().messages?.messages[message.id]) return;
+  dispatch(addMessage(message));
+}
+
 
 // Custom selectors
 export const getMessages = createSelector(
