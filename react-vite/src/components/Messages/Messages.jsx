@@ -164,7 +164,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             onChange={e => setMessageInput(e.target.value)}
           />
           <div className="emojis">
-            <i onClick={showEmojisList} className={`fa-solid fa-face-smile${disabledInputMessage() ? " disabled" : ""}`}>
+            <i onClick={showEmojisList} className={`fa-solid fa-face-smile${disabledInputMessage() ? " disabled" : ""}`} title="Add Emojis">
             </i>
           </div>
           <button
@@ -172,7 +172,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             type="submit"
             className={disabledInputMessage() ? "disabled" : ""}
           >
-            <i className="fa-regular fa-paper-plane">
+            <i className="fa-regular fa-paper-plane" title="Send">
             </i>
           </button>
         </form>

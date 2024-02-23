@@ -48,8 +48,8 @@ function MessageSettings({ setEditMessageInput }) {
 
   return (
     <div className="message-settings">
-      <span onClick={openUpdateMessageForm}><i className="fa-solid fa-gear"></i></span>
-      <span onClick={openDeleteMessageForm}><i className="fa-solid fa-trash-can"></i></span>
+      <span onClick={openUpdateMessageForm}><i className="fa-solid fa-gear" title="Update"></i></span>
+      <span onClick={openDeleteMessageForm}><i className="fa-solid fa-trash-can" title="Delete"></i></span>
     </div>
   );
 }

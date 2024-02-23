@@ -46,7 +46,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     <div id="workspaces" className="direct-messages">
       <h2 className="subheading">
         <span>Direct Messages</span>
-        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces}></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="minimize"></i>
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
@@ -69,6 +69,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                 {m.id === user.id ? (
                   <span className="member-icon-me me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
+<<<<<<< HEAD
                   <span className="member-icon">
                     {m.removed ? (
                       <i
@@ -86,6 +87,9 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                     )
                     }
                   </span>
+=======
+                  <span className="member-icon" onClick={e => showDeleteMembershipModal(e, m.id)}>{isWorkspaceOwner() && <i className="fa-solid fa-user-xmark" title="Remove this user from Workspace"></i>}</span>
+>>>>>>> 0f3b33c7091a33af696d4bdcb54439c30a4400a7
                 )}
               </div>
             </div>
