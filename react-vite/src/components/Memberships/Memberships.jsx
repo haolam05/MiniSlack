@@ -22,12 +22,21 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     setModalContent(<h2 className="subheading alert-success">Successfully Deleted Member</h2>);
   }
 
-  const showDeleteMembershipModal = (e, memberId) => { // remove member from workspace
+  const showDeleteMembershipModal = (e, memberId, email) => { // remove member from workspace
     e.stopPropagation();
     setModalContent(
       <ConfirmDeleteFormModal
         text="Are you sure you want to remove this member from the workspace?"
-        deleteCb={() => deleteMember(memberId)}
+        deleteCb={() => {
+          deleteMember(memberId);
+          const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
+          console.log(removeUserIcon)
+          if (!removeUserIcon) return;
+          removeUserIcon.classList.remove("fa-user-xmark");
+          removeUserIcon.classList.add("fa-ban");
+          removeUserIcon.setAttribute("title", "User is no longer a member of this workspace. Old messages are being kept here.");
+          removeUserIcon.addEventListener('click', e => e.stopPropagation());
+        }}
         cancelDeleteCb={closeModal}
       />
     );
@@ -60,7 +69,23 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                 {m.id === user.id ? (
                   <span className="member-icon-me me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
-                  <span className="member-icon" onClick={e => showDeleteMembershipModal(e, m.id)}>{isWorkspaceOwner() && <i className="fa-solid fa-user-xmark"></i>}</span>
+                  <span className="member-icon">
+                    {m.removed ? (
+                      <i
+                        title="User is no longer a member of this workspace. Old messages are being kept here."
+                        onClick={e => e.stopPropagation()}
+                        className={`fa-solid fa-ban`}
+                        dataset={m.email}
+                      ></i>
+                    ) : (
+                      isWorkspaceOwner() && <i
+                        onClick={e => showDeleteMembershipModal(e, m.id, m.email)}
+                        className={`fa-solid fa-user-xmark`}
+                        data-email={m.email}
+                      ></i>
+                    )
+                    }
+                  </span>
                 )}
               </div>
             </div>

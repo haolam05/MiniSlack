@@ -19,7 +19,7 @@ export const reset = () => ({
   type: RESET
 });
 
-const addMessage = message => {
+export const addMessage = message => {
   return {
     type: ADD_MESSAGE,
     message

@@ -1,3 +1,4 @@
+from ..socket import socketio
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
 from ..models import  db, Message, Workspace, Channel, User, Reaction
@@ -64,6 +65,7 @@ def create_message():
 
 
         """ Returns new message """
+        socketio.emit("new_message", new_message.to_dict())
         return new_message.to_dict(), 200
 
     return form.errors, 400

@@ -6,6 +6,7 @@ import { select } from "../../utils/dom";
 import { getAvatarUrl } from "../../utils/image";
 import { useModal } from "../../context/Modal";
 import { sortDesc } from "../../utils/sort";
+import { io } from 'socket.io-client';
 import Loading from "../Loading";
 import UserProfile from "../UserProfile";
 import Workspaces from "../Workspaces";
@@ -19,6 +20,8 @@ import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
+
+let socket;
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -41,12 +44,36 @@ function HomePage() {
   useEffect(() => {
     clearMessageHeader();
     const loadData = async () => {
+      const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
+      socket = io(url);
+      socket.on("new_message", message => {
+        // const workspace = document.querySelector(".workspace.selected");
+        // if (workspace && +workspace.id === message.workspace_id) {
+        //   if (message.channel_id !== null) {  // channel message
+        //     const channel = document.querySelector(".workspace-channel.selected");
+        //     if (channel) {
+
+        //     }
+        //   } else if (message.receiver_id !== null) {  // private message
+        //     const member = document.querySelector(".workspace-message.selected");
+        //     if (!member) {
+
+        //     }
+        //   }
+        // }
+        const workspace =
+          dispatch(messageActions.addMessage(message))
+        // receiver_id ===> a member of the current workspace ===> toggle class to become un-hidden
+      });
+
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
       if (userIsValid(user)) {
         await dispatch(workspaceActions.loadWorkspaces());
       }
       setIsLoaded(true);
+
+      return () => socket.disconnect();
     }
     loadData();
   }, [dispatch, user]);
@@ -209,6 +236,7 @@ function HomePage() {
           setEditMessageInput={setEditMessageInput}
           emojis={emojis}
           getMessageAuthorName={getMessageAuthorName}
+          socket={socket}
         />
       </div>
     </div>

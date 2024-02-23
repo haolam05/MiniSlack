@@ -110,7 +110,14 @@ def delete_user():
     if current_user.is_deleted == True:
         return { "message": "User couldn't be found" }, 404
 
+    """ Delete user """
     current_user.is_deleted = True
+
+    """ Delete workspaces owned by the user """
+    for workspace in current_user.user_workspaces:
+        db.session.delete(workspace)
+
+    """ Logout """
     db.session.commit()
     logout_user()
 

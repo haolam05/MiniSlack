@@ -26,4 +26,4 @@ COPY . .
 RUN flask db downgrade base
 RUN flask db upgrade head
 RUN flask seed all
-CMD gunicorn app:app
+CMD gunicorn -k gevent -w 1 app:app

@@ -74,7 +74,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
             }
           }}>+</p>
         </div>
-      </div>
+      </div >
       <div className="msg-date">{formattedDate(m.created_at)}</div>
       <div className="dot"><i className="fa-solid fa-circle"></i></div>
       <div className="msg-time">{formattedTime(m.created_at)}</div>

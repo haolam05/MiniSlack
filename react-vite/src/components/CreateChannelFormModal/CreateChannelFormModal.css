@@ -1,9 +1,0 @@
-#create-channel-form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#create-channel-form-container > form {
-    width: 50%;
-}

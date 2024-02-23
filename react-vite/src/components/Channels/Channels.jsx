@@ -26,6 +26,8 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
   }
 
   const createChannel = async () => {
+    const workspace = document.querySelector(".workspace.selected");
+    if (!workspace) return setModalContent(<h2 className="subheading modal-errors">Please select a workspace first</h2>)
     await setModalContent(<ChannelFormModal />);
     const currentDm = document.querySelector(".workspace-message.selected");
     if (currentDm) currentDm.classList.remove("selected");

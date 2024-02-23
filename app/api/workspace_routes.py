@@ -243,8 +243,9 @@ def get_all_memberships(id):
         return redirect("/api/auth/forbidden")
 
     active_members = workspace.users
+    active_member_ids = [m.id for m in active_members]
 
-    member_ids = [m.id for m in active_members]
+    member_ids = [*active_member_ids]
     for message in Message.query.filter(Message.workspace_id == id):
         sender_id = message.sender_id
         receiver_id = message.receiver_id
@@ -256,4 +257,6 @@ def get_all_memberships(id):
             member_ids.append(receiver_id)
 
     members = [{**User.query.get(member_id).to_dict(), "workspace_id": id} for member_id in member_ids]
+    for member in members:
+        member["removed"] = member["id"] not in active_member_ids
     return members, 200
