@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
@@ -9,20 +9,37 @@ import EditMessageForm from "../EditMessageForm";
 import EmojisList from "../EmojsList";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName, newMessageNotification, setNewMessageNotification }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [searchMessage, setSearchMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([...messages]);
   const [deletedIds, setDeletedIds] = useState([]);
+  const messagesBottomRef = useRef(null);
+
+  const scrollToNewMessage = () => {
+    messagesBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    const notification = document.querySelector(".notification");
+    if (newMessageNotification) notification.classList.remove("hidden");
+  }, [newMessageNotification]);
 
   useEffect(() => {
     setCurrentMessages([...messages]);
+    // scrollToNewMessage();
   }, [messages]);
+
+  const handleScrollingBottom = () => {
+    scrollToNewMessage();
+    const notification = document.querySelector(".notification");
+    if (notification) notification.classList.add("hidden");
+    setNewMessageNotification(false);
+  }
 
   const disabledInputMessage = () => {
     if (user && user.user === null) {
-      // setMessageInput("");
       return true;
     }
     const userReceiver = document.querySelector(".workspace-message.selected");
@@ -69,7 +86,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
       return setModalContent(<h2 className="subheading modal-errors">User is no longer a member of the workspace</h2>)
     }
     setMessageInput("");
-    scrollToNewMessage();
     enabledSubmitButton();
   }
 
@@ -174,6 +190,13 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             <div className="reactions"><ShowReactions m={m} /></div>
           </div>
         ))}
+        <div className="new-message" title="Scroll to the bottom">
+          <i className="fa-brands fa-weixin" onClick={handleScrollingBottom}></i>
+          <div className="notification hidden">
+            <i className="fa-solid fa-circle" onClick={handleScrollingBottom}></i>
+          </div>
+        </div>
+        <div ref={messagesBottomRef}></div>
       </div>
       <div id="message-input" onClick={hideEmojisList}>
         <form onSubmit={handleSubmit} id="create-message-form">
@@ -184,6 +207,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             onChange={e => setMessageInput(e.target.value)}
           />
           <div className="emojis">
+            <div>{ }</div>
             <i onClick={showEmojisList} className={`fa-solid fa-face-smile${disabledInputMessage() ? " disabled" : ""}`} title="Add Emojis">
             </i>
           </div>

@@ -655,3 +655,30 @@
 .demo-users .text {
   color: var(--purple);
 }
+
+.new-message {
+  cursor: pointer;
+  width: fit-content;
+  padding: 5px 10px;
+  position: absolute;
+  bottom: 150px;
+  right: 40px;
+  z-index: 1;
+}
+
+.new-message i {
+  font-size: 17pt;
+  color: var(--green);
+}
+
+.notification {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+}
+
+
+.notification .fa-circle::before {
+  color: var(--red);
+  font-size: 7pt;
+}

@@ -30,6 +30,7 @@ function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [messageInput, setMessageInput] = useState("");
   const [editMessageInput, setEditMessageInput] = useState("");
+  const [newMessageNotification, setNewMessageNotification] = useState(false);
   const user = useSelector(sessionActions.sessionUser);
   const workspaces = useSelector(workspaceActions.getWorkspaces);
   const channels = useSelector(channelActions.getChannels);
@@ -48,23 +49,23 @@ function HomePage() {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
       socket = io(url);
       socket.on("new_message", message => {
-        // const workspace = document.querySelector(".workspace.selected");
-        // if (workspace && +workspace.id === message.workspace_id) {
-        //   if (message.channel_id !== null) {  // channel message
-        //     const channel = document.querySelector(".workspace-channel.selected");
-        //     if (channel) {
-
-        //     }
-        //   } else if (message.receiver_id !== null) {  // private message
-        //     const member = document.querySelector(".workspace-message.selected");
-        //     if (!member) {
-
-        //     }
-        //   }
-        // }
-        const workspace =
-          dispatch(messageActions.addMessage(message))
-        // receiver_id ===> a member of the current workspace ===> toggle class to become un-hidden
+        // console.log(document.hasFocus())
+        // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
+        if (message.is_private) {
+          const member = document.querySelector(".workspace-message.selected");
+          if (message.receiver_id === user.id && member && +member.id === message.sender_id) {
+            dispatch(messageActions.addMessage(message));
+            document.querySelector(".new-message").classList.remove("hidden");
+            setNewMessageNotification(true);
+          }
+        } else {
+          const channel = document.querySelector(".workspace-channel.selected");
+          if (channel && +channel.id === message.channel_id && message.sender_id !== user?.id) {
+            dispatch(messageActions.addMessage(message));
+            document.querySelector(".new-message").classList.remove("hidden");
+            if (message.sender_id !== message.receiver_id) setNewMessageNotification(true);
+          }
+        }
       });
 
       await dispatch(sessionActions.restoreSession());
@@ -79,11 +80,20 @@ function HomePage() {
     loadData();
   }, [dispatch, user]);
 
-  const scrollToNewMessage = () => {
-    const chatWindow = document.querySelector(".messages-details-wrapper");
-    const messageElHeight = 84; // px
-    if (chatWindow && Math.abs(chatWindow.scrollHeight - messageElHeight - (chatWindow.clientHeight + chatWindow.scrollTop) <= 2)) {
-      chatWindow.scrollTop = chatWindow.scrollHeight;
+  // const scrollToNewMessage = (forceScroll = false) => {
+  //   const chatWindow = document.querySelector(".messages-details-wrapper");
+  //   if (chatWindow) {
+  //     if (forceScroll || chatWindow.scrollHeight === chatWindow.clientHeight + chatWindow.scrollTop) {
+  //       chatWindow.scrollTop = chatWindow.scrollHeight;
+  //     }
+  //   }
+  // }
+
+  const clearNotification = () => {
+    const notification = document.querySelector(".notification");
+    if (notification) {
+      notification.classList.add("hidden");
+      setNewMessageNotification(false);
     }
   }
 
@@ -100,6 +110,8 @@ function HomePage() {
   }
 
   const showChannelsAndMemberships = async e => {
+    clearNotification();
+    clearMessageHeader();
     select(e);
     const workspace = e.target.closest(".workspace");
     if (!workspace) return;
@@ -111,6 +123,7 @@ function HomePage() {
   }
 
   const showChannelMessages = async (e, c) => {
+    clearNotification();
     select(e);
     const channel = e.target.closest(".workspace-channel");
     if (!channel) return;
@@ -127,19 +140,16 @@ function HomePage() {
     }
     if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadChannelMessages(+channel.id));
-    const chatWindow = document.querySelector(".messages-details-wrapper");
-    if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   const showDirectMessages = async (e, id, workspaceId) => {
+    clearNotification();
     select(e);
     const headerName = getDirectMessagesHeader();
     const selected = document.querySelector(".workspace-channel.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
     await dispatch(messageActions.loadDirectMessages(id, user.id, workspaceId));
-    const chatWindow = document.querySelector(".messages-details-wrapper");
-    if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   const hideEditMessageForm = e => {
@@ -233,11 +243,12 @@ function HomePage() {
           formattedTime={formattedTime}
           messageInput={messageInput}
           setMessageInput={setMessageInput}
-          scrollToNewMessage={scrollToNewMessage}
           editMessageInput={editMessageInput}
           setEditMessageInput={setEditMessageInput}
           emojis={emojis}
           getMessageAuthorName={getMessageAuthorName}
+          newMessageNotification={newMessageNotification}
+          setNewMessageNotification={setNewMessageNotification}
           socket={socket}
         />
       </div>

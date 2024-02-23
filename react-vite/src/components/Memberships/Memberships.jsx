@@ -37,7 +37,6 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
         deleteCb={() => {
           deleteMember(memberId);
           const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
-          console.log(removeUserIcon)
           if (!removeUserIcon) return;
           removeUserIcon.classList.remove("fa-user-xmark");
           removeUserIcon.classList.add("fa-ban");
@@ -95,7 +94,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                         title="User is no longer a member of this workspace. Note that old messages are being preserved."
                         onClick={e => e.stopPropagation()}
                         className={`fa-solid fa-ban`}
-                        dataset={m.email}
+                        data-email={m.email}
                       ></i>
                     ) : (
                       isWorkspaceOwner() && <i
