@@ -12,6 +12,7 @@
   --my-message-background: #0084ff;
   --other-message-background: #323436;
   --submit-button-background: rgb(91, 109, 91);
+  --welcome-modal-background: rgba(26, 128, 218, 0.333);
   --purple: rgb(173, 173, 218);
   --gray: #808080;
   --dark-gray: #999999;
@@ -19,6 +20,8 @@
   --red: #FF5A5F;
   --green: rgb(93, 203, 93);
   --pink: pink;
+  --wheat: wheat;
+  --light-yellow: rgb(245, 249, 3);
 }
 
 * {

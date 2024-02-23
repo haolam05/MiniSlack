@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 
 function EmojisList({ emojis, setMessageInput }) {
   const [searchEmoji, setSearchEmoji] = useState("");
-  const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
+  const [currentEmojis, setCurrentEmojis] = useState(emojis ? [...emojis] : []);
 
   useEffect(() => {
-    setCurrentEmojis([...emojis]);
+    setCurrentEmojis(emojis ? [...emojis] : []);
   }, [emojis]);
+
+  if (!emojis) return;
 
   return (
     <div className="emojis-list hidden">

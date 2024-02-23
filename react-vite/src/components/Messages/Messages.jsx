@@ -22,7 +22,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
 
   const disabledInputMessage = () => {
     if (user && user.user === null) {
-      setMessageInput("");
+      // setMessageInput("");
       return true;
     }
     const userReceiver = document.querySelector(".workspace-message.selected");

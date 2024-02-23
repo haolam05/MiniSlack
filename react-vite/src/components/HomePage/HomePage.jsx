@@ -196,7 +196,7 @@ function HomePage() {
     if (author) return `${author.first_name} ${author.last_name}`
   }
 
-  if (!isLoaded) return <Loading />
+  if (!isLoaded) return <Loading />;
 
   return (
     <div id="home-page">
