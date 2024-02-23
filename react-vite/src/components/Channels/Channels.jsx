@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
@@ -11,8 +11,11 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
   const dispatch = useDispatch();
   const { closeModal, setModalContent } = useModal();
   const [searchChannel, setSearchChannel] = useState("");
-  const [currentChannels, setCurrentChannels] = useState(channels);
+  const [currentChannels, setCurrentChannels] = useState([...channels]);
 
+  useEffect(() => {
+    setCurrentChannels([...channels]);
+  }, [channels]);
 
   const deleteChannel = async (_e, channelId) => {
     const channel = document.querySelector(`.channel-${channelId}`);
@@ -26,7 +29,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     if (header) {
       if (selectedChannel === null || +selectedChannel?.id === channelId) header.textContent = "";
     }
-    channel.remove();
+    // channel.remove();
   }
 
   const createChannel = async () => {
@@ -53,7 +56,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
-          <div className="searchbox-channels">
+          {!channels.length ? '' : <div className="searchbox-channels">
             <input
               type="text"
               spellCheck={false}
@@ -65,7 +68,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
                 setCurrentChannels(channels.filter(channel => channel.name.toLowerCase().includes(e.target.value.toLowerCase())));
               }}
             />
-          </div>
+          </div>}
           {currentChannels.map(c => (
             <div
               id={c.id}
