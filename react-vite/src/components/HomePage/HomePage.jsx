@@ -19,6 +19,7 @@ import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
+import WelcomeModal from "../WelcomeModal/WelcomeModal";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -193,6 +194,9 @@ function HomePage() {
           showDirectMessages={showDirectMessages}
           getAvatarUrl={getAvatarUrl}
         />
+      </div>
+      <div>
+        <WelcomeModal />
       </div>
       <div id="main-content">
         <Messages
