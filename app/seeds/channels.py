@@ -99,6 +99,41 @@ def seed_channels():
             "topic": "double or single?",
             "description": "it's up to you"
         },
+        {
+            "name": "flex vs grid",
+            "owner_id": username_to_ids["nickleger"],
+            "workspace_id": workspace_name_to_ids["css champs"],
+            "topic": "can you center a div?",
+            "description": "can i?"
+        },
+        {
+            "name": "js vs css animations",
+            "owner_id": username_to_ids["nickyli"],
+            "workspace_id": workspace_name_to_ids["css champs"],
+            "topic": "animations!!!",
+            "description": "ux!"
+        },
+        {
+            "name": "friday plans",
+            "owner_id": username_to_ids["nickleger"],
+            "workspace_id": workspace_name_to_ids["team building"],
+            "topic": "plans after work",
+            "description": "a group of us go downtown after work every friday. come join!"
+        },
+        {
+            "name": "coffee heads",
+            "owner_id": username_to_ids["haolam"],
+            "workspace_id": workspace_name_to_ids["team building"],
+            "topic": "coffee!",
+            "description": "buzz buzz buzz"
+        },
+        {
+            "name": "board games",
+            "owner_id": username_to_ids["nickyli"],
+            "workspace_id": workspace_name_to_ids["team building"],
+            "topic": "board games on wednesday",
+            "description": "come to floor 10 for games!"
+        },
 
     ]
 

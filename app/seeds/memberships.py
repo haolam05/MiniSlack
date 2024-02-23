@@ -81,6 +81,14 @@ def seed_memberships():
             "username": "nickyli",
             "workspace_name": "team building"
         },
+        {
+            "username": "nickyli",
+            "workspace_name": "css champs"
+        },
+        {
+            "username": "nickleger",
+            "workspace_name": "css champs"
+        },
     ]
 
     for m in memberships:
