@@ -60,7 +60,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
             <input
               type="text"
               spellCheck={false}
-              placeholder={`🔍 Search for workspaces`}
+              placeholder={`Search for workspaces`}
               value={searchWorkspace}
               onChange={e => {
                 setSearchWorkspace(e.target.value);

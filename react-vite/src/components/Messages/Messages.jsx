@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
@@ -11,6 +12,13 @@ import * as messageActions from "../../redux/message";
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
+  const [searchMessage, setSearchMessage] = useState("");
+  const [currentMessages, setCurrentMessages] = useState([...messages]);
+  const [deletedIds, setDeletedIds] = useState([]);
+
+  useEffect(() => {
+    setCurrentMessages([...messages]);
+  }, [messages]);
 
   const disabledInputMessage = () => {
     if (user && user.user === null) {
@@ -89,7 +97,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
 
   const deleteReaction = async (e, messageId, ownerId, reactionId) => {
     e.stopPropagation();
-    if (ownerId === user.id) {
+    if (ownerId === user?.id) {
       e.target.remove();
       await deleteReactionApi(messageId, reactionId);
     }
@@ -101,7 +109,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
         return <div
           onClick={e => deleteReaction(e, m.id, r.user_id, r.id)}
           key={r.id}
-          className={`reaction${r.user_id === user.id ? '' : ' not-me'}`}
+          className={`reaction${r.user_id === user?.id ? '' : ' not-me'}`}
         >
           {r.encoded_text}
         </div>
@@ -113,15 +121,28 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     <div className="messages-wrapper">
       <div className="messages-details-wrapper" onClick={hideEmojisList}>
         <div className="message-header"></div>
-        {messages.map(m => (
+        {!messages.length ? '' : <div className="searchbox-messages">
+          <input
+            type="text"
+            spellCheck={false}
+            placeholder={`Search for messages`}
+            value={searchMessage}
+            onChange={e => {
+              setSearchMessage(e.target.value);
+              if (e.target.value === "") return setCurrentMessages(messages.filter(message => !deletedIds.includes(message.id)));
+              setCurrentMessages(messages.filter(message => !deletedIds.includes(message.id) && message.message.toLowerCase().includes(e.target.value.toLowerCase())));
+            }}
+          />
+        </div>}
+        {currentMessages.map(m => (
           <div
             id={m.id}
             key={m.id}
-            className={`message ${m.sender_id === user.id ? 'me' : ''}`}
+            className={`message ${m.sender_id === user?.id ? 'me' : ''}`}
             onClick={showMessageTime}
           >
             <div className="message-details">
-              {m.sender_id === user.id ? (
+              {m.sender_id === user?.id ? (
                 <>
                   <div>{m.message}</div>
                   <EditMessageForm
@@ -140,13 +161,13 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
                 </>
               )}
             </div>
-            {m.sender_id === user.id ? (
-              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
+            {m.sender_id === user?.id ? (
+              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user?.id ? 'me' : ''}`}>
                 <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
-                <MessageSettings setEditMessageInput={setEditMessageInput} />
+                <MessageSettings setEditMessageInput={setEditMessageInput} setDeletedIds={setDeletedIds} />
               </div>
             ) : (
-              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user.id ? 'me' : ''}`}>
+              <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user?.id ? 'me' : ''}`}>
                 <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
               </div>
             )}

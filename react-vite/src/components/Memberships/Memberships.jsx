@@ -61,7 +61,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
             <input
               type="text"
               spellCheck={false}
-              placeholder={`🔍 Search for memberships`}
+              placeholder={`Search for memberships`}
               value={searchMembership}
               onChange={e => {
                 setSearchMembership(e.target.value);

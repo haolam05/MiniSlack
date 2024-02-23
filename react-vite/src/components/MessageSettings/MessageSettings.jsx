@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 import * as messageActions from "../../redux/message";
 
-function MessageSettings({ setEditMessageInput }) {
+function MessageSettings({ setEditMessageInput, setDeletedIds }) {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
 
@@ -27,6 +27,7 @@ function MessageSettings({ setEditMessageInput }) {
     if (data?.errors) return;
     const message = e.target.closest(".message.me");
     if (message) {
+      setDeletedIds(ids => [...ids, messageId]);
       message.classList.add("hidden");
     }
     closeModal();

@@ -60,7 +60,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
             <input
               type="text"
               spellCheck={false}
-              placeholder={`🔍 Search for channels`}
+              placeholder={`Search for channels`}
               value={searchChannel}
               onChange={e => {
                 setSearchChannel(e.target.value);

@@ -275,7 +275,8 @@
 .searchbox-emojis input,
 .searchbox-workspaces input,
 .searchbox-channels input,
-.searchbox-memberships input {
+.searchbox-memberships input,
+.searchbox-messages input {
   flex-grow: 1;
   background-color: var(--other-message-background);
   border: none;
@@ -286,25 +287,50 @@
 
 .searchbox-workspaces,
 .searchbox-channels,
-.searchbox-memberships {
+.searchbox-memberships,
+.searchbox-messages {
   position: sticky;
   top: 0;
 }
 
 .searchbox-workspaces input,
 .searchbox-channels input,
-.searchbox-memberships input {
+.searchbox-memberships input,
+.searchbox-messages input,
+.searchbox-emojis input {
   width: 188px;
   padding: 10px;
   padding-left: 15px;
   border-radius: 10px;
+  background-color: rgb(81, 81, 81);
 }
 
 .searchbox-emojis input:focus,
 .searchbox-workspaces input:focus,
 .searchbox-channels input:focus,
-.searchbox-memberships input:focus {
+.searchbox-memberships input:focus,
+.searchbox-messages input:focus {
   outline: none;
+  text-align: center;
+}
+
+.searchbox-emojis input::placeholder,
+.searchbox-workspaces input::placeholder,
+.searchbox-channels input::placeholder,
+.searchbox-memberships input::placeholder,
+.searchbox-messages input::placeholder {
+  color: var(--white);
+  font-style: italic;
+  font-size: 10pt;
+  text-align: center;
+}
+
+.searchbox-messages {
+  top: 39px;
+}
+
+.searchbox-messages input {
+  width: 95%;
 }
 
 .reaction-icons {
