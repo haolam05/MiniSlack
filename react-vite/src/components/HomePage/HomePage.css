@@ -447,9 +447,10 @@
 }
 
 .message-time-dot i {
-  font-size: 10pt;
+  font-size: 17pt;
   margin-right: 5px;
   margin-left: 55px;
+  color: var(--pink);
 }
 
 .reactions {

@@ -35,7 +35,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
     <>
       <div className="message-time-dot">
         <i
-          className="fa-solid fa-face-smile"
+          className="fa-solid fa-face-smile add-reaction-icon"
           title="Add reaction"
           onClick={e => {
             const reactions = e.target.parentElement.querySelector(".reaction-icons");
