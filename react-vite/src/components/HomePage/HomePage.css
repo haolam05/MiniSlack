@@ -273,7 +273,8 @@
 }
 
 .searchbox-emojis input,
-.searchbox-workspaces input {
+.searchbox-workspaces input,
+.searchbox-channels input {
   flex-grow: 1;
   background-color: var(--other-message-background);
   border: none;
@@ -282,12 +283,14 @@
   padding: 5px 20px;
 }
 
-.searchbox-workspaces {
+.searchbox-workspaces,
+.searchbox-channels {
   position: sticky;
   top: 0;
 }
 
-.searchbox-workspaces input {
+.searchbox-workspaces input,
+.searchbox-channels input {
   width: 188px;
   padding: 10px;
   padding-left: 15px;
@@ -295,7 +298,8 @@
 }
 
 .searchbox-emojis input:focus,
-.searchbox-workspaces input:focus {
+.searchbox-workspaces input:focus,
+.searchbox-channels input:focus {
   outline: none;
 }
 
