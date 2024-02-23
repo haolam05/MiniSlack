@@ -250,16 +250,18 @@
   background-color: var(--gray);
   border-radius: 10px;
   position: relative;
-  bottom: 405px;
+  bottom: 357px;
   left: 15px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   padding: 10px;
+  padding-top: 62px;
   scrollbar-color: var(--home-page-background) transparent;
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 200px;
+  height: 100px;
+  align-items: flex-start;
   width: 350px;
 }
 
@@ -274,6 +276,7 @@
 
 .searchbox-emojis input,
 .searchbox-workspaces input,
+.searchbox-icons input,
 .searchbox-channels input,
 .searchbox-memberships input,
 .searchbox-messages input {
@@ -286,6 +289,7 @@
 }
 
 .searchbox-workspaces,
+.searchbox-icons,
 .searchbox-channels,
 .searchbox-memberships,
 .searchbox-messages {
@@ -294,6 +298,7 @@
 }
 
 .searchbox-workspaces input,
+.searchbox-icons input,
 .searchbox-channels input,
 .searchbox-memberships input,
 .searchbox-messages input,
@@ -307,6 +312,7 @@
 
 .searchbox-emojis input:focus,
 .searchbox-workspaces input:focus,
+.searchbox-icons input:focus,
 .searchbox-channels input:focus,
 .searchbox-memberships input:focus,
 .searchbox-messages input:focus {
@@ -318,7 +324,8 @@
 .searchbox-workspaces input::placeholder,
 .searchbox-channels input::placeholder,
 .searchbox-memberships input::placeholder,
-.searchbox-messages input::placeholder {
+.searchbox-messages input::placeholder,
+.searchbox-icons input::placeholder {
   color: var(--white);
   font-style: italic;
   font-size: 10pt;
@@ -331,6 +338,13 @@
 
 .searchbox-messages input {
   width: 95%;
+}
+
+.searchbox-icons {
+  display: fixed;
+  position: fixed;
+  left: 640px;
+  top: 680px;
 }
 
 .reaction-icons {
