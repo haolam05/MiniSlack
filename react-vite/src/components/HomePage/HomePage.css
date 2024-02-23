@@ -274,7 +274,8 @@
 
 .searchbox-emojis input,
 .searchbox-workspaces input,
-.searchbox-channels input {
+.searchbox-channels input,
+.searchbox-memberships input {
   flex-grow: 1;
   background-color: var(--other-message-background);
   border: none;
@@ -284,13 +285,15 @@
 }
 
 .searchbox-workspaces,
-.searchbox-channels {
+.searchbox-channels,
+.searchbox-memberships {
   position: sticky;
   top: 0;
 }
 
 .searchbox-workspaces input,
-.searchbox-channels input {
+.searchbox-channels input,
+.searchbox-memberships input {
   width: 188px;
   padding: 10px;
   padding-left: 15px;
@@ -299,7 +302,8 @@
 
 .searchbox-emojis input:focus,
 .searchbox-workspaces input:focus,
-.searchbox-channels input:focus {
+.searchbox-channels input:focus,
+.searchbox-memberships input:focus {
   outline: none;
 }
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
@@ -6,6 +7,12 @@ import * as workspaceActions from "../../redux/workspace";
 function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, showDirectMessages, getAvatarUrl }) {
   const { closeModal, setModalContent } = useModal();
   const dispatch = useDispatch();
+  const [searchMembership, setSearchMembership] = useState("");
+  const [currentMemberships, setCurrentMemberships] = useState([...memberships]);
+
+  useEffect(() => {
+    setCurrentMemberships([...memberships]);
+  }, [memberships]);
 
   const isWorkspaceOwner = () => {
     const workspace = document.querySelector(".workspace.selected");
@@ -50,7 +57,20 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
-          {memberships.map(m => (
+          {!memberships.length ? '' : <div className="searchbox-memberships">
+            <input
+              type="text"
+              spellCheck={false}
+              placeholder={`🔍 Search for memberships`}
+              value={searchMembership}
+              onChange={e => {
+                setSearchMembership(e.target.value);
+                if (e.target.value === "") return setCurrentMemberships(memberships);
+                setCurrentMemberships(memberships.filter(membership => `${membership.first_name.toLowerCase()} ${membership.last_name.toLowerCase()}`.includes(e.target.value.toLowerCase())));
+              }}
+            />
+          </div>}
+          {currentMemberships.map(m => (
             <div
               id={m.id}
               key={m.id}
