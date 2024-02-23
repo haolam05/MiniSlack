@@ -222,9 +222,7 @@ function HomePage() {
           getAvatarUrl={getAvatarUrl}
         />
       </div>
-      <div>
-        <WelcomeModal />
-      </div>
+        { !user?.id && <WelcomeModal /> }
       <div id="main-content">
         <Messages
           user={user}

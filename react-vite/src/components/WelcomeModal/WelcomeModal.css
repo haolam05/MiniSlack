@@ -8,6 +8,7 @@
     height: 450px;
     width: 800px;
     animation: slide-in 5s ease-in-out;
+    z-index: 999;
   }
 
   @keyframes slide-in {
