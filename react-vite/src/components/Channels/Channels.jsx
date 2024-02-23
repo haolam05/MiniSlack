@@ -44,7 +44,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     <div id="workspaces" className="channels">
       <h2 className="subheading">
         <span>Channels</span>
-        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="minimize"></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="Minimize"></i>
         {user?.user !== null && <i className="fa-solid fa-square-plus" onClick={createChannel} title="Create a New Channel"></i>}
       </h2>
       <div className="workspaces-list-wrapper">

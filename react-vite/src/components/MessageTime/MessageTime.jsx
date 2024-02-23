@@ -11,6 +11,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
           id={codePoint}
           className="emoji"
           key={emoji.slug}
+          title={emoji.unicodeName.slice(5)}
           onClick={e => {
             const reactions = e.target.closest(".message").querySelector(".reactions");
             if (reactions) {
@@ -32,7 +33,6 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
     <>
       <div className="message-time-dot">
         <i
-          title="Add Reactions"
           className="fa-solid fa-face-smile"
           onClick={e => {
             const reactions = e.target.parentElement.querySelector(".reaction-icons");

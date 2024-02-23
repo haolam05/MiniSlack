@@ -46,7 +46,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     <div id="workspaces" className="direct-messages">
       <h2 className="subheading">
         <span>Direct Messages</span>
-        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="minimize"></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="Minimize"></i>
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
@@ -67,12 +67,12 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                   <span className="member-name" style={{ backgroundColor: 'transparent' }} >{m.first_name} {m.last_name}</span>
                 </div>
                 {m.id === user.id ? (
-                  <span className="member-icon-me me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
+                  <span className="member-icon-me me" title="Me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
                   <span className="member-icon">
                     {m.removed ? (
                       <i
-                        title="User is no longer a member of this workspace. Old messages are being kept here."
+                        title="User is no longer a member of this workspace. Old messages are preserved"
                         onClick={e => e.stopPropagation()}
                         className={`fa-solid fa-ban`}
                         dataset={m.email}
@@ -81,6 +81,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                       isWorkspaceOwner() && <i
                         onClick={e => showDeleteMembershipModal(e, m.id, m.email)}
                         className={`fa-solid fa-user-xmark`}
+                        title="Remove this member"
                         data-email={m.email}
                       ></i>
                     )

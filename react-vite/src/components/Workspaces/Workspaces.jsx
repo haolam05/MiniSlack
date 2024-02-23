@@ -44,7 +44,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
     <div id="workspaces">
       <h2 className="subheading">
         <span>Workspaces</span>
-        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="minimize"></i>
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="Minimize"></i>
         {user?.user !== null && <i className="fa-solid fa-square-plus" onClick={createWorkspace} title="Create a New Workspace"></i>}
       </h2>
       <div className="workspaces-list-wrapper">

@@ -8,7 +8,7 @@ import EditMessageForm from "../EditMessageForm";
 import EmojisList from "../EmojsList";
 import * as messageActions from "../../redux/message";
 
-function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName, socket }) {
+function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, scrollToNewMessage, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
 
@@ -21,7 +21,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     const channelReceiver = document.querySelector(".workspace-channel.selected");
     const workspace = document.querySelector(".workspace.selected");
     if (!workspace || (!userReceiver && !channelReceiver)) {
-      setMessageInput("");
       return true;
     }
     return false;
