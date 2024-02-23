@@ -95,7 +95,7 @@ def seed_messages():
         },
         {
             "is_private": False,
-            "message": "Hey guys, let's start by introduce ourselves...",
+            "message": "Hey guys, let's start by introducing ourselves...",
             "sender_id": username_to_ids["haolam"],
             "channel_id": c_w_to_ids["general:javascript-devs"],
             "workspace_id": name_to_ids["javascript-devs"]
@@ -176,6 +176,139 @@ def seed_messages():
             "sender_id": username_to_ids["nickleger"],
             "channel_id": c_w_to_ids["general:javascript-devs"],
             "workspace_id": name_to_ids["javascript-devs"]
+        },
+        {
+            "is_private": False,
+            "message": "hash maps are fun",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["hash maps:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "agreed! 😀",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["hash maps:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "really? they stress me out",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["hash maps:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "someone help me with weighted graphs!",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["weighted graphs:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "have you tried polya's framework",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["weighted graphs:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "we can't help if you don't ask a good question",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["weighted graphs:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "we can't help if you don't ask a good question",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["weighted graphs:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "linked lists should always be doubly linked",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["basic linked lists:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "they should always have a tail pointer too! 😀",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["basic linked lists:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "i'll just use an array. 0(n) search is fine for my app",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["basic linked lists:DSNA"],
+            "workspace_id": name_to_ids["DSNA"]
+        },
+        {
+            "is_private": False,
+            "message": "weather is nice today 😀",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["general:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "so sunny!",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["general:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "so warm!",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["general:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "no homework in project week??",
+            "sender_id": username_to_ids["haolam"],
+            "channel_id": c_w_to_ids["homework discussion:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "nope. just stress lol",
+            "sender_id": username_to_ids["nickleger"],
+            "channel_id": c_w_to_ids["homework discussion:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "yay no homework",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["homework discussion:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": False,
+            "message": "we all passed, yay!",
+            "sender_id": username_to_ids["nickyli"],
+            "channel_id": c_w_to_ids["assessments:aA Union"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": True,
+            "message": "hi hao!",
+            "sender_id": username_to_ids["nickyli"],
+            "receiver_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["aA Union"]
+        },
+        {
+            "is_private": True,
+            "message": "hi nicky!",
+            "receiver_id": username_to_ids["nickyli"],
+            "sender_id": username_to_ids["haolam"],
+            "workspace_id": name_to_ids["aA Union"]
         },
     ]
 
