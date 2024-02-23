@@ -1,12 +1,12 @@
 .welcome-modal {
   position: absolute;
-  top: 100px;
-  left: 425px;
+  top: 30px;
+  left: 375px;
   background-color: var(--welcome-modal-background);
   padding: 10px;
   border-radius: 20px;
-  height: 450px;
-  width: 800px;
+  height: 650px;
+  width: 500px;
   animation: slide-in 5s ease-in-out;
   z-index: 1;
 }
@@ -17,7 +17,7 @@
   }
 
   100% {
-    transform: translateY(50px);
+    transform: translateY(25px);
   }
 }
 
@@ -53,4 +53,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 1020px) {
+  .welcome-modal {
+    width: 400px;
+    height: 750px;
+    left: 415px;
+  }
 }
