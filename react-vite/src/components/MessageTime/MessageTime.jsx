@@ -2,6 +2,8 @@ import { useState } from "react";
 
 function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }) {
   const [showAllEmojis, setShowAllEmojis] = useState(false);
+  const [searchEmoji, setSearchEmoji] = useState("");
+  const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
 
   const showEmojisHelper = icons => {
     return icons.map(emoji => {
@@ -11,6 +13,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
           id={codePoint}
           className="emoji"
           key={emoji.slug}
+          title={emoji.unicodeName.slice(5)}
           onClick={e => {
             const reactions = e.target.closest(".message").querySelector(".reactions");
             if (reactions) {
@@ -32,8 +35,8 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
     <>
       <div className="message-time-dot">
         <i
-          title="Add Reactions"
           className="fa-solid fa-face-smile"
+          title="Add reaction"
           onClick={e => {
             const reactions = e.target.parentElement.querySelector(".reaction-icons");
             const date = e.target.parentElement.parentElement.querySelector(".msg-date");
@@ -60,22 +63,37 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
             if (dot) dot.classList.remove("hidden");
           }
         }}>
+          <div className="searchbox-emojis">
+            <input
+              type="text"
+              spellCheck={false}
+              placeholder={`🔍 Search for emojis`}
+              value={searchEmoji}
+              onChange={e => {
+                setSearchEmoji(e.target.value);
+                if (e.target.value === "") return setCurrentEmojis(emojis);
+                setCurrentEmojis(emojis.filter(emoji => emoji.unicodeName.toLowerCase().includes(e.target.value.toLowerCase())));
+              }}
+            />
+          </div>
           {showAllEmojis ? (
-            <div className="current-emojis">{showEmojisHelper(emojis)}</div>
+            <div className="current-emojis">{showEmojisHelper(currentEmojis)}</div>
           ) : (
-            <div className="current-emojis">{showEmojisHelper(emojis.slice(0, 5))}</div>
+            <div className="current-emojis">{showEmojisHelper(currentEmojis.slice(0, 5))}</div>
           )}
           <p className="more-icons" onClick={e => {
             if (!showAllEmojis && e.target.textContent === '+') {
               e.target.textContent = '-'
+              e.target.setAttribute("title", "Minimize");
               setShowAllEmojis(true);
             } else if (showAllEmojis && e.target.textContent === '-') {
               e.target.textContent = '+';
+              e.target.setAttribute("title", "Expand");
               setShowAllEmojis(false);
             }
           }}>+</p>
         </div>
-      </div>
+      </div >
       <div className="msg-date">{formattedDate(m.created_at)}</div>
       <div className="dot"><i className="fa-solid fa-circle"></i></div>
       <div className="msg-time">{formattedTime(m.created_at)}</div>

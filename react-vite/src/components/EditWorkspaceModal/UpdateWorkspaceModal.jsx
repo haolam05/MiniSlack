@@ -37,6 +37,7 @@ const UpdatedWorkspaceModal = workspace => {
         <input
           type="text"
           value={name}
+          placeholder="At least 4 characters"
           spellCheck={false}
           onChange={e => setName(e.target.value)}
         />
