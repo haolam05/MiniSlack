@@ -89,6 +89,10 @@ def seed_memberships():
             "username": "nickleger",
             "workspace_name": "css champs"
         },
+        {
+            "username": "nickleger",
+            "workspace_name": "aA Union"
+        }
     ]
 
     for m in memberships:
