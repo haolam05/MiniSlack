@@ -20,6 +20,7 @@ import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
+import WelcomeModal from "../WelcomeModal/WelcomeModal";
 
 let socket;
 
@@ -221,6 +222,7 @@ function HomePage() {
           getAvatarUrl={getAvatarUrl}
         />
       </div>
+        { !user?.id && <WelcomeModal /> }
       <div id="main-content">
         <Messages
           user={user}

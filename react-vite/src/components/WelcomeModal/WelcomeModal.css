@@ -1,0 +1,55 @@
+.welcome-modal {
+    position: absolute;
+    top: 100px;
+    left: 450px;
+    background-color: rgba(26, 128, 218, 0.333);
+    padding: 10px;
+    border-radius: 20px;
+    height: 450px;
+    width: 800px;
+    animation: slide-in 5s ease-in-out;
+    z-index: 999;
+  }
+
+  @keyframes slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+  }
+
+  .welcome-modal.hidden {
+    display: none;
+  }
+
+  .welcome-modal h1 {
+    color: wheat;
+  }
+
+  .welcome-modal p {
+    color: wheat;
+    text-indent: 2em;
+    line-height: 2;
+    margin-left: 15px;
+  }
+
+  .close-welcome-modal {
+    color: rgb(245, 249, 3);
+    display: flex;
+    justify-content:flex-end;
+    cursor: pointer;
+  }
+
+  .fa-people-roof {
+    color: wheat;
+    margin-left: -20px;
+  }
+
+  .welcome-to-minislack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
