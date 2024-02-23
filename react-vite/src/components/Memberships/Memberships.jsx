@@ -18,7 +18,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
     const workspace = document.querySelector(".workspace.selected");
     if (!workspace) return false;
     const workspaceOwnerId = +workspace.dataset.workspaceOwnerId;
-    return user.id === workspaceOwnerId;
+    return user?.id === workspaceOwnerId;
   }
 
   const deleteMember = async memberId => {
@@ -86,7 +86,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                   />
                   <span className="member-name" style={{ backgroundColor: 'transparent' }} >{m.first_name} {m.last_name}</span>
                 </div>
-                {m.id === user.id ? (
+                {m.id === user?.id ? (
                   <span className="member-icon-me me" title="Me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
                   <span className="member-icon">

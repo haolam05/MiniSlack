@@ -32,7 +32,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
   }
 
   const leaveWorkspace = async workspaceId => {
-    const data = await dispatch(workspaceActions.leaveMembershipThunk(workspaceId, user.id));
+    const data = await dispatch(workspaceActions.leaveMembershipThunk(workspaceId, user?.id));
     if (data?.errors) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>);
     setModalContent(<h2 className="subheading alert-success">Successfully Leaved Workspace</h2>);
   }
@@ -79,8 +79,8 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
             >
               <div className="workspace-details">
                 <div>{w.name}</div>
-                {w.owner_id === user.id ? (
-                  <div className={`workspace-btns${w.owner_id === user.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
+                {w.owner_id === user?.id ? (
+                  <div className={`workspace-btns${w.owner_id === user?.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
                     <div className="invite-member" onClick={() => inviteMember(w.id)}>
                       <i className="fa-solid fa-share-from-square" title="Invite a user into this workspace (only can invite MiniSlack Members)"></i>
                     </div>

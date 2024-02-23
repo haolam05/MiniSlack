@@ -44,7 +44,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     const workspace = document.querySelector(".workspace.selected");
     if (!workspace) return;
     const workspaceOwnerId = workspace.dataset.workspaceOwnerId;
-    return c.owner_id === user.id || +workspaceOwnerId === user.id ? ' me' : ' hidden';
+    return c.owner_id === user?.id || +workspaceOwnerId === user?.id ? ' me' : ' hidden';
   }
 
   return (
