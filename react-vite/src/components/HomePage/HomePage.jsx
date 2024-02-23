@@ -92,7 +92,7 @@ function HomePage() {
       const messageHeader = document.querySelector(".message-header");
       messageHeader.innerHTML = `<div style="display: flex; gap: 10px; align-items: center;">
         <span>${headerName}</span>
-        <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info"></i></span>
+        <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info" title="Details"></i></span>
       </div>
       `;
       messageHeader.querySelector("#channel-info").addEventListener('click', () => setModalContent(<ChannelInfo headerName={headerName} c={c} />));

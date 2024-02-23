@@ -42,8 +42,8 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     <div id="workspaces" className="channels">
       <h2 className="subheading">
         <span>Channels</span>
-        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces}></i>
-        {user?.user !== null && <i className="fa-solid fa-square-plus" onClick={createChannel} ></i>}
+        <i className="fa-solid fa-square-minus" onClick={collapseWorkspaces} title="minimize"></i>
+        {user?.user !== null && <i className="fa-solid fa-square-plus" onClick={createChannel} title="Create a New Channel"></i>}
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
@@ -59,13 +59,13 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
                 <div className={`channel-btns${channelSettingClasses(c)}`} onClick={e => e.stopPropagation()}>
                   <div className="update-channel-btn">
                     <OpenModalButton
-                      buttonText={<i className="fa-solid fa-gear"></i>}
+                      buttonText={<i className="fa-solid fa-gear" title="Update"></i>}
                       modalComponent={<UpdatedChannelModal channel={c} />}
                     />
                   </div>
                   <div className="delete-channel-btn">
                     <OpenModalButton
-                      buttonText={<i className="fa-solid fa-trash-can delete-channel-btn"></i>}
+                      buttonText={<i className="fa-solid fa-trash-can delete-channel-btn" title="Delete"></i>}
                       modalComponent={
                         <ConfirmDeleteFormModal
                           text="Are you sure you want to delete this channel?"

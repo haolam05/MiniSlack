@@ -50,7 +50,7 @@ function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEdi
         value={editMessageInput}
         onChange={(e => setEditMessageInput(e.target.value))}
       ></textarea>
-      <i onClick={handleSubmit} className="fa-regular fa-paper-plane"></i>
+      <i onClick={handleSubmit} className="fa-regular fa-paper-plane" title="Save"></i>
     </form>
   );
 }
