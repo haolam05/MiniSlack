@@ -69,7 +69,6 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                 {m.id === user.id ? (
                   <span className="member-icon-me me" onClick={e => e.stopPropagation()}><i className="fa-solid fa-user"></i></span>
                 ) : (
-<<<<<<< HEAD
                   <span className="member-icon">
                     {m.removed ? (
                       <i
@@ -87,9 +86,6 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                     )
                     }
                   </span>
-=======
-                  <span className="member-icon" onClick={e => showDeleteMembershipModal(e, m.id)}>{isWorkspaceOwner() && <i className="fa-solid fa-user-xmark" title="Remove this user from Workspace"></i>}</span>
->>>>>>> 0f3b33c7091a33af696d4bdcb54439c30a4400a7
                 )}
               </div>
             </div>
