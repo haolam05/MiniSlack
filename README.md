@@ -965,7 +965,7 @@ Delete a member of a workspace.
 
     ```json
     {
-      "message": "Successfully removed haolam@user.io from nick-nicky workspace"
+      "message": "Successfully removed haolam@user.io from team building workspace"
     }
     ```
 

@@ -24,7 +24,7 @@ def seed_workspaces():
             "owner_id": username_to_ids["luffy"]
         },
         {
-            "name": "nick-nicky",
+            "name": "team building",
             "owner_id": username_to_ids["luffy"]
         },
         {

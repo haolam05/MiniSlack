@@ -51,7 +51,7 @@ def seed_memberships():
         },
         {
             "username": "haolam",
-            "workspace_name": "nick-nicky"
+            "workspace_name": "team building"
         },
         {
             "username": "nickyli",
@@ -68,6 +68,18 @@ def seed_memberships():
         {
             "username": "robin",
             "workspace_name": "python-devs"
+        },
+        {
+            "username": "nickleger",
+            "workspace_name": "DSNA"
+        },
+        {
+            "username": "nickleger",
+            "workspace_name": "team building"
+        },
+        {
+            "username": "nickyli",
+            "workspace_name": "team building"
         },
     ]
 

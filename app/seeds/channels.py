@@ -78,6 +78,27 @@ def seed_channels():
             "topic": "python memes",
             "description": "python memes only please!"
         },
+        {
+            "name": "hash maps",
+            "owner_id": username_to_ids["haolam"],
+            "workspace_id": workspace_name_to_ids["DSNA"],
+            "topic": "maps yeah",
+            "description": "maps yeeee"
+        },
+        {
+            "name": "weighted graphs",
+            "owner_id": username_to_ids["nickyli"],
+            "workspace_id": workspace_name_to_ids["DSNA"],
+            "topic": "no ti-89",
+            "description": "x and y??"
+        },
+        {
+            "name": "basic linked lists",
+            "owner_id": username_to_ids["nickleger"],
+            "workspace_id": workspace_name_to_ids["DSNA"],
+            "topic": "double or single?",
+            "description": "it's up to you"
+        },
 
     ]
 
