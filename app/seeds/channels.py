@@ -50,6 +50,34 @@ def seed_channels():
             "topic": "Having fun everyday!",
             "description": "We ask questions everyday. Come and join us..."
         },
+        {
+            "name": "general",
+            "owner_id": username_to_ids["nickyli"],
+            "workspace_id": workspace_name_to_ids["python-devs"],
+            "topic": "anything and everything!",
+            "description": "this is our general channel"
+        },
+        {
+            "name": "syntax questions",
+            "owner_id": username_to_ids["nickyli"],
+            "workspace_id": workspace_name_to_ids["python-devs"],
+            "topic": "python syntax questions!",
+            "description": "come here if you get confuse js and py syntax"
+        },
+        {
+            "name": "flask-help",
+            "owner_id": username_to_ids["haolam"],
+            "workspace_id": workspace_name_to_ids["python-devs"],
+            "topic": "get help with flask",
+            "description": "a supportive channel where you can discuss your flask troubles"
+        },
+        {
+            "name": "python memes",
+            "owner_id": username_to_ids["nickleger"],
+            "workspace_id": workspace_name_to_ids["python-devs"],
+            "topic": "python memes",
+            "description": "python memes only please!"
+        },
 
     ]
 

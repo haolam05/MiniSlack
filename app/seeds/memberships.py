@@ -52,7 +52,23 @@ def seed_memberships():
         {
             "username": "haolam",
             "workspace_name": "nick-nicky"
-        }
+        },
+        {
+            "username": "nickyli",
+            "workspace_name": "python-devs"
+        },
+        {
+            "username": "haolam",
+            "workspace_name": "python-devs"
+        },
+        {
+            "username": "nickleger",
+            "workspace_name": "python-devs"
+        },
+        {
+            "username": "robin",
+            "workspace_name": "python-devs"
+        },
     ]
 
     for m in memberships:
