@@ -271,11 +271,25 @@
   justify-content: center;
 }
 
+.searchbox-emojis input {
+  flex-grow: 1;
+  background-color: var(--other-message-background);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.searchbox-emojis input:focus {
+  outline: none;
+}
+
 .reaction-icons {
   display: flex;
+  flex-direction: column;
   gap: 5px;
   flex-wrap: wrap;
-  text-align: justify;
+  text-align: center;
+  justify-content: center;
   background-color: var(--home-page-background);
   border-radius: 10px;
   padding: 10px 15px;

@@ -72,7 +72,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                   <span className="member-icon">
                     {m.removed ? (
                       <i
-                        title="User is no longer a member of this workspace. Old messages are preserved"
+                        title="User is no longer a member of this workspace. Note that old messages are being preserved."
                         onClick={e => e.stopPropagation()}
                         className={`fa-solid fa-ban`}
                         dataset={m.email}
