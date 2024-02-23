@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
@@ -10,6 +11,8 @@ import * as workspaceActions from "../../redux/workspace";
 function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMemberships }) {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
+  const [searchWorkspace, setSearchWorkspace] = useState("");
+  const [currentWorkspaces, setCurrentWorkspaces] = useState(workspaces);
 
   const deleteWorkspace = async (_e, workspaceId) => {
     await dispatch(workspaceActions.deleteWorkspaceThunk(workspaceId));
@@ -49,7 +52,20 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
       </h2>
       <div className="workspaces-list-wrapper">
         <div className="workspaces-list">
-          {workspaces.map(w => (
+          <div className="searchbox-workspaces">
+            <input
+              type="text"
+              spellCheck={false}
+              placeholder={`🔍 Search for workspaces`}
+              value={searchWorkspace}
+              onChange={e => {
+                setSearchWorkspace(e.target.value);
+                if (e.target.value === "") return setCurrentWorkspaces(workspaces);
+                setCurrentWorkspaces(workspaces.filter(workspace => workspace.name.toLowerCase().includes(e.target.value.toLowerCase())));
+              }}
+            />
+          </div>
+          {currentWorkspaces.map(w => (
             <div
               id={w.id}
               data-workspace-owner-id={w.owner_id}

@@ -72,7 +72,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
               onChange={e => {
                 setSearchEmoji(e.target.value);
                 if (e.target.value === "") return setCurrentEmojis(emojis);
-                setCurrentEmojis(emojis.filter(emoji => emoji.unicodeName.toLowerCase().includes(e.target.value.toLocaleLowerCase())));
+                setCurrentEmojis(emojis.filter(emoji => emoji.unicodeName.toLowerCase().includes(e.target.value.toLowerCase())));
               }}
             />
           </div>
