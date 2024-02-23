@@ -12,15 +12,15 @@ def seed_workspaces():
             "owner_id": username_to_ids["luffy"]
         },
         {
-            "name": "hao-nick-nicky",
+            "name": "javascript-devs",
             "owner_id": username_to_ids["haolam"]
         },
         {
-            "name": "hao-nick",
+            "name": "css champs",
             "owner_id": username_to_ids["haolam"]
         },
         {
-            "name": "hao-nicky",
+            "name": "DSNA",
             "owner_id": username_to_ids["luffy"]
         },
         {

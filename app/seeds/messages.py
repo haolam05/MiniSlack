@@ -14,168 +14,168 @@ def seed_messages():
             "message": "Hi, my name is Hao",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickleger"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Nice to meet you 😀",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickleger"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Do I know you???",
             "sender_id": username_to_ids["nickleger"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Hi, my name is Hao",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickyli"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Nice to meet you 😀",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickyli"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Do I know you???",
             "sender_id": username_to_ids["nickyli"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "What do you want? Get out of my face :)",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickyli"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live? Tell me about yourself. How old are you? Where do you live?",
             "sender_id": username_to_ids["haolam"],
             "receiver_id": username_to_ids["nickyli"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "Seen ✅✅✅✅",
             "sender_id": username_to_ids["nickyli"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
             "sender_id": username_to_ids["nickyli"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
             "sender_id": username_to_ids["nickyli"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": True,
             "message": "🤩🤩🤩🤩🤩🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🙈🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗",
             "sender_id": username_to_ids["nickyli"],
             "receiver_id": username_to_ids["haolam"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Hey guys, let's start by introduce ourselves...",
             "sender_id": username_to_ids["haolam"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "My name is Nicky.",
             "sender_id": username_to_ids["nickyli"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "I'm Nick",
             "sender_id": username_to_ids["nickleger"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Where are you from?",
             "sender_id": username_to_ids["haolam"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Not sure 🐷",
             "sender_id": username_to_ids["nickyli"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Don't know 🐼",
             "sender_id": username_to_ids["nickleger"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "How old are you?",
             "sender_id": username_to_ids["haolam"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Not sure 🐷",
             "sender_id": username_to_ids["nickyli"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Don't know 🐼",
             "sender_id": username_to_ids["nickleger"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Nice to meet you",
             "sender_id": username_to_ids["haolam"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "Same",
             "sender_id": username_to_ids["nickyli"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
         {
             "is_private": False,
             "message": "SAME 😀",
             "sender_id": username_to_ids["nickleger"],
-            "channel_id": c_w_to_ids["general:hao-nick-nicky"],
-            "workspace_id": name_to_ids["hao-nick-nicky"]
+            "channel_id": c_w_to_ids["general:javascript-devs"],
+            "workspace_id": name_to_ids["javascript-devs"]
         },
     ]
 

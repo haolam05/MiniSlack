@@ -32,21 +32,21 @@ def seed_channels():
         {
             "name": "general",
             "owner_id": username_to_ids["haolam"],
-            "workspace_id": workspace_name_to_ids["hao-nick-nicky"],
+            "workspace_id": workspace_name_to_ids["javascript-devs"],
             "topic": "Study group 🐼",
             "description": "We study everyday. Come and join us..."
         },
         {
             "name": "random",
             "owner_id": username_to_ids["nickyli"],
-            "workspace_id": workspace_name_to_ids["hao-nick-nicky"],
+            "workspace_id": workspace_name_to_ids["javascript-devs"],
             "topic": "Movie everyday 🐷",
             "description": "We watch movie everyday. Come and join us..."
         },
         {
             "name": "lecture questions",
             "owner_id": username_to_ids["haolam"],
-            "workspace_id": workspace_name_to_ids["hao-nick-nicky"],
+            "workspace_id": workspace_name_to_ids["javascript-devs"],
             "topic": "Having fun everyday!",
             "description": "We ask questions everyday. Come and join us..."
         },

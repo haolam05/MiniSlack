@@ -27,27 +27,27 @@ def seed_memberships():
         },
         {
             "username": "haolam",
-            "workspace_name": "hao-nick-nicky"
+            "workspace_name": "javascript-devs"
         },
         {
             "username": "nickleger",
-            "workspace_name": "hao-nick-nicky"
+            "workspace_name": "javascript-devs"
         },
         {
             "username": "nickyli",
-            "workspace_name": "hao-nick-nicky"
+            "workspace_name": "javascript-devs"
         },
         {
             "username": "haolam",
-            "workspace_name": "hao-nick"
+            "workspace_name": "css champs"
         },
         {
             "username": "nickyli",
-            "workspace_name": "hao-nicky"
+            "workspace_name": "DSNA"
         },
         {
             "username": "haolam",
-            "workspace_name": "hao-nicky"
+            "workspace_name": "DSNA"
         },
         {
             "username": "haolam",
