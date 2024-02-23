@@ -1,14 +1,12 @@
 import { useState } from "react";
 import "./WelcomeModal.css";
 
-
 const WelcomeModal = () => {
-
     const [isOpen, setIsOpen] = useState(true);
     const onClose = () => setIsOpen(false);
 
     return (
-        <div className={isOpen? "welcome-modal visible" : "welcome-modal hidden"}>
+        <div className={isOpen ? "welcome-modal visible" : "welcome-modal hidden"}>
             <i class="fa-solid fa-circle-xmark close-welcome-modal" onClick={onClose}></i>
             <div className="welcome-to-minislack">
                 <i class="fa-solid fa-people-roof"></i>

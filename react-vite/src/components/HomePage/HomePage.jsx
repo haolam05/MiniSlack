@@ -14,13 +14,13 @@ import Channels from "../Channels";
 import Memeberships from "../Memberships";
 import Messages from "../Messages";
 import ChannelInfo from "../ChannelInfo";
+import WelcomeModal from "../WelcomeModal";
 import * as sessionActions from "../../redux/session";
 import * as workspaceActions from "../../redux/workspace";
 import * as channelActions from "../../redux/channel";
 import * as messageActions from "../../redux/message";
 import * as membershipActions from "../../redux/membership";
 import "./HomePage.css";
-import WelcomeModal from "../WelcomeModal/WelcomeModal";
 
 let socket;
 
@@ -222,7 +222,7 @@ function HomePage() {
           getAvatarUrl={getAvatarUrl}
         />
       </div>
-        { !user?.id && <WelcomeModal /> }
+      {!user?.id && <WelcomeModal />}
       <div id="main-content">
         <Messages
           user={user}
