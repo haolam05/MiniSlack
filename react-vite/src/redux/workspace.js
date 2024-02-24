@@ -18,7 +18,7 @@ const loadWorkspacesAction = workspaces => ({
   workspaces
 });
 
-const createWorkspaceAction = workspace => {
+export const createWorkspaceAction = workspace => {
   return {
     type: CREATE_WORKSPACE,
     workspace

@@ -201,8 +201,7 @@ def create_membership(id):
 
         user.workspaces.append(workspace)
         db.session.commit()
-
-        socketio.emit("invite_member", { "member_id": user.id, "workspace_name": workspace.name })
+        socketio.emit("invite_member", { "member_id": user.id, "workspace": workspace.to_dict() })
         return { "user_id": user.id, "workspace_id": workspace.id }, 200
 
     return form.errors, 400
