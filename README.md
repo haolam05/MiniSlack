@@ -8,7 +8,65 @@
 
 [slack-database-schema]: https://slack2024.s3.us-west-2.amazonaws.com/public/slack-database-schema.png
 
-## Demo
+# Demo
+## Sign up
+![alt text](<demo/signup.gif>)
+
+## Login
+![alt text](<demo/login.gif>)
+
+## Demo user login
+![alt text](<demo/demo-user-login.gif>)
+
+## Logout
+![alt text](<demo/logout.gif>)
+
+## View workspaces
+![alt text](<demo/view-workspaces.gif>)
+
+## Create workspace
+![alt text](<demo/create-workspace.gif>)
+
+## Update workspace
+![alt text](<demo/Update-workspace.gif>)
+
+## Delete workspace
+![alt text](<demo/Delete-workspace.gif>)
+
+## View channels
+![alt text](<demo/View-channels.gif>)
+
+## Create channel
+![alt text](<demo/Create-channel.gif>)
+
+## Edit channel
+![alt text](<demo/Edit-channel.gif>)
+
+## Delete channel
+![alt text](<demo/Delete-channel.gif>)
+
+## View messages
+![alt text](<demo/View-messages.gif>)
+
+## Create message
+![alt text](<demo/Create-message.gif>)
+
+## Edit message
+![alt text](<demo/Edit-message.gif>)
+
+## Delete message
+![alt text](<demo/Delete-message.gif>)
+
+## View reactions
+![alt text](<demo/View-reactions.gif>)
+
+## Creat reaction
+![alt text](<demo/Create-reaction.gif>)
+
+## Delete reaction
+![alt text](<demo/Delete-reaction.gif>)
+
+
 
 ## Techologies
 
