@@ -227,7 +227,7 @@ def delete_membership(workspace_id, user_id):
         return redirect("/api/auth/forbidden")
 
     user.workspaces = [w for w in user.workspaces if w != workspace]
-    socketio.emit("delete_member", { "member_id": user_id, "workspace_name": workspace.name })
+    socketio.emit("delete_member", { "member_id": user_id, "workspace": workspace.to_dict() })
     db.session.commit()
 
     return { "message": f"Successfully removed {user.email} from {workspace.name} workspace" }

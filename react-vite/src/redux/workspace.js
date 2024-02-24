@@ -32,7 +32,7 @@ const editWorkspaceAction = workspace => {
   }
 }
 
-const deleteWorkspaceAction = workspaceId => {
+export const deleteWorkspaceAction = workspaceId => {
   return {
     type: DELETE_WORKSPACE,
     workspaceId

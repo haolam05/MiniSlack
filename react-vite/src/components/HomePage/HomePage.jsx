@@ -81,20 +81,23 @@ function HomePage() {
       }
     }
 
-    const handleDeleteMember = ({ member_id, workspace_name }) => {
+    const handleDeleteMember = ({ member_id, workspace }) => {
       if (member_id === user.id) {
+        dispatch(channelActions.reset());
+        dispatch(messageActions.reset());
+        dispatch(membershipActions.reset());
+        dispatch(workspaceActions.deleteWorkspaceAction(workspace.id));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
-          <p>You have been removed from &quot;{workspace_name}&quot; workspace.</p>
+          <p>You have been removed from &quot;{workspace.name}&quot; workspace.</p>
         </div>);
-        setTimeout(() => window.location.reload(), 4000);
       }
     }
 
     const handleInviteMember = ({ member_id, workspace }) => {
       if (member_id === user.id) {
-        dispatch(workspaceActions.createWorkspaceAction(workspace))
+        dispatch(workspaceActions.createWorkspaceAction(workspace));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
