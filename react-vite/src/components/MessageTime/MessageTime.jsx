@@ -19,7 +19,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
             if (reactions) {
               const reaction = document.createElement('div');
               reaction.classList.add("reaction");
-              reaction.setAttribute("title", `${user.first_name} ${user.last_name}`)
+              reaction.setAttribute("title", `${user?.first_name} ${user?.last_name}`)
               reaction.textContent = String.fromCodePoint(codePoint);
               reactions.append(reaction);
               createReaction(reaction, m, e.target.id);

@@ -95,6 +95,16 @@ function HomePage() {
       }
     }
 
+    const handleMemberLeave = ({ workspace, member }) => {
+      if (user.id === workspace.owner_id) {
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>{member.first_name} {member.last_name} just leaved the &quot;{workspace.name}&quot; workspace.</p>
+        </div>);
+      }
+    }
+
     const handleInviteMember = ({ member_id, workspace }) => {
       if (member_id === user.id) {
         dispatch(workspaceActions.createWorkspaceAction(workspace));
@@ -106,14 +116,14 @@ function HomePage() {
       }
     }
 
-
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
       socket = io(url);
       socket.on("new_message", handleNewMessageSocket);
       socket.on("invite_member", handleInviteMember);
-      socket.on("delete_member", handleDeleteMember);
+      socket.on("remove_member", handleDeleteMember);
+      socket.on("member_leave", handleMemberLeave);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
