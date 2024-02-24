@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }) {
+function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, user }) {
   const [showAllEmojis, setShowAllEmojis] = useState(false);
   const [searchEmoji, setSearchEmoji] = useState("");
   const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
@@ -19,6 +19,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction }
             if (reactions) {
               const reaction = document.createElement('div');
               reaction.classList.add("reaction");
+              reaction.setAttribute("title", `${user.first_name} ${user.last_name}`)
               reaction.textContent = String.fromCodePoint(codePoint);
               reactions.append(reaction);
               createReaction(reaction, m, e.target.id);

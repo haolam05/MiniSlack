@@ -29,11 +29,16 @@ class Reaction(db.Model):
         return True
 
 
-    def to_dict(self):
-        return {
+    def to_dict(self, owner=False):
+        res = {
             "id": self.id,
             "encoded_text": self.encoded_text,
             "created_at": self.created_at,
             "user_id": self.user_id,
             "message_id": self.message_id
         }
+
+        if owner:
+            res["user"] = self.user.to_dict()
+
+        return res

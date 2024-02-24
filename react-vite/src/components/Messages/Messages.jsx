@@ -124,6 +124,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
       return m.reactions.map(r => {
         return <div
           onClick={e => deleteReaction(e, m.id, r.user_id, r.id)}
+          title={`${r.user.first_name} ${r.user.last_name}`}
           key={r.id}
           className={`reaction${r.user_id === user?.id ? '' : ' not-me'}`}
         >
@@ -179,7 +180,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             </div>
             {m.sender_id === user?.id ? (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user?.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} user={user} />
                 <MessageSettings setEditMessageInput={setEditMessageInput} setDeletedIds={setDeletedIds} />
               </div>
             ) : (

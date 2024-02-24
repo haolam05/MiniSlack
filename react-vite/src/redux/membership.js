@@ -18,7 +18,7 @@ const addMemberships = memberships => {
 export const addMembership = membership => ({
   type: ADD_MEMBERSHIP,
   membership
-})
+});
 
 export const reset = () => ({
   type: RESET

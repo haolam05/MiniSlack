@@ -57,6 +57,6 @@ class Message(db.Model):
         if reactions:
             result["reactions"] = []
             for reaction in self.reactions:
-                result["reactions"].append(reaction.to_dict())
+                result["reactions"].append(reaction.to_dict(owner=True))
 
         return result
