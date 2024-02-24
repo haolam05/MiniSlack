@@ -17,6 +17,8 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     setCurrentChannels([...channels]);
   }, [channels]);
 
+
+
   const deleteChannel = async (_e, channelId) => {
     const channel = document.querySelector(`.channel-${channelId}`);
     if (!channel) return;
@@ -29,7 +31,6 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
     if (header) {
       if (selectedChannel === null || +selectedChannel?.id === channelId) header.textContent = "";
     }
-    // channel.remove();
   }
 
   const createChannel = async () => {
@@ -98,6 +99,16 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
                     />
                   </div>
                 </div>
+              </div>
+              <div className="channel-notification">
+                <i
+                  className="fa-solid fa-bell hidden"
+                  data-channel-id={c.id}
+                  onClick={e => {
+                    e.target.classList.add("hidden");
+                  }}
+                >
+                </i>
               </div>
             </div>
           ))}

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
+from ..socket import socketio
 from ..models import  db, Workspace, Channel, User, Message
 from ..forms import WorkspaceForm, ChannelForm, MembershipForm
 
@@ -201,6 +202,7 @@ def create_membership(id):
         user.workspaces.append(workspace)
         db.session.commit()
 
+        socketio.emit("invite_member", { "member_id": user.id, "workspace_name": workspace.name })
         return { "user_id": user.id, "workspace_id": workspace.id }, 200
 
     return form.errors, 400
@@ -226,6 +228,7 @@ def delete_membership(workspace_id, user_id):
         return redirect("/api/auth/forbidden")
 
     user.workspaces = [w for w in user.workspaces if w != workspace]
+    socketio.emit("delete_member", { "member_id": user_id, "workspace_name": workspace.name })
     db.session.commit()
 
     return { "message": f"Successfully removed {user.email} from {workspace.name} workspace" }

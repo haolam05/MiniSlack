@@ -73,7 +73,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
             <div
               id={m.id}
               key={m.id}
-              className="workspace workspace-message"
+              className={`workspace workspace-message member-${m.id}`}
               onClick={e => showDirectMessages(e, m.id, m.workspace_id)}
             >
               <div className="membership-details-wrapper">
@@ -107,6 +107,16 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
                     }
                   </span>
                 )}
+              </div>
+              <div className="member-notification">
+                <i
+                  className="fa-solid fa-bell hidden"
+                  data-member-id={m.id}
+                  onClick={e => {
+                    e.target.classList.add("hidden");
+                  }}
+                >
+                </i>
               </div>
             </div>
           ))}

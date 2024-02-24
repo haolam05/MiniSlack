@@ -682,3 +682,18 @@
   color: var(--red);
   font-size: 7pt;
 }
+
+
+.channel-notification i {
+  color: var(--red);
+  position: absolute;
+  left: 195px;
+  margin-top: 8px;
+}
+
+.member-notification i {
+  color: var(--red);
+  position: absolute;
+  left: 155px;
+  margin-top: -7px;
+}
