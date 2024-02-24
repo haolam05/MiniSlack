@@ -139,8 +139,13 @@ function HomePage() {
         </div>);
         const workspaceEl = document.querySelector(".workspace.selected");
         const channelEl = document.querySelector(`.channel-${channel.id}`);
+        const isChannelChat = document.querySelector(".workspace-channel.selected");
         if (workspace && channelEl && +workspaceEl.id === workspace.id) {
           dispatch(channelActions.deleteChannelAction(channel.id));
+          if (isChannelChat) {
+            dispatch(messageActions.reset());
+            clearMessageHeader();
+          }
         }
       }
     }
