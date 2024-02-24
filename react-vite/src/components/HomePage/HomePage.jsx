@@ -116,6 +116,20 @@ function HomePage() {
       }
     }
 
+    const handleDeleteWorkspace = ({ member_ids, workspace }) => {
+      if (member_ids.includes(user.id)) {
+        dispatch(channelActions.reset());
+        dispatch(messageActions.reset());
+        dispatch(membershipActions.reset());
+        dispatch(workspaceActions.deleteWorkspaceAction(workspace.id));
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>&quot;{workspace.name}&quot; workspace has been deleted.</p>
+        </div>);
+      }
+    }
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
@@ -124,6 +138,7 @@ function HomePage() {
       socket.on("invite_member", handleInviteMember);
       socket.on("remove_member", handleDeleteMember);
       socket.on("member_leave", handleMemberLeave);
+      socket.on("delete_workspace", handleDeleteWorkspace);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());

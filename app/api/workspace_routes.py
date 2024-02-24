@@ -103,6 +103,9 @@ def delete_workspace(id):
     db.session.delete(workspace)
     db.session.commit()
 
+    member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+    socketio.emit("delete_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict() })
+
     return { "message": f"Successfully deleted {workspace.name} workspace" }
 
 
