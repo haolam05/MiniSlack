@@ -43,66 +43,67 @@ function HomePage() {
     if (messageHeader) messageHeader.textContent = "";
   }
 
-  const handleNewMessageSocket = message => {
-    // console.log(document.hasFocus())
-    // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
-    if (message.is_private) {
-      if (message.receiver_id === user.id) {    // current user === receiver
-        const workspace = document.querySelector(".workspace.selected");
-        const member = document.querySelector(".workspace-message.selected");
-        if (member && +member.id === message.sender_id) { // selected message (ongoing conversation) ---> use msg notification (weixin)
-          dispatch(messageActions.addMessageThunk(message));
-          document.querySelector(".new-message").classList?.remove("hidden");
-          setNewMessageNotification(message.sender_id !== message.receiver_id);
-        } else if (workspace && +workspace.id === message.workspace_id) {  // bell
-          const selectedMessage = document.querySelector(`.member-${message.sender_id}`);
-          if (selectedMessage) {
-            const bell = document.querySelector(`[data-member-id="${message.sender_id}"]`);
-            if (bell) bell.classList.remove('hidden');
-          }
-        }
-      }
-    } else {  // channel message; if channel is selected, use message notification(weixin), else, use channel notification(bell)
-      if (message.sender_id !== user?.id) {
-        const channel = document.querySelector(".workspace-channel.selected");
-        if (channel && +channel.id === message.channel_id) {  // weixin
-          dispatch(messageActions.addMessageThunk(message));
-          document.querySelector(".new-message").classList.remove("hidden");
-          setNewMessageNotification(true);
-        } else {  // bell
-          const selectedChannel = document.querySelector(`.channel-${message.channel_id}`);
-          if (selectedChannel) {
-            const bell = document.querySelector(`[data-channel-id="${message.channel_id}"]`);
-            if (bell) bell.classList.remove('hidden');
-          }
-        }
-      }
-    }
-  }
-
-  const handleDeleteMember = ({ member_id, workspace_name }) => {
-    if (member_id === user.id) {
-      setModalContent(<div>
-        <h2 className="subheading">Notification</h2>
-        <br />
-        <p>You have been removed from "{workspace_name}" workspace.</p>
-      </div>);
-      setTimeout(() => window.location.reload(), 4000);
-    }
-  }
-
-  const handleInviteMember = ({ member_id, workspace_name }) => {
-    if (member_id === user.id) {
-      setModalContent(<div>
-        <h2 className="subheading">Notification</h2>
-        <br />
-        <p>You have been added to "{workspace_name}" workspace.</p>
-      </div>);
-      setTimeout(() => window.location.reload(), 4000);
-    }
-  }
-
   useEffect(() => {
+    const handleNewMessageSocket = message => {
+      // console.log(document.hasFocus())
+      // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
+      if (message.is_private) {
+        if (message.receiver_id === user.id) {    // current user === receiver
+          const workspace = document.querySelector(".workspace.selected");
+          const member = document.querySelector(".workspace-message.selected");
+          if (member && +member.id === message.sender_id) { // selected message (ongoing conversation) ---> use msg notification (weixin)
+            dispatch(messageActions.addMessageThunk(message));
+            document.querySelector(".new-message").classList?.remove("hidden");
+            setNewMessageNotification(message.sender_id !== message.receiver_id);
+          } else if (workspace && +workspace.id === message.workspace_id) {  // bell
+            const selectedMessage = document.querySelector(`.member-${message.sender_id}`);
+            if (selectedMessage) {
+              const bell = document.querySelector(`[data-member-id="${message.sender_id}"]`);
+              if (bell) bell.classList.remove('hidden');
+            }
+          }
+        }
+      } else {  // channel message; if channel is selected, use message notification(weixin), else, use channel notification(bell)
+        if (message.sender_id !== user?.id) {
+          const channel = document.querySelector(".workspace-channel.selected");
+          if (channel && +channel.id === message.channel_id) {  // weixin
+            dispatch(messageActions.addMessageThunk(message));
+            document.querySelector(".new-message").classList.remove("hidden");
+            setNewMessageNotification(true);
+          } else {  // bell
+            const selectedChannel = document.querySelector(`.channel-${message.channel_id}`);
+            if (selectedChannel) {
+              const bell = document.querySelector(`[data-channel-id="${message.channel_id}"]`);
+              if (bell) bell.classList.remove('hidden');
+            }
+          }
+        }
+      }
+    }
+
+    const handleDeleteMember = ({ member_id, workspace_name }) => {
+      if (member_id === user.id) {
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>You have been removed from &quot;{workspace_name}&quot; workspace.</p>
+        </div>);
+        setTimeout(() => window.location.reload(), 4000);
+      }
+    }
+
+    const handleInviteMember = ({ member_id, workspace_name }) => {
+      if (member_id === user.id) {
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>You have been added to &quot;{workspace_name}&quot; workspace.</p>
+        </div>);
+        setTimeout(() => window.location.reload(), 4000);
+      }
+    }
+
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
@@ -121,7 +122,7 @@ function HomePage() {
       return () => socket.disconnect();
     }
     loadData();
-  }, [dispatch, user]);
+  }, [dispatch, user, setModalContent]);
 
   // const scrollToNewMessage = (forceScroll = false) => {
   //   const chatWindow = document.querySelector(".messages-details-wrapper");
@@ -131,10 +132,6 @@ function HomePage() {
   //     }
   //   }
   // }
-
-  const clearChannelMessageNotification = () => {
-
-  }
 
   const clearNotification = () => {
     const notification = document.querySelector(".notification");
