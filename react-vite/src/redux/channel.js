@@ -26,7 +26,7 @@ const updateChannelAction = channel => ({
   channel
 });
 
-const deleteChannelAction = channelId => ({
+export const deleteChannelAction = channelId => ({
   type: DELETE_CHANNEL,
   channelId
 });

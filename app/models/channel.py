@@ -53,5 +53,5 @@ class Channel(db.Model):
             "description": self.description,
             "owner_id": self.owner_id,
             "workspace_id": self.workspace_id,
-            "created_at": self.created_at
+            "created_at": str(self.created_at)
         }

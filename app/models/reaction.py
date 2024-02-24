@@ -32,8 +32,8 @@ class Reaction(db.Model):
     def to_dict(self, owner=False):
         res = {
             "id": self.id,
-            "encoded_text": self.encoded_text,
-            "created_at": self.created_at,
+            "encoded_text": str(self.encoded_text),
+            "created_at": str(self.created_at),
             "user_id": self.user_id,
             "message_id": self.message_id
         }

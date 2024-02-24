@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..models import  db, Channel, Message
+from ..socket import socketio
+from ..models import  db, Channel, Message, Workspace
 from ..forms import ChannelForm
 
 channel_routes = Blueprint("channels", __name__)
@@ -54,6 +55,10 @@ def delete_channel(id):
 
     db.session.delete(channel)
     db.session.commit()
+
+    workspace = Workspace.query.get(channel.workspace_id)
+    member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+    socketio.emit("delete_channel", { "member_ids": member_ids, "workspace": workspace.to_dict(), "channel": channel.to_dict() })
 
     return { "message": f"Successfully deleted {channel.name} channel" }
 
