@@ -126,6 +126,12 @@ def delete_user():
     for workspace in current_user.user_workspaces:
         db.session.delete(workspace)
 
+    """ Emits logout event """
+    for user_ids in onlines.values():
+        if current_user.id in user_ids:
+            user_ids.remove(current_user.id)
+    socketio.emit("offline", onlines)
+
     """ Logout """
     db.session.commit()
     logout_user()
@@ -164,12 +170,14 @@ def login():
 @login_required
 def logout():
     """Logout"""
+
+    """ Emits logout event """
     for user_ids in onlines.values():
         if current_user.id in user_ids:
             user_ids.remove(current_user.id)
     socketio.emit("offline", onlines)
-    print(onlines)
 
+    """ Logout """
     logout_user()
     return {'message': 'User logged out'}, 200
 
