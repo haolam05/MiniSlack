@@ -5,6 +5,7 @@ from app.forms import LoginForm, SignUpForm, UpdateUserForm, UpdatePasswordForm
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import check_password_hash
 from .aws_helpers import upload_file_to_s3, get_unique_filename
+from ..socket import socketio, onlines
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -155,6 +156,11 @@ def login():
 @login_required
 def logout():
     """Logout"""
+    for user_ids in onlines.values():
+        if current_user.id in user_ids:
+            user_ids.remove(current_user.id)
+    socketio.emit("offline", onlines)
+
     logout_user()
     return {'message': 'User logged out'}, 200
 

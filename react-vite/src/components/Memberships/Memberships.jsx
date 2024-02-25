@@ -78,6 +78,7 @@ function Memberships({ user, collapseWorkspaces, memberships, showUserProfile, s
             >
               <div className="membership-details-wrapper">
                 <div className="membership-image-name">
+                  <div className="online"><i className="fa-solid fa-circle hidden"></i></div>
                   <img
                     onClick={e => showUserProfile(e, m)}
                     src={getAvatarUrl(m.profile_image_url)}

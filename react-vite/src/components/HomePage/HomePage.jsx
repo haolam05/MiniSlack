@@ -262,6 +262,30 @@ function HomePage() {
       }
     }
 
+    const handleWorkspaceOnlineOffline = onlineIds => {
+      if (user && onlineIds.includes(user.id)) {
+        const members = document.querySelectorAll(".workspace-message");
+        for (let i = 0; i < members.length; i++) {
+          const member = members[i];
+          const onlineSignal = document.querySelector(`.member-${+member.id} .online>i`);
+          if (onlineIds.includes(+member.id)) {
+            onlineSignal.classList.remove("hidden");
+          } else {
+            onlineSignal.classList.add("hidden");
+          }
+        }
+      }
+    }
+
+    const handleOffline = onlines => {
+      const workspace = document.querySelector(".workspace.selected");
+      if (workspace) {
+        const workspaceId = +workspace.id;
+        const onlineIds = onlines[workspaceId];
+        handleWorkspaceOnlineOffline(onlineIds);
+      }
+    }
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
@@ -279,6 +303,9 @@ function HomePage() {
       socket.on("delete_channel", handleDeleteChannel);
       socket.on("create_reaction", handleCreateReaction);
       socket.on("delete_reaction", handleDeleteReaction);
+      socket.on("enter_workspace", handleWorkspaceOnlineOffline);
+      socket.on("leave_workspace", handleWorkspaceOnlineOffline);
+      socket.on("offline", handleOffline);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
@@ -320,6 +347,9 @@ function HomePage() {
   }
 
   const showChannelsAndMemberships = async e => {
+    const oldWorkspace = document.querySelector(".workspace.selected");
+    const oldWorkspaceId = oldWorkspace ? +oldWorkspace.id : null;
+
     clearNotification();
     select(e);
     const workspace = e.target.closest(".workspace");
@@ -328,7 +358,13 @@ function HomePage() {
     const selectedDm = document.querySelector(".workspace-message.selected");
     if (different_workspace && selectedDm) selectedDm.classList.remove("selected");
     await dispatch(membershipActions.loadMemberships(+workspace.id));
-    if (different_workspace) clearMessageHeader();
+    if (different_workspace) {
+      clearMessageHeader();
+      if (oldWorkspaceId) {
+        socket.emit("leave_workspace", { workspace_id: oldWorkspaceId, user_id: user.id });
+      }
+      socket.emit("enter_workspace", { workspace_id: +workspace.id, user_id: user.id });
+    }
   }
 
   const showChannelMessages = async (e, c) => {

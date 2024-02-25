@@ -708,3 +708,11 @@
   left: 155px;
   margin-top: -7px;
 }
+
+.online i.fa-circle:before {
+  font-size: 10px;
+  color: var(--online);
+  position: absolute;
+  left: 55px;
+  margin-top: 8px;
+}
