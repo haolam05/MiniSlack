@@ -37,7 +37,6 @@ function UpdatedChannelModal({ channel, channelHeaderText }) {
     if (channelEl) {
       await dispatch(channelActions.loadChannels(+workspace.id));
       const messageHeader = document.querySelector(".message-header");
-      console.log(messageHeader)
       messageHeader.innerHTML = channelHeaderText(name);
       messageHeader.querySelector("#channel-info").addEventListener('click', () => {
         setModalContent(<ChannelInfo headerName={name} c={payload} />)

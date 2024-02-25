@@ -1,5 +1,4 @@
 function ShowReactions({ m, deleteReaction, user }) {
-  // console.log(m, deleteReaction, user);
   if (m.reactions && m.reactions.length) {
     return m.reactions.map(r => {
       return <div

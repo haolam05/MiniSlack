@@ -39,7 +39,7 @@ export const reset = () => ({
 // Thunk action creators
 export const loadChannels = workspaceId => async (dispatch, getState) => {
   const channels = Object.values(getState().channels.channels);
-  if (channels.length && channels[0].workspace_id === workspaceId) return false;;
+  if (channels.length && channels[0].workspace_id === workspaceId) return false;
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels`);
   const data = await res.json();
   if (!res.ok) return { errors: data };

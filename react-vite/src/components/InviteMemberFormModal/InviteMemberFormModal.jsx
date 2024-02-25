@@ -22,7 +22,7 @@ function InviteMemberFormModal({ workspaceId, user }) {
       }
     }
     loadMembers();
-  }, []);
+  }, [user.id, workspaceId]);
 
   const deleteMember = async memberId => {
     const workspace = document.querySelector(".workspace.selected");
@@ -40,7 +40,6 @@ function InviteMemberFormModal({ workspaceId, user }) {
         deleteCb={() => {
           deleteMember(memberId);
           const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
-          console.log(removeUserIcon)
           if (!removeUserIcon) return;
           removeUserIcon.classList.remove("fa-user-xmark");
           removeUserIcon.classList.add("fa-ban");

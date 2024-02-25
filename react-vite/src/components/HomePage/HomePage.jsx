@@ -246,7 +246,19 @@ function HomePage() {
       const member = document.querySelector(`.workspace-message.selected.member-${new_reaction.user_id}`);
       if (user.id !== new_reaction.user_id && workspace && +workspace.id === message.workspace_id) {
         if (member || channel) {
-          dispatch(messageActions.addMessage(message));
+          const reactions = document.querySelector(`.reaction-message-${message.id}`);
+          if (reactions) {
+            const reactionExist = document.querySelector(`#reaction-${new_reaction.id}`);
+            if (reactionExist) return;
+            const reaction = document.createElement('div');
+            reaction.classList.add("reaction");
+            reaction.classList.add("not-me");
+            reaction.setAttribute("title", `${new_reaction.user.first_name} ${new_reaction.user.last_name}`)
+            reaction.textContent = new_reaction.encoded_text;
+            reaction.setAttribute("id", `reaction-${new_reaction.id}`);
+            reaction.addEventListener("click", e => e.stopPropagation());
+            reactions.append(reaction);
+          }
         }
       }
     }
@@ -257,7 +269,8 @@ function HomePage() {
       const member = document.querySelector(`.workspace-message.selected.member-${reaction.user_id}`);
       if (user.id !== reaction.user_id && workspace && +workspace.id === message.workspace_id) {
         if (member || channel) {
-          dispatch(messageActions.addMessage(message));
+          const reactionEl = document.querySelector(`#reaction-${reaction.id}`);
+          if (reactionEl) reactionEl.remove();
         }
       }
     }

@@ -171,7 +171,8 @@ def create_reaction(id):
         db.session.add(new_reaction)
         db.session.commit()
 
-        socketio.emit("create_reaction", { "message": message.to_dict(reactions=True), "new_reaction": new_reaction.to_dict() })
+        reaction_json = { **new_reaction.to_dict(), "user": current_user.to_dict() }
+        socketio.emit("create_reaction", { "message": message.to_dict(reactions=True), "new_reaction": reaction_json })
         return new_reaction.to_dict(), 200
 
     return form.errors, 400

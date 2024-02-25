@@ -3,15 +3,25 @@ import { csrfFetch } from "./csrf";
 
 // Action
 const ADD_MESSAGES = " messages/ADD_MESSAGES";
-const RESET = 'messages/RESET';
 const ADD_MESSAGE = "messages/ADD_MESSAGE";
+const ADD_REACTION = "messages/ADD_REACTION";
 const REMOVE_MESSAGE = "messages/REMOVE_MESSAGE";
+const RESET = 'messages/RESET';
+
 
 // POJO action creators
 const addMessages = messages => {
   return {
     type: ADD_MESSAGES,
     messages
+  }
+}
+
+export const addReaction = (messageId, reaction) => {
+  return {
+    type: ADD_REACTION,
+    messageId,
+    reaction
   }
 }
 
@@ -137,6 +147,15 @@ export default function messageReducer(state = initialState, action) {
           [action.message.id]: action.message
         }
       }
+    case ADD_REACTION: {
+      const newState = { ...state };
+      const reactions = newState.messages[action.messageId].reactions;
+      const reaction_ids = reactions.map(reaction => reaction.id);
+      if (!reaction_ids.includes(action.reaction.id)) {
+        reactions.push(action.reaction);
+      }
+      return newState;
+    }
     case REMOVE_MESSAGE: {
       const newState = { ...state };
       delete newState.messages[action.messageId];
