@@ -28,7 +28,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
   }
 
   const inviteMember = workspaceId => {
-    setModalContent(<InviteMemberFormModal workspaceId={workspaceId} />)
+    setModalContent(<InviteMemberFormModal workspaceId={workspaceId} user={user} />)
   }
 
   const leaveWorkspace = async workspaceId => {

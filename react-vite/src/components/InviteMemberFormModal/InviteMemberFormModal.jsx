@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import { useModal } from "../../context/Modal";
+import { getInviteUsers } from "../../utils/user";
 import * as workspaceActions from "../../redux/workspace";
 import ConfirmDeleteFormModal from "../ConfirmDeleteFormModal";
 
-function InviteMemberFormModal({ workspaceId }) {
+function InviteMemberFormModal({ workspaceId, user }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+  const [members, setMembers] = useState([]);
   const [errors, setErrors] = useState({});
   const { closeModal, setModalContent } = useModal();
+
+  useEffect(() => {
+    const loadMembers = async () => {
+      const members = await getInviteUsers(workspaceId);
+      if (!members.errors) {
+        setMembers(members.filter(m => m.id !== user.id));
+        if (members.length) setEmail(members[0].email);
+      }
+    }
+    loadMembers();
+  }, []);
 
   const deleteMember = async memberId => {
     const workspace = document.querySelector(".workspace.selected");
@@ -67,32 +80,20 @@ function InviteMemberFormModal({ workspaceId }) {
     removeUserIcon.addEventListener('click', e => showDeleteMembershipModal(e, +member.id, email));
   };
 
-  const inputIsInvalid = () => {
-    return (
-      !email.length ||
-      !email.includes('@') ||
-      !email.includes('.')
-    );
-  }
-
   return (
     <div className="invite-member-container">
       <h2 className="subheading">Send Invitation</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          value={email}
-          spellCheck={false}
-          placeholder="example@user.io"
-          onChange={e => setEmail(e.target.value)}
-        />
+        <label htmlFor="email">Member emails</label>
+        <select name="members" value={email} onChange={e => setEmail(e.target.value)}>
+          {members.map(m => <option key={m.id} value={m.email}>{m.email}</option>)}
+        </select>
         {errors.email && <p className="modal-errors">{errors.email}</p>}
         {errors.message && <p className="modal-errors">{errors.message}</p>}
         <button
           type="submit"
-          className={inputIsInvalid() ? "disabled" : ""}
-          disabled={inputIsInvalid()}
+        // className={inputIsInvalid() ? "disabled" : ""}
+        // disabled={inputIsInvalid()}
         >
           Send
         </button>

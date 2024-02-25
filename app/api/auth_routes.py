@@ -18,6 +18,14 @@ def authenticate():
     return { 'user': None }, 200
 
 
+@auth_routes.route('/users')
+@login_required
+def get_all_users():
+    """Get all users in MiniSlack"""
+    users = [user.to_dict() for user in User.query.all()]
+    return users, 200
+
+
 @auth_routes.route('/<int:id>')
 @login_required
 def get_current_user(id):

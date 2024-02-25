@@ -87,6 +87,10 @@ input[disabled]:hover {
   cursor: not-allowed;
 }
 
+select {
+  background-color: var(--other-message-background);
+}
+
 .disabled:hover,
 select[disabled]:hover {
   cursor: not-allowed;
