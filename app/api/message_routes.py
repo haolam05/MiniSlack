@@ -99,7 +99,7 @@ def update_message(id):
             message.message = form.data["message"]
 
         db.session.commit()
-        # socketio.emit("update_message", message.to_dict())
+        socketio.emit("update_message", message.to_dict())
         return message.to_dict(), 200
 
     return form.errors, 400
@@ -120,7 +120,7 @@ def delete_message(id):
     db.session.delete(message)
     db.session.commit()
 
-    socketio.emit("delete_message", { "message": message.to_dict() })
+    socketio.emit("delete_message", message.to_dict())
     return { "message": f"Successfully deleted {current_user.email}'s message" }
 
 

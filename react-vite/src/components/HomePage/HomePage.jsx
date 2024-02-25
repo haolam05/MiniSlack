@@ -45,7 +45,6 @@ function HomePage() {
 
   useEffect(() => {
     const handleCreateMessage = message => {
-      // console.log(document.hasFocus())
       // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
       if (message.is_private) {
         if (message.receiver_id === user.id) {    // current user === receiver
@@ -81,20 +80,37 @@ function HomePage() {
       }
     }
 
-    const handleDeleteMessage = ({ message }) => {
+    const handleUpdateMessage = message => {
       const workspace = document.querySelector(".workspace.selected");
       if (message.sender_id !== user.id && workspace && +workspace.id === message.workspace_id) {
         if (message.is_private) {
           const member = document.querySelector(".workspace-message.selected");
           if (member && user.id === message.receiver_id && +member.id === message.sender_id) {
-            dispatch(messageActions.removeMessage(message.id));
+            const messageEl = document.querySelector(`.message-${message.id}>.message-details>div+div`);
+            if (messageEl) messageEl.textContent = message.message;
+          }
+        } else {
+          const channel = document.querySelector(".workspace-channel.selected");
+          if (channel && +channel.id === message.channel_id) {
+            const messageEl = document.querySelector(`.message-${message.id}>.message-details>div+div`);
+            if (messageEl) messageEl.textContent = message.message;
+          }
+        }
+      }
+    }
+
+    const handleDeleteMessage = (message) => {
+      const workspace = document.querySelector(".workspace.selected");
+      if (message.sender_id !== user.id && workspace && +workspace.id === message.workspace_id) {
+        if (message.is_private) {
+          const member = document.querySelector(".workspace-message.selected");
+          if (member && user.id === message.receiver_id && +member.id === message.sender_id) {
             const messageEl = document.querySelector(`.message-${message.id}`);
             if (messageEl) messageEl.classList.add("hidden");
           }
         } else {
           const channel = document.querySelector(".workspace-channel.selected");
           if (channel && +channel.id === message.channel_id) {
-            dispatch(messageActions.removeMessage(message.id));
             const messageEl = document.querySelector(`.message-${message.id}`);
             if (messageEl) messageEl.classList.add("hidden");
           }
@@ -198,17 +214,18 @@ function HomePage() {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
       socket = io(url);
       socket.on("new_message", handleCreateMessage);
+      socket.on("update_message", handleUpdateMessage);
       socket.on("delete_message", handleDeleteMessage);
       socket.on("invite_member", handleInviteMember);
       socket.on("remove_member", handleDeleteMember);
       socket.on("member_leave", handleMemberLeave);
+      // socket.on("update_workspace", handleUpdateWorkspace);
       socket.on("delete_workspace", handleDeleteWorkspace);
+      // socket.on("create_channel", handleCreateChannel);
+      // socket.on("update_channel", handleUpdateChannel);
       socket.on("delete_channel", handleDeleteChannel);
       socket.on("create_reaction", handleCreateReaction);
       socket.on("delete_reaction", handleDeleteReaction);
-      // socket.on("update_workspace", handleUpdateWorkspace);
-      // socket.on("update_channel", handleUpdateChannel);
-      // socket.on("create_channel", handleCreateChannel);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
