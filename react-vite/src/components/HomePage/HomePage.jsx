@@ -178,6 +178,17 @@ function HomePage() {
       }
     }
 
+    const handleCreateChannel = ({ member_ids, channel, workspace }) => {
+      if (member_ids.includes(user.id)) {
+        dispatch(channelActions.createChannelsAction(channel));
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>&quot;{workspace.name}&quot; workspace just added a new channel called &quot;{channel.name}&quot;. Check it out!</p>
+        </div>);
+      }
+    }
+
     const handleUpdateChannel = ({ member_ids, workspace, channel, old_name }) => {
       if (member_ids.includes(user.id)) {
         const workspaceEl = document.querySelector(".workspace.selected");
@@ -263,7 +274,7 @@ function HomePage() {
       socket.on("member_leave", handleMemberLeave);
       socket.on("update_workspace", handleUpdateWorkspace);
       socket.on("delete_workspace", handleDeleteWorkspace);
-      // socket.on("create_channel", handleCreateChannel);
+      socket.on("create_channel", handleCreateChannel);
       socket.on("update_channel", handleUpdateChannel);
       socket.on("delete_channel", handleDeleteChannel);
       socket.on("create_reaction", handleCreateReaction);

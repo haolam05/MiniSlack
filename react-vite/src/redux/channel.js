@@ -16,7 +16,7 @@ const getChannelsAction = channels => ({
   channels
 });
 
-const createChannelsAction = channel => ({
+export const createChannelsAction = channel => ({
   type: ADD_CHANNEL,
   channel
 });

@@ -162,6 +162,9 @@ def create_channel(id):
         db.session.add(new_channel)
         db.session.commit()
 
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        socketio.emit("create_channel", { "member_ids": member_ids, "workspace": workspace.to_dict(), "channel": new_channel.to_dict() })
+
         return new_channel.to_dict(), 200
 
     return form.errors, 400
