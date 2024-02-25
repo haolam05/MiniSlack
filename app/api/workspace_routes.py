@@ -85,7 +85,7 @@ def update_workspace(id):
             workspace.name = form.data["name"]
             db.session.commit()
 
-        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id if member.is_deleted == False]
         socketio.emit("update_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict(), "old_name": old_name })
 
         return workspace.to_dict(), 200
@@ -108,7 +108,7 @@ def delete_workspace(id):
     db.session.delete(workspace)
     db.session.commit()
 
-    member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+    member_ids = [member.id for member in workspace.users if member.id != current_user.id if member.is_deleted == False]
     socketio.emit("delete_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict() })
 
     return { "message": f"Successfully deleted {workspace.name} workspace" }
@@ -162,7 +162,7 @@ def create_channel(id):
         db.session.add(new_channel)
         db.session.commit()
 
-        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id if member.is_deleted == False]
         socketio.emit("create_channel", { "member_ids": member_ids, "workspace": workspace.to_dict(), "channel": new_channel.to_dict() })
 
         return new_channel.to_dict(), 200

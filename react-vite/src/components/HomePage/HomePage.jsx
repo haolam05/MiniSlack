@@ -315,6 +315,7 @@ function HomePage() {
           <br />
           <p>{member.first_name} {member.last_name} has left &quot;{workspace.name}&quot; workspace.</p>
         </div>);
+        changeMemberIconToNonMemberIcon(member.email);
       }
     }
 
@@ -374,6 +375,15 @@ function HomePage() {
     }
     loadData();
   }, [dispatch, user, setModalContent]);
+
+  const changeMemberIconToNonMemberIcon = email => {
+    const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
+    if (!removeUserIcon) return;
+    removeUserIcon.classList.remove("fa-user-xmark");
+    removeUserIcon.classList.add("fa-ban");
+    removeUserIcon.setAttribute("title", "User is no longer a member of this workspace. Old messages are being kept here.");
+    removeUserIcon.addEventListener('click', e => e.stopPropagation());
+  }
 
   const clearMessageHeader = () => {
     const messageHeader = document.querySelector(".message-header");

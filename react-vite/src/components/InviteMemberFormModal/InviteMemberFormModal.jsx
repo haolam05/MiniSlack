@@ -91,8 +91,6 @@ function InviteMemberFormModal({ workspaceId, user }) {
         {errors.message && <p className="modal-errors">{errors.message}</p>}
         <button
           type="submit"
-        // className={inputIsInvalid() ? "disabled" : ""}
-        // disabled={inputIsInvalid()}
         >
           Send
         </button>

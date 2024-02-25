@@ -131,7 +131,7 @@ def delete_user():
     delete_workspace_ids = [workspace.id for workspace in current_user.user_workspaces]
     delete_workspace_names = [workspace.name for workspace in current_user.user_workspaces]
     for workspace in current_user.user_workspaces:
-        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id if member.is_deleted == False]
         socketio.emit("owner_delete_delete_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict(), "owner": current_user.to_dict(), "deleted_workspace_ids": delete_workspace_ids, "deleted_workspace_names": delete_workspace_names })
         db.session.delete(workspace)
 
