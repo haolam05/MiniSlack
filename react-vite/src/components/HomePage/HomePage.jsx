@@ -73,6 +73,17 @@ function HomePage() {
           }
         }
       }
+
+      const chatWindow = document.querySelector(".messages-details-wrapper");
+      if (chatWindow) {
+        // check b4 the new message div is added
+        if (chatWindow.scrollTop + chatWindow.clientHeight === chatWindow.scrollHeight) {
+          setTimeout(() => {
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            clearNotification();
+          }, 300);
+        }
+      }
     }
 
     const handleUpdateMessage = message => {
