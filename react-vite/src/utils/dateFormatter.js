@@ -1,13 +1,15 @@
 export const formattedDate = inputDate => {
-  const date = new Date(inputDate)
-  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-  const [year, month, day] = [localDate.getFullYear(), localDate.getMonth() + 1, localDate.getDate()]
+  const parts = inputDate.split(" ");
+  if (parts.length !== 2) return;
+  const date = parts[0];
+  const [year, month, day] = date.split("-");
   return `${year}-${`${month}`.padStart(2, '0')}-${`${day}`.padStart(2, '0')}`;
 };
 
 export const formattedTime = inputDate => {
-  const date = new Date(inputDate)
-  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-  const [hour, min, sec] = [`${localDate.getHours()}`, `${localDate.getMinutes()}`, `${localDate.getSeconds()}`].map(t => t.padStart(2, '0'));
-  return `${hour}:${min}:${sec}`;
+  const parts = inputDate.split(" ");
+  if (parts.length !== 2) return;
+  const time = parts[1].split('.')[0];
+  const [hour, min, sec] = time.split(":");
+  return `${hour.padStart(2, '0')}:${min.padStart(2, '0')}:${sec.padStart(2, '0')}`;
 };
