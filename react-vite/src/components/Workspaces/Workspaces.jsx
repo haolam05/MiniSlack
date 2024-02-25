@@ -82,7 +82,7 @@ function Workspaces({ user, workspaces, collapseWorkspaces, showChannelsAndMembe
                 {w.owner_id === user?.id ? (
                   <div className={`workspace-btns${w.owner_id === user?.id ? ' me' : ' hidden'}`} onClick={e => e.stopPropagation()}>
                     <div className="invite-member" onClick={() => inviteMember(w.id)}>
-                      <i className="fa-solid fa-share-from-square" title="Invite a user into this workspace (only can invite MiniSlack Members)"></i>
+                      <i className="fa-solid fa-share-from-square" title="Add a user into this workspace (can only add MiniSlack Members)"></i>
                     </div>
                     <div className="update-workspace-btn">
                       <OpenModalButton

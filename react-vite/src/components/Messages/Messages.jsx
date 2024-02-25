@@ -7,6 +7,7 @@ import MessageTime from "../MessageTime";
 import MessageSettings from "../MessageSettings";
 import EditMessageForm from "../EditMessageForm";
 import EmojisList from "../EmojsList";
+import ShowReactions from "../ShowReactions";
 import * as messageActions from "../../redux/message";
 
 function Messages({ user, messages, showMessageTime, getMessageAuthorImage, formattedDate, formattedTime, messageInput, setMessageInput, editMessageInput, setEditMessageInput, emojis, getMessageAuthorName, newMessageNotification, setNewMessageNotification }) {
@@ -28,7 +29,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
 
   useEffect(() => {
     setCurrentMessages([...messages]);
-    // scrollToNewMessage();
   }, [messages]);
 
   const handleScrollingBottom = () => {
@@ -109,6 +109,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     const messaegId = data.message_id;
     const userId = data.user_id;
     reactionEl.addEventListener("click", e2 => deleteReaction(e2, messaegId, userId, reactionId));
+    return data;
   }
 
   const deleteReaction = async (e, messageId, ownerId, reactionId) => {
@@ -116,21 +117,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     if (ownerId === user?.id) {
       e.target.remove();
       await deleteReactionApi(messageId, reactionId);
-    }
-  }
-
-  function ShowReactions({ m }) {
-    if (m.reactions && m.reactions.length) {
-      return m.reactions.map(r => {
-        return <div
-          onClick={e => deleteReaction(e, m.id, r.user_id, r.id)}
-          title={`${r.user.first_name} ${r.user.last_name}`}
-          key={r.id}
-          className={`reaction${r.user_id === user?.id ? '' : ' not-me'}`}
-        >
-          {r.encoded_text}
-        </div>
-      })
     }
   }
 
@@ -155,7 +141,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
           <div
             id={m.id}
             key={m.id}
-            className={`message ${m.sender_id === user?.id ? 'me' : ''}`}
+            className={`message ${m.sender_id === user?.id ? 'me' : ''} message-${m.id}`}
             onClick={showMessageTime}
           >
             <div className="message-details">
@@ -185,10 +171,10 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
               </div>
             ) : (
               <div onClick={e => e.stopPropagation()} className={`hidden message-time ${m.sender_id === user?.id ? 'me' : ''}`}>
-                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} />
+                <MessageTime formattedDate={formattedDate} formattedTime={formattedTime} m={m} emojis={emojis} createReaction={createReaction} user={user} />
               </div>
             )}
-            <div className="reactions"><ShowReactions m={m} /></div>
+            <div className={`reactions reaction-message-${m.id}`}><ShowReactions m={m} deleteReaction={deleteReaction} user={user} /></div>
           </div>
         ))}
         <div className="new-message" title="Scroll to the bottom">

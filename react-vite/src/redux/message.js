@@ -26,7 +26,7 @@ export const addMessage = message => {
   }
 }
 
-const removeMessage = messageId => {
+export const removeMessage = messageId => {
   return {
     type: REMOVE_MESSAGE,
     messageId
@@ -35,14 +35,22 @@ const removeMessage = messageId => {
 
 
 // Thunk action creators
-export const loadChannelMessages = channeId => async dispatch => {
+export const loadChannelMessages = channeId => async (dispatch, getState) => {
+  const channelMessages = Object.values(getState().messages.messages);
+  if (channelMessages.length && channelMessages[0].channel_id === channeId) return;
   const res = await csrfFetch(`/api/channels/${channeId}/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(addMessages(data.Messages));
 }
 
-export const loadDirectMessages = (id1, id2, workspaceId) => async dispatch => {
+export const loadDirectMessages = (id1, id2, workspaceId) => async (dispatch, getState) => {
+  const directMessages = Object.values(getState().messages.messages);
+  if (directMessages.length) {
+    const ids = [id1, id2].sort((a, b) => a - b);
+    const ids2 = [directMessages[0].sender_id, directMessages[0].receiver_id].sort((a, b) => a - b);
+    if (ids[0] === ids2[0] && ids[1] === ids2[1]) return;
+  }
   const res = await csrfFetch(`/api/auth/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };

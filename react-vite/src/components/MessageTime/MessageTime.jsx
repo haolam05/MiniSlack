@@ -4,7 +4,6 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
   const [showAllEmojis, setShowAllEmojis] = useState(false);
   const [searchEmoji, setSearchEmoji] = useState("");
   const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
-
   const showEmojisHelper = icons => {
     return icons.map(emoji => {
       const codePoint = "0x" + emoji.codePoint.split(" ")[0];
@@ -14,15 +13,17 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
           className="emoji"
           key={emoji.slug}
           title={emoji.unicodeName.slice(5)}
-          onClick={e => {
+          onClick={async e => {
             const reactions = e.target.closest(".message").querySelector(".reactions");
             if (reactions) {
+              reactions.classList.add(`reaction-message-${m.id}`);
               const reaction = document.createElement('div');
               reaction.classList.add("reaction");
               reaction.setAttribute("title", `${user.first_name} ${user.last_name}`)
               reaction.textContent = String.fromCodePoint(codePoint);
               reactions.append(reaction);
-              createReaction(reaction, m, e.target.id);
+              const data = await createReaction(reaction, m, e.target.id);
+              reaction.setAttribute("id", `reaction-${data.id}`);
             }
           }}
         >

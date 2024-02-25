@@ -44,7 +44,7 @@ function HomePage() {
   }
 
   useEffect(() => {
-    const handleNewMessageSocket = message => {
+    const handleCreateMessage = message => {
       // console.log(document.hasFocus())
       // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
       if (message.is_private) {
@@ -76,6 +76,27 @@ function HomePage() {
               const bell = document.querySelector(`[data-channel-id="${message.channel_id}"]`);
               if (bell) bell.classList.remove('hidden');
             }
+          }
+        }
+      }
+    }
+
+    const handleDeleteMessage = ({ message }) => {
+      const workspace = document.querySelector(".workspace.selected");
+      if (message.sender_id !== user.id && workspace && +workspace.id === message.workspace_id) {
+        if (message.is_private) {
+          const member = document.querySelector(".workspace-message.selected");
+          if (member && user.id === message.receiver_id && +member.id === message.sender_id) {
+            dispatch(messageActions.removeMessage(message.id));
+            const messageEl = document.querySelector(`.message-${message.id}`);
+            if (messageEl) messageEl.classList.add("hidden");
+          }
+        } else {
+          const channel = document.querySelector(".workspace-channel.selected");
+          if (channel && +channel.id === message.channel_id) {
+            dispatch(messageActions.removeMessage(message.id));
+            const messageEl = document.querySelector(`.message-${message.id}`);
+            if (messageEl) messageEl.classList.add("hidden");
           }
         }
       }
@@ -150,16 +171,44 @@ function HomePage() {
       }
     }
 
+    const handleCreateReaction = ({ message, new_reaction }) => {
+      const workspace = document.querySelector(".workspace.selected");
+      const channel = document.querySelector(`.workspace-channel.selected.channel-${message.channel_id}`);
+      const member = document.querySelector(`.workspace-message.selected.member-${new_reaction.user_id}`);
+      if (user.id !== new_reaction.user_id && workspace && +workspace.id === message.workspace_id) {
+        if (member || channel) {
+          dispatch(messageActions.addMessage(message));
+        }
+      }
+    }
+
+    const handleDeleteReaction = ({ message, reaction }) => {
+      const workspace = document.querySelector(".workspace.selected");
+      const channel = document.querySelector(`.workspace-channel.selected.channel-${message.channel_id}`);
+      const member = document.querySelector(`.workspace-message.selected.member-${reaction.user_id}`);
+      if (user.id !== reaction.user_id && workspace && +workspace.id === message.workspace_id) {
+        if (member || channel) {
+          dispatch(messageActions.addMessage(message));
+        }
+      }
+    }
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
       socket = io(url);
-      socket.on("new_message", handleNewMessageSocket);
+      socket.on("new_message", handleCreateMessage);
+      socket.on("delete_message", handleDeleteMessage);
       socket.on("invite_member", handleInviteMember);
       socket.on("remove_member", handleDeleteMember);
       socket.on("member_leave", handleMemberLeave);
       socket.on("delete_workspace", handleDeleteWorkspace);
       socket.on("delete_channel", handleDeleteChannel);
+      socket.on("create_reaction", handleCreateReaction);
+      socket.on("delete_reaction", handleDeleteReaction);
+      // socket.on("update_workspace", handleUpdateWorkspace);
+      // socket.on("update_channel", handleUpdateChannel);
+      // socket.on("create_channel", handleCreateChannel);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
@@ -172,15 +221,6 @@ function HomePage() {
     }
     loadData();
   }, [dispatch, user, setModalContent]);
-
-  // const scrollToNewMessage = (forceScroll = false) => {
-  //   const chatWindow = document.querySelector(".messages-details-wrapper");
-  //   if (chatWindow) {
-  //     if (forceScroll || chatWindow.scrollHeight === chatWindow.clientHeight + chatWindow.scrollTop) {
-  //       chatWindow.scrollTop = chatWindow.scrollHeight;
-  //     }
-  //   }
-  // }
 
   const clearNotification = () => {
     const notification = document.querySelector(".notification");
@@ -334,25 +374,26 @@ function HomePage() {
           getAvatarUrl={getAvatarUrl}
         />
       </div>
-      {!user?.id && <WelcomeModal />}
       <div id="main-content">
-        <Messages
-          user={user}
-          messages={messages}
-          showMessageTime={showMessageTime}
-          getMessageAuthorImage={getMessageAuthorImage}
-          formattedDate={formattedDate}
-          formattedTime={formattedTime}
-          messageInput={messageInput}
-          setMessageInput={setMessageInput}
-          editMessageInput={editMessageInput}
-          setEditMessageInput={setEditMessageInput}
-          emojis={emojis}
-          getMessageAuthorName={getMessageAuthorName}
-          newMessageNotification={newMessageNotification}
-          setNewMessageNotification={setNewMessageNotification}
-          socket={socket}
-        />
+        {!user?.id ? <WelcomeModal /> : (
+          <Messages
+            user={user}
+            messages={messages}
+            showMessageTime={showMessageTime}
+            getMessageAuthorImage={getMessageAuthorImage}
+            formattedDate={formattedDate}
+            formattedTime={formattedTime}
+            messageInput={messageInput}
+            setMessageInput={setMessageInput}
+            editMessageInput={editMessageInput}
+            setEditMessageInput={setEditMessageInput}
+            emojis={emojis}
+            getMessageAuthorName={getMessageAuthorName}
+            newMessageNotification={newMessageNotification}
+            setNewMessageNotification={setNewMessageNotification}
+            socket={socket}
+          />
+        )}
       </div>
     </div>
   );

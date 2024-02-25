@@ -99,6 +99,7 @@ def update_message(id):
             message.message = form.data["message"]
 
         db.session.commit()
+        # socketio.emit("update_message", message.to_dict())
         return message.to_dict(), 200
 
     return form.errors, 400
@@ -118,6 +119,8 @@ def delete_message(id):
 
     db.session.delete(message)
     db.session.commit()
+
+    socketio.emit("delete_message", { "message": message.to_dict() })
     return { "message": f"Successfully deleted {current_user.email}'s message" }
 
 
@@ -167,6 +170,8 @@ def create_reaction(id):
 
         db.session.add(new_reaction)
         db.session.commit()
+
+        socketio.emit("create_reaction", { "message": message.to_dict(reactions=True), "new_reaction": new_reaction.to_dict() })
         return new_reaction.to_dict(), 200
 
     return form.errors, 400
@@ -191,4 +196,6 @@ def delete_reaction(message_id, reaction_id):
 
     db.session.delete(reaction)
     db.session.commit()
+
+    socketio.emit("delete_reaction", { "message": message.to_dict(reactions=True), "reaction": reaction.to_dict() })
     return { "message": f"Successfully deleted reaction" }, 200

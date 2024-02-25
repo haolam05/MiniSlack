@@ -56,12 +56,13 @@
 }
 
 .workspaces-list-wrapper {
-  width: 240px;
+  /* width: 240px; */
   padding: 10px;
 }
 
 .workspaces-list {
-  width: 240px;
+  flex-grow: 1;
+  min-width: 240px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -303,10 +304,10 @@
 .searchbox-memberships input,
 .searchbox-messages input,
 .searchbox-emojis input {
-  width: 188px;
+  /* width: 188px; */
   padding: 10px;
   padding-left: 15px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background-color: rgb(81, 81, 81);
 }
 
@@ -337,7 +338,7 @@
 }
 
 .searchbox-messages input {
-  width: 95%;
+  width: 98%;
 }
 
 .searchbox-icons {
@@ -455,9 +456,19 @@
 
 .reactions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  gap: 5px;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.reaction {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
 }
 
 .reaction.not-me {

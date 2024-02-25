@@ -1,14 +1,10 @@
 .welcome-modal {
-  position: absolute;
-  top: 30px;
-  left: 375px;
   background-color: var(--welcome-modal-background);
-  padding: 10px;
+  padding: 20px;
   border-radius: 20px;
-  height: 650px;
-  width: 500px;
+  height: fit-content;
+  width: fit-content;
   animation: slide-in 5s ease-in-out;
-  z-index: 1;
 }
 
 @keyframes slide-in {
