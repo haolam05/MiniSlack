@@ -23,6 +23,7 @@
 
 .welcome-modal h1 {
   color: var(--wheat);
+  font-size: 17pt;
 }
 
 .welcome-modal p {
@@ -30,6 +31,7 @@
   text-indent: 2em;
   line-height: 2;
   margin-left: 15px;
+  font-size: 15pt;
 }
 
 .close-welcome-modal {
