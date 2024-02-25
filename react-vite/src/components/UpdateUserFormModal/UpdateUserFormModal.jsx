@@ -109,7 +109,12 @@ function UpdateUserFormModal({ user }) {
         <input
           type="file"
           accept="image/*"
-          onChange={e => setProfileImageUrl(e.target.files[0])}
+          onChange={e => {
+            const size = e.target.files[0].size;
+            if (size > 10 ** 6) return setErrors({ profileImageUrl: "File size must not be larger than 10MB." });
+            setProfileImageUrl(e.target.files[0]);
+            setErrors({ profileImageUrl: "" });
+          }}
         />
         {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
         {imageIsUploading && <Loading />}
