@@ -38,16 +38,11 @@ function HomePage() {
   const memberships = useSelector(membershipActions.getMemberships);
   const emojis = useSelector(sessionActions.getEmojis);
 
-  const clearMessageHeader = () => {
-    const messageHeader = document.querySelector(".message-header");
-    if (messageHeader) messageHeader.textContent = "";
-  }
-
   useEffect(() => {
     const handleCreateMessage = message => {
       // the receiver is the currently logged in user and sender is the currently selected member that we are talking to
       if (message.is_private) {
-        if (message.receiver_id === user.id) {    // current user === receiver
+        if (message.receiver_id === user?.id) {    // current user === receiver
           const workspace = document.querySelector(".workspace.selected");
           const member = document.querySelector(".workspace-message.selected");
           if (member && +member.id === message.sender_id) { // selected message (ongoing conversation) ---> use msg notification (weixin)
@@ -82,10 +77,10 @@ function HomePage() {
 
     const handleUpdateMessage = message => {
       const workspace = document.querySelector(".workspace.selected");
-      if (message.sender_id !== user.id && workspace && +workspace.id === message.workspace_id) {
+      if (message.sender_id !== user?.id && workspace && +workspace.id === message.workspace_id) {
         if (message.is_private) {
           const member = document.querySelector(".workspace-message.selected");
-          if (member && user.id === message.receiver_id && +member.id === message.sender_id) {
+          if (member && user?.id === message.receiver_id && +member.id === message.sender_id) {
             const messageEl = document.querySelector(`.message-${message.id}>.message-details>div+div`);
             if (messageEl) messageEl.textContent = message.message;
           }
@@ -101,10 +96,10 @@ function HomePage() {
 
     const handleDeleteMessage = (message) => {
       const workspace = document.querySelector(".workspace.selected");
-      if (message.sender_id !== user.id && workspace && +workspace.id === message.workspace_id) {
+      if (message.sender_id !== user?.id && workspace && +workspace.id === message.workspace_id) {
         if (message.is_private) {
           const member = document.querySelector(".workspace-message.selected");
-          if (member && user.id === message.receiver_id && +member.id === message.sender_id) {
+          if (member && user?.id === message.receiver_id && +member.id === message.sender_id) {
             const messageEl = document.querySelector(`.message-${message.id}`);
             if (messageEl) messageEl.classList.add("hidden");
           }
@@ -119,7 +114,7 @@ function HomePage() {
     }
 
     const handleDeleteMember = ({ member_id, workspace }) => {
-      if (member_id === user.id) {
+      if (member_id === user?.id) {
         dispatch(channelActions.reset());
         dispatch(messageActions.reset());
         dispatch(membershipActions.reset());
@@ -133,7 +128,7 @@ function HomePage() {
     }
 
     const handleMemberLeave = ({ workspace, member }) => {
-      if (user.id === workspace.owner_id) {
+      if (user?.id === workspace.owner_id) {
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
@@ -143,7 +138,7 @@ function HomePage() {
     }
 
     const handleInviteMember = ({ member_id, workspace }) => {
-      if (member_id === user.id) {
+      if (member_id === user?.id) {
         dispatch(workspaceActions.createWorkspaceAction(workspace));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
@@ -154,7 +149,7 @@ function HomePage() {
     }
 
     const handleUpdateWorkspace = ({ member_ids, workspace, old_name }) => {
-      if (member_ids.includes(user.id)) {
+      if (member_ids.includes(user?.id)) {
         dispatch(workspaceActions.editWorkspaceAction(workspace));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
@@ -165,7 +160,7 @@ function HomePage() {
     }
 
     const handleDeleteWorkspace = ({ member_ids, workspace }) => {
-      if (member_ids.includes(user.id)) {
+      if (member_ids.includes(user?.id)) {
         dispatch(channelActions.reset());
         dispatch(messageActions.reset());
         dispatch(membershipActions.reset());
@@ -179,7 +174,7 @@ function HomePage() {
     }
 
     const handleCreateChannel = ({ member_ids, channel, workspace }) => {
-      if (member_ids.includes(user.id)) {
+      if (member_ids.includes(user?.id)) {
         dispatch(channelActions.createChannelsAction(channel));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
@@ -190,7 +185,7 @@ function HomePage() {
     }
 
     const handleUpdateChannel = ({ member_ids, workspace, channel, old_name }) => {
-      if (member_ids.includes(user.id)) {
+      if (member_ids.includes(user?.id)) {
         const workspaceEl = document.querySelector(".workspace.selected");
         const isChannelChat = document.querySelector(".workspace-channel.selected");
         if (workspaceEl && +workspaceEl.id === workspace.id) {
@@ -221,7 +216,7 @@ function HomePage() {
     }
 
     const handleDeleteChannel = ({ member_ids, workspace, channel }) => {
-      if (member_ids.includes(user.id)) {
+      if (member_ids.includes(user?.id)) {
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
@@ -244,7 +239,7 @@ function HomePage() {
       const workspace = document.querySelector(".workspace.selected");
       const channel = document.querySelector(`.workspace-channel.selected.channel-${message.channel_id}`);
       const member = document.querySelector(`.workspace-message.selected.member-${new_reaction.user_id}`);
-      if (user.id !== new_reaction.user_id && workspace && +workspace.id === message.workspace_id) {
+      if (user?.id !== new_reaction.user_id && workspace && +workspace.id === message.workspace_id) {
         if (member || channel) {
           const reactions = document.querySelector(`.reaction-message-${message.id}`);
           if (reactions) {
@@ -253,7 +248,7 @@ function HomePage() {
             const reaction = document.createElement('div');
             reaction.classList.add("reaction");
             reaction.classList.add("not-me");
-            reaction.setAttribute("title", `${new_reaction.user.first_name} ${new_reaction.user.last_name}`)
+            reaction.setAttribute("title", `${new_reaction.user?.first_name} ${new_reaction.user?.last_name}`)
             reaction.textContent = new_reaction.encoded_text;
             reaction.setAttribute("id", `reaction-${new_reaction.id}`);
             reaction.addEventListener("click", e => e.stopPropagation());
@@ -267,7 +262,7 @@ function HomePage() {
       const workspace = document.querySelector(".workspace.selected");
       const channel = document.querySelector(`.workspace-channel.selected.channel-${message.channel_id}`);
       const member = document.querySelector(`.workspace-message.selected.member-${reaction.user_id}`);
-      if (user.id !== reaction.user_id && workspace && +workspace.id === message.workspace_id) {
+      if (user?.id !== reaction.user_id && workspace && +workspace.id === message.workspace_id) {
         if (member || channel) {
           const reactionEl = document.querySelector(`#reaction-${reaction.id}`);
           if (reactionEl) reactionEl.remove();
@@ -276,13 +271,16 @@ function HomePage() {
     }
 
     const handleWorkspaceOnlineOffline = onlineIds => {
-      if (user && onlineIds.includes(user.id)) {
+      if (user && onlineIds.includes(user?.id)) {
         const members = document.querySelectorAll(".workspace-message");
+        const searchbox = members[0]?.parentElement.firstChild;
         for (let i = 0; i < members.length; i++) {
           const member = members[i];
           const onlineSignal = document.querySelector(`.member-${+member.id} .online>i`);
           if (onlineIds.includes(+member.id)) {
             onlineSignal.classList.remove("hidden");
+            member.parentElement.prepend(member);
+            if (searchbox) member.parentElement.prepend(searchbox);
           } else {
             onlineSignal.classList.add("hidden");
           }
@@ -332,6 +330,11 @@ function HomePage() {
     loadData();
   }, [dispatch, user, setModalContent]);
 
+  const clearMessageHeader = () => {
+    const messageHeader = document.querySelector(".message-header");
+    if (messageHeader) messageHeader.textContent = "";
+  }
+
   const clearNotification = () => {
     const notification = document.querySelector(".notification");
     if (notification) {
@@ -374,9 +377,9 @@ function HomePage() {
     if (different_workspace) {
       clearMessageHeader();
       if (oldWorkspaceId) {
-        socket.emit("leave_workspace", { workspace_id: oldWorkspaceId, user_id: user.id });
+        socket.emit("leave_workspace", { workspace_id: oldWorkspaceId, user_id: user?.id });
       }
-      socket.emit("enter_workspace", { workspace_id: +workspace.id, user_id: user.id });
+      socket.emit("enter_workspace", { workspace_id: +workspace.id, user_id: user?.id });
     }
   }
 
@@ -407,7 +410,7 @@ function HomePage() {
     const selected = document.querySelector(".workspace-channel.selected");
     if (headerName) document.querySelector(".message-header").textContent = headerName;
     if (selected) selected.classList.remove("selected");
-    await dispatch(messageActions.loadDirectMessages(id, user.id, workspaceId));
+    await dispatch(messageActions.loadDirectMessages(id, user?.id, workspaceId));
 
     const member = e.target.closest(".workspace-message");
     if (!member) return;

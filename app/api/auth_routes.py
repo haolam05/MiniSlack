@@ -168,6 +168,7 @@ def logout():
         if current_user.id in user_ids:
             user_ids.remove(current_user.id)
     socketio.emit("offline", onlines)
+    print(onlines)
 
     logout_user()
     return {'message': 'User logged out'}, 200
