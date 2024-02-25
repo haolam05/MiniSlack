@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import { isImageValid } from "../../utils/image";
+import Loading from "../Loading";
 import * as sessionActions from "../../redux/session";
 
 function SignupFormModal() {
@@ -14,6 +15,7 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profileImageUrl, setProfileImageUrl] = useState("");
+  const [imageIsUploading, setImageIsUploading] = useState(false);
   const [errors, setErrors] = useState({});
   const { setModalContent } = useModal();
 
@@ -31,6 +33,7 @@ function SignupFormModal() {
       return setErrors({ confirmPassword: "Confirm Password field must be the same as the Password field" });
     }
 
+    setImageIsUploading(true);
     const data = await dispatch(
       sessionActions.signup({
         first_name: firstName,
@@ -44,9 +47,11 @@ function SignupFormModal() {
 
     if (data?.errors) {
       enabledSubmitButton();
+      setImageIsUploading(false);
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully Signed Up</h2>);
+    setImageIsUploading(false);
   };
 
   const inputInvalid = () => {
@@ -130,6 +135,7 @@ function SignupFormModal() {
           onChange={e => setProfileImageUrl(e.target.files[0])}
         />
         {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
+        {imageIsUploading && <Loading />}
         <button
           type="submit"
           className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}

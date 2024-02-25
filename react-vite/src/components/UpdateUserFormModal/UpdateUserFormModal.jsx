@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import { isImageValid } from "../../utils/image";
+import Loading from "../Loading";
 import * as sessionActions from "../../redux/session";
 
 function UpdateUserFormModal({ user }) {
@@ -11,6 +12,7 @@ function UpdateUserFormModal({ user }) {
   const [lastName, setLastName] = useState(user.last_name || "");
   const [password, setPassword] = useState("");
   const [profileImageUrl, setProfileImageUrl] = useState("");
+  const [imageIsUploading, setImageIsUploading] = useState(false);
   const [errors, setErrors] = useState({});
   const { setModalContent } = useModal();
 
@@ -23,6 +25,7 @@ function UpdateUserFormModal({ user }) {
       return setErrors({ profileImageUrl: "Only .png, .jpg, .jpeg, .gif are allowed" });
     }
 
+    setImageIsUploading(true);
     const data = await dispatch(
       sessionActions.updateUser({
         first_name: firstName,
@@ -36,9 +39,11 @@ function UpdateUserFormModal({ user }) {
 
     if (data?.errors) {
       enabledSubmitButton();
+      setImageIsUploading(false);
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully Updated</h2>);
+    setImageIsUploading(false);
   };
 
   const inputInvalid = () => {
@@ -106,6 +111,7 @@ function UpdateUserFormModal({ user }) {
           onChange={e => setProfileImageUrl(e.target.files[0])}
         />
         {errors.profileImageUrl && <p className="modal-errors">{errors.profileImageUrl}</p>}
+        {imageIsUploading && <Loading />}
         <button
           type="submit"
           className={`btn-submit ${inputInvalid() ? 'disabled' : ''}`}

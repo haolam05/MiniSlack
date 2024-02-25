@@ -152,7 +152,7 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
 
         if user.is_deleted == True:
-            return { "message": "User couldn't be found" }, 404
+            return { "message": "User is already be deleted" }, 404
 
         login_user(user)
         return user.to_dict()
