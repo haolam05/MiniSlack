@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect
 from flask_login import login_required, current_user
-from ..socket import socketio
+from ..socket import socketio, onlines
 from ..models import  db, Workspace, Channel, User, Message
 from ..forms import WorkspaceForm, ChannelForm, MembershipForm
 
@@ -242,6 +242,10 @@ def delete_membership(workspace_id, user_id):
     if current_user == workspace.owner:
         socketio.emit("remove_member", { "member_id": user_id, "workspace": workspace.to_dict() })
     else:
+        for user_ids in onlines.values():
+            if current_user.id in user_ids:
+                user_ids.remove(current_user.id)
+                socketio.emit("offline", onlines)
         socketio.emit("member_leave", { "workspace": workspace.to_dict(), "member": user.to_dict() })
 
     db.session.commit()

@@ -27,6 +27,7 @@ function UpdatePasswordFormModal({ user }) {
       return setErrors(data.errors);
     }
     setModalContent(<h2 className="subheading alert-success">Successfully Updated! Please log in again!</h2>);
+    enabledSubmitButton();
   };
 
   const inputInvalid = () => {

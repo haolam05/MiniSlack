@@ -52,6 +52,7 @@ function SignupFormModal() {
     }
     setModalContent(<h2 className="subheading alert-success">Successfully Signed Up</h2>);
     setImageIsUploading(false);
+    enabledSubmitButton();
   };
 
   const inputInvalid = () => {

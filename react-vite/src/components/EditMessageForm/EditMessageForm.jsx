@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 
 function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEditMessageInput }) {
   useEffect(() => {
@@ -7,6 +8,7 @@ function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEdi
 
   const handleSubmit = async e => {
     e.preventDefault();
+    disabledSubmitButton();
 
     const messageId = +e.target.closest(".message")?.id || null;
     const userReceiver = document.querySelector(".workspace-message.selected");
@@ -15,8 +17,8 @@ function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEdi
     const form = e.target.parentElement.closest(".edit-message-form");
     const messageDetails = e.target.closest(".message-details").querySelector('div');
 
-    if (!userReceiver && !channelReceiver) return;
-    if (!workspace || !editMessageInput.length) return;
+    if (!userReceiver && !channelReceiver) return enabledSubmitButton();
+    if (!workspace || !editMessageInput.length) return enabledSubmitButton();
 
     let payload;
 
@@ -36,10 +38,11 @@ function EditMessageForm({ m, messageActions, dispatch, editMessageInput, setEdi
       }
     }
     const data = await dispatch(messageActions.updateMessageThunk(messageId, payload));
-    if (data?.errors) return;
+    if (data?.errors) return enabledSubmitButton();
     form.classList.add("hidden");
     messageDetails.classList.remove("hidden");
     messageDetails.textContent = editMessageInput;
+    enabledSubmitButton();
   }
 
   return (

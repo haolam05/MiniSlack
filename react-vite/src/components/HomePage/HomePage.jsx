@@ -308,6 +308,30 @@ function HomePage() {
       }
     }
 
+    const handleUserDeleteMemberLeave = ({ workspace, member }) => {
+      if (user?.id === workspace.owner_id) {
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>{member.first_name} {member.last_name} has left.</p>
+        </div>);
+      }
+    }
+
+    const handleOwnerDeleteDeleteWorkspace = ({ member_ids, workspace, owner }) => {
+      if (member_ids.includes(user?.id)) {
+        dispatch(channelActions.reset());
+        dispatch(messageActions.reset());
+        dispatch(membershipActions.reset());
+        dispatch(workspaceActions.deleteWorkspaceAction(workspace.id));
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>The owner({owner.first_name} {owner.last_name}) is no longer a member of Minislack.</p>
+        </div>);
+      }
+    }
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
@@ -328,6 +352,8 @@ function HomePage() {
       socket.on("enter_workspace", handleWorkspaceOnlineOffline);
       socket.on("leave_workspace", handleWorkspaceOnlineOffline);
       socket.on("offline", handleOffline);
+      socket.on("user_delete_member_leave", handleUserDeleteMemberLeave);
+      socket.on("owner_delete_delete_workspace", handleOwnerDeleteDeleteWorkspace);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());
@@ -356,7 +382,7 @@ function HomePage() {
 
   const channelHeaderText = channelName => {
     return `<div style="display: flex; gap: 10px; align-items: center;">
-      <span>${channelName}</span>
+      <span>${channelName[0].toUpperCase() + channelName.slice(1).toLowerCase()}</span>
       <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info" title="Details"></i></span>
     </div>`;
   }

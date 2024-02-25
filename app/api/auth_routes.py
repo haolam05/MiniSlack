@@ -124,7 +124,14 @@ def delete_user():
 
     """ Delete workspaces owned by the user """
     for workspace in current_user.user_workspaces:
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        socketio.emit("owner_delete_delete_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict(), "owner": current_user.to_dict() })
         db.session.delete(workspace)
+
+    """ Delete workspaces joined by the user """
+    for workspace in current_user.workspaces:
+        socketio.emit("user_delete_member_leave", { "workspace": workspace.to_dict(), "member": current_user.to_dict() })
+    current_user.workspaces = []
 
     """ Emits logout event """
     for user_ids in onlines.values():

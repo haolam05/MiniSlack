@@ -33,6 +33,7 @@ function ChannelFormModal() {
     }
 
     setModalContent(<h2 className="subheading alert-success">Successfully Created</h2>);
+    enabledSubmitButton();
   }
 
 

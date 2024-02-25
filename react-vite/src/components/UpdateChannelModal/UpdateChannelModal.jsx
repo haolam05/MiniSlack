@@ -42,6 +42,7 @@ function UpdatedChannelModal({ channel, channelHeaderText }) {
         setModalContent(<ChannelInfo headerName={name} c={payload} />)
       });
     }
+    enabledSubmitButton();
   }
 
   if (!channel) return;

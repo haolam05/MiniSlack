@@ -44,6 +44,7 @@ function UpdateUserFormModal({ user }) {
     }
     setModalContent(<h2 className="subheading alert-success">Successfully Updated</h2>);
     setImageIsUploading(false);
+    enabledSubmitButton();
   };
 
   const inputInvalid = () => {
