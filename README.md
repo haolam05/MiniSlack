@@ -66,13 +66,33 @@
 ## Delete reaction
 ![alt text](<demo/Delete-reaction.gif>)
 
-
-
 ## Techologies
 
-## Design Principles and Techniques
+* PFR Stack
+  * Postgres (Sqlite in development)
+  * Flask 
+  * React (Redux for state management)
+* SQLAlchemy
+  * ORM for easier CRUD operations on the database
+* AWS
+  * Cloud hosting service for image(s) uploading
+* Flask-socketio
+  * Allows for real-time notifications, messaging, and authorization changes (e.g. being added to or removed from a workspace)
+* Open Emoji API
+  * Get a list of emojis to implement message reactions
+* Redux State Hydration
+  * Avoid unecessary fetches from the database, speed up application, and increase users' experience while ensuring data integrity across pages
+* Protections
+  * csrf (exchange tokens for non-GET requests)
+  * SQL injection (sanitize query input)
+* DBDiagram
+  * Used for design and sketch database schema, assign associations amongst tables
+* Data Racing
+  * Avoid false positive due to fast button clicks
+  * Avoid multiple CUD records being sent to the database by ensuring CUD signals are only processed once
 
 ## Features
+   * See user_stories.md
 
 ## API Documentation
 
