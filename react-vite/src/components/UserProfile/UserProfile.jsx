@@ -30,7 +30,7 @@ function UserProfile({ user, setModalContent, closeModal, showSettings = true })
 
   const deleteUser = async () => {
     dispatch(sessionActions.deleteUser());
-    setModalContent(<h2 className="subheading alert-success">Account is deleted successfully. You won't allow to signup with this email or login again.</h2>);
+    setModalContent(<h2 className="subheading alert-success">Account is deleted successfully. You won&apos;t allow to signup with this email or login again.</h2>);
   }
 
   return (
