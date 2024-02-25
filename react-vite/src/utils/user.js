@@ -20,5 +20,5 @@ export const getInviteUsers = async workspaceId => {
   const data2 = await res2.json();
   if (!res2.ok) return { errors: data2 };
   const memberIds = data2.Members.map(m => m.id);
-  return data.users.filter(user => !memberIds.includes(user.id));
+  return data.users.filter(user => !memberIds.includes(user.id) && !user.is_deleted);
 }
