@@ -309,25 +309,33 @@ function HomePage() {
     }
 
     const handleUserDeleteMemberLeave = ({ workspace, member }) => {
-      if (user?.id === workspace.owner_id) {
+      if (user?.id === workspace.owner_id && member.id !== user?.id) {
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
-          <p>{member.first_name} {member.last_name} has left.</p>
+          <p>{member.first_name} {member.last_name} has left &quot;{workspace.name}&quot; workspace.</p>
         </div>);
       }
     }
 
-    const handleOwnerDeleteDeleteWorkspace = ({ member_ids, workspace, owner }) => {
+    const handleOwnerDeleteDeleteWorkspace = ({ member_ids, workspace, owner, deleted_workspace_ids, deleted_workspace_names }) => {
       if (member_ids.includes(user?.id)) {
-        dispatch(channelActions.reset());
-        dispatch(messageActions.reset());
-        dispatch(membershipActions.reset());
+        const workspaceEl = document.querySelector(".workspace.selected");
+        if (workspaceEl && deleted_workspace_ids.includes(+workspaceEl.id)) {
+          clearMessageHeader();
+          dispatch(channelActions.reset());
+          dispatch(messageActions.reset());
+          dispatch(membershipActions.reset());
+        }
         dispatch(workspaceActions.deleteWorkspaceAction(workspace.id));
         setModalContent(<div>
           <h2 className="subheading">Notification</h2>
           <br />
           <p>The owner({owner.first_name} {owner.last_name}) is no longer a member of Minislack.</p>
+          <p>The following workspaces are deleted:</p>
+          <ul className="deleted-workspaces">
+            {deleted_workspace_names.map((name, i) => <li key={i}>{name}</li>)}
+          </ul>
         </div>);
       }
     }
