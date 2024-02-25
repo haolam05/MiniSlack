@@ -21,7 +21,7 @@ const createChannelsAction = channel => ({
   channel
 });
 
-const updateChannelAction = channel => ({
+export const updateChannelAction = channel => ({
   type: UPDATE_CHANNEL,
   channel
 });
@@ -37,12 +37,15 @@ export const reset = () => ({
 
 
 // Thunk action creators
-export const loadChannels = workspaceId => async dispatch => {
+export const loadChannels = workspaceId => async (dispatch, getState) => {
+  const channels = Object.values(getState().channels.channels);
+  if (channels.length && channels[0].workspace_id === workspaceId) return false;;
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/channels`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(getChannelsAction(data.Channels));
   dispatch(messageActions.reset());
+  return true;
 }
 
 export const updateChannelThunk = (channelId, payload) => async dispatch => {

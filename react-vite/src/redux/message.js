@@ -35,10 +35,10 @@ export const removeMessage = messageId => {
 
 
 // Thunk action creators
-export const loadChannelMessages = channeId => async (dispatch, getState) => {
+export const loadChannelMessages = channelId => async (dispatch, getState) => {
   const channelMessages = Object.values(getState().messages.messages);
-  if (channelMessages.length && channelMessages[0].channel_id === channeId) return;
-  const res = await csrfFetch(`/api/channels/${channeId}/messages`);
+  if (channelMessages.length && channelMessages[0].channel_id === channelId) return;
+  const res = await csrfFetch(`/api/channels/${channelId}/messages`);
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(addMessages(data.Messages));

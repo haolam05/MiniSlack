@@ -7,7 +7,7 @@ import UpdatedChannelModal from "../UpdateChannelModal";
 import ChannelFormModal from "../ChannelFormModal";
 import * as channelActions from "../../redux/channel";
 
-function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
+function Channels({ user, collapseWorkspaces, channels, showChannelMessages, channelHeaderText }) {
   const dispatch = useDispatch();
   const { closeModal, setModalContent } = useModal();
   const [searchChannel, setSearchChannel] = useState("");
@@ -83,7 +83,7 @@ function Channels({ user, collapseWorkspaces, channels, showChannelMessages }) {
                   <div className="update-channel-btn">
                     <OpenModalButton
                       buttonText={<i className="fa-solid fa-gear" title="Update"></i>}
-                      modalComponent={<UpdatedChannelModal channel={c} />}
+                      modalComponent={<UpdatedChannelModal channel={c} channelHeaderText={channelHeaderText} />}
                     />
                   </div>
                   <div className="delete-channel-btn">

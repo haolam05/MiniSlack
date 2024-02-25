@@ -25,7 +25,7 @@ export const createWorkspaceAction = workspace => {
   }
 }
 
-const editWorkspaceAction = workspace => {
+export const editWorkspaceAction = workspace => {
   return {
     type: EDIT_WORKSPACE,
     workspace

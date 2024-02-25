@@ -69,6 +69,7 @@ def update_workspace(id):
     form["csrf_token"].data = request.cookies["csrf_token"]
     workspace = Workspace.query.get(id)
     user_id = current_user.to_dict()['id']
+    old_name = workspace.name
 
     if form.validate_on_submit():
         if not workspace:
@@ -84,7 +85,11 @@ def update_workspace(id):
             workspace.name = form.data["name"]
             db.session.commit()
 
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        socketio.emit("update_workspace", { "member_ids": member_ids, "workspace": workspace.to_dict(), "old_name": old_name })
+
         return workspace.to_dict(), 200
+
     return form.errors, 400
 
 

@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import ChannelInfo from "../ChannelInfo";
 import * as channelActions from "../../redux/channel";
 
-function UpdatedChannelModal({ channel }) {
+function UpdatedChannelModal({ channel, channelHeaderText }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [name, setName] = useState(channel.name);
@@ -35,8 +36,12 @@ function UpdatedChannelModal({ channel }) {
     const channelEl = document.querySelector(".workspace-channel.selected");
     if (channelEl) {
       await dispatch(channelActions.loadChannels(+workspace.id));
-      channelEl.classList.remove("selected");
-      document.querySelector(".message-header").textContent = "";
+      const messageHeader = document.querySelector(".message-header");
+      console.log(messageHeader)
+      messageHeader.innerHTML = channelHeaderText(name);
+      messageHeader.querySelector("#channel-info").addEventListener('click', () => {
+        setModalContent(<ChannelInfo headerName={name} c={payload} />)
+      });
     }
   }
 

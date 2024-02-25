@@ -153,6 +153,17 @@ function HomePage() {
       }
     }
 
+    const handleUpdateWorkspace = ({ member_ids, workspace, old_name }) => {
+      if (member_ids.includes(user.id)) {
+        dispatch(workspaceActions.editWorkspaceAction(workspace));
+        setModalContent(<div>
+          <h2 className="subheading">Notification</h2>
+          <br />
+          <p>&quot;{old_name}&quot; workspace has updated its name to &quot;{workspace.name}&quot;.</p>
+        </div>);
+      }
+    }
+
     const handleDeleteWorkspace = ({ member_ids, workspace }) => {
       if (member_ids.includes(user.id)) {
         dispatch(channelActions.reset());
@@ -164,6 +175,37 @@ function HomePage() {
           <br />
           <p>&quot;{workspace.name}&quot; workspace has been deleted.</p>
         </div>);
+      }
+    }
+
+    const handleUpdateChannel = ({ member_ids, workspace, channel, old_name }) => {
+      if (member_ids.includes(user.id)) {
+        const workspaceEl = document.querySelector(".workspace.selected");
+        const isChannelChat = document.querySelector(".workspace-channel.selected");
+        if (workspaceEl && +workspaceEl.id === workspace.id) {
+          dispatch(channelActions.updateChannelAction(channel));
+          if (isChannelChat && +isChannelChat.id === channel.id) {
+            dispatch(messageActions.loadChannelMessages(channel.id));
+            const messageHeader = document.querySelector(".message-header");
+            messageHeader.innerHTML = channelHeaderText(channel.name);
+            messageHeader.querySelector("#channel-info").addEventListener('click', () => {
+              setModalContent(<ChannelInfo headerName={channel.name} c={channel} />)
+            });
+          }
+        }
+        if (old_name !== channel.name) {
+          setModalContent(<div>
+            <h2 className="subheading">Notification</h2>
+            <br />
+            <p>&quot;{old_name}&quot; channel from &quot;{workspace.name}&quot; workspace has updated its content and changed its name to &quot;{channel.name}&quot;.</p>
+          </div>);
+        } else {
+          setModalContent(<div>
+            <h2 className="subheading">Notification</h2>
+            <br />
+            <p>&quot;{old_name}&quot; channel from &quot;{workspace.name}&quot; workspace has updated its content.</p>
+          </div>);
+        }
       }
     }
 
@@ -219,10 +261,10 @@ function HomePage() {
       socket.on("invite_member", handleInviteMember);
       socket.on("remove_member", handleDeleteMember);
       socket.on("member_leave", handleMemberLeave);
-      // socket.on("update_workspace", handleUpdateWorkspace);
+      socket.on("update_workspace", handleUpdateWorkspace);
       socket.on("delete_workspace", handleDeleteWorkspace);
       // socket.on("create_channel", handleCreateChannel);
-      // socket.on("update_channel", handleUpdateChannel);
+      socket.on("update_channel", handleUpdateChannel);
       socket.on("delete_channel", handleDeleteChannel);
       socket.on("create_reaction", handleCreateReaction);
       socket.on("delete_reaction", handleDeleteReaction);
@@ -247,6 +289,13 @@ function HomePage() {
     }
   }
 
+  const channelHeaderText = channelName => {
+    return `<div style="display: flex; gap: 10px; align-items: center;">
+      <span>${channelName}</span>
+      <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info" title="Details"></i></span>
+    </div>`;
+  }
+
   const showUserProfile = (e, member) => {
     e.stopPropagation();
     setModalContent(<UserProfile user={member} setModalContent={setModalContent} closeModal={closeModal} showSettings={false} />);
@@ -261,15 +310,14 @@ function HomePage() {
 
   const showChannelsAndMemberships = async e => {
     clearNotification();
-    clearMessageHeader();
     select(e);
     const workspace = e.target.closest(".workspace");
     if (!workspace) return;
+    const different_workspace = await dispatch(channelActions.loadChannels(+workspace.id));
     const selectedDm = document.querySelector(".workspace-message.selected");
-    if (selectedDm) selectedDm.classList.remove("selected");
-    await dispatch(channelActions.loadChannels(+workspace.id));
+    if (different_workspace && selectedDm) selectedDm.classList.remove("selected");
     await dispatch(membershipActions.loadMemberships(+workspace.id));
-    await dispatch(messageActions.reset());
+    if (different_workspace) clearMessageHeader();
   }
 
   const showChannelMessages = async (e, c) => {
@@ -281,11 +329,7 @@ function HomePage() {
     const selected = document.querySelector(".workspace-message.selected");
     if (headerName) {
       const messageHeader = document.querySelector(".message-header");
-      messageHeader.innerHTML = `<div style="display: flex; gap: 10px; align-items: center;">
-        <span>${headerName}</span>
-        <span id="channel-info"><i style="font-size: 11pt; cursor: pointer;" class="fa-solid fa-circle-info" title="Details"></i></span>
-      </div>
-      `;
+      messageHeader.innerHTML = channelHeaderText(headerName);
       messageHeader.querySelector("#channel-info").addEventListener('click', () => setModalContent(<ChannelInfo headerName={headerName} c={c} />));
     }
     if (selected) selected.classList.remove("selected");
@@ -381,6 +425,7 @@ function HomePage() {
           channels={sortDesc(channels)}
           collapseWorkspaces={collapseWorkspaces}
           showChannelMessages={showChannelMessages}
+          channelHeaderText={channelHeaderText}
         />
         <Memeberships
           user={user}

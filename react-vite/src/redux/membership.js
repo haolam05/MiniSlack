@@ -26,7 +26,9 @@ export const reset = () => ({
 
 
 // Thunk action creators
-export const loadMemberships = workspaceId => async dispatch => {
+export const loadMemberships = workspaceId => async (dispatch, getState) => {
+  const memberships = Object.values(getState().memberships.memberships);
+  if (memberships.length && memberships[0].workspace_id === workspaceId) return;
   const res = await csrfFetch(`/api/workspaces/${workspaceId}/all-memberships`);
   const data = await res.json();
   if (!res.ok) return { errors: data };

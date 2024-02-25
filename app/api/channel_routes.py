@@ -16,6 +16,7 @@ def update_channel(id):
 
     if form.validate_on_submit():
         channel = Channel.query.get(id)
+        old_name = channel.name
 
         if not channel:
             return { "message": "Channel couldn't be found" }, 404
@@ -36,6 +37,9 @@ def update_channel(id):
             channel.description = form.data["description"]
 
         db.session.commit()
+        workspace = Workspace.query.get(channel.workspace_id)
+        member_ids = [member.id for member in workspace.users if member.id != current_user.id]
+        socketio.emit("update_channel", { "member_ids": member_ids, "workspace": workspace.to_dict(), "channel": channel.to_dict(), "old_name": old_name })
         return channel.to_dict(), 200
 
     return form.errors, 400
