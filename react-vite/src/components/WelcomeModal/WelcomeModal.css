@@ -55,8 +55,9 @@
 
 @media screen and (max-width: 1020px) {
   .welcome-modal {
-    width: 400px;
-    height: 750px;
+    top: 20px;
+    width: 450px;
+    height: 870px;
     left: 415px;
   }
 }
