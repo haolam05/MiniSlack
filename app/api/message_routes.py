@@ -120,7 +120,7 @@ def delete_message(id):
     db.session.delete(message)
     db.session.commit()
 
-    socketio.emit("delete_message", message.to_dict())
+    socketio.emit("delete_message", message.to_dict(reactions=True))
     return { "message": f"Successfully deleted {current_user.email}'s message" }
 
 

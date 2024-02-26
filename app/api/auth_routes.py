@@ -105,6 +105,13 @@ def update_user_password():
         current_user.password = form.data["new_password"]
 
         db.session.commit()
+
+        """ Emits logout event """
+        for user_ids in onlines.values():
+            if current_user.id in user_ids:
+                user_ids.remove(current_user.id)
+        socketio.emit("offline", onlines)
+
         logout_user()
         return { "message": "Successfully updated your password. Please log in again." }, 200
 
