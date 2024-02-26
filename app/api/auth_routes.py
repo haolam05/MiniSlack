@@ -86,6 +86,9 @@ def update_user():
         user.first_name = form.data["first_name"]
         user.last_name = form.data["last_name"]
 
+        """ Emits update user event """
+        socketio.emit("update_user", user.to_dict())
+
         db.session.commit()
         return user.to_dict()
 
@@ -107,9 +110,11 @@ def update_user_password():
         db.session.commit()
 
         """ Emits logout event """
+        print(onlines, "BEFORE")
         for user_ids in onlines.values():
             if current_user.id in user_ids:
                 user_ids.remove(current_user.id)
+        print(onlines, "AFTER")
         socketio.emit("offline", onlines)
 
         logout_user()

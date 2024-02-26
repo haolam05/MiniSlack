@@ -341,6 +341,23 @@ function HomePage() {
       }
     }
 
+    const handleUpdateUser = updatedUser => {
+      if (user?.id === updatedUser.id) return;
+      const member = document.querySelector(`.member-${updatedUser.id}`);
+      if (member && +member.id === updatedUser.id) {
+        const memberName = member.querySelector(".member-name");
+        const memberImage = member.querySelector("img");
+        if (memberName) memberName.textContent = `${updatedUser.first_name} ${updatedUser.last_name}`;
+        if (memberImage) memberImage.src = updatedUser.profile_image_url;
+        const selectedMember = document.querySelector(".workspace-message.selected");
+        if (selectedMember && +selectedMember.id === updatedUser.id) {
+          const messageHeader = document.querySelector(".message-header");
+          if (messageHeader) messageHeader.textContent = `${updatedUser.first_name} ${updatedUser.last_name}`;
+        }
+        member.addEventListener('click', e => showUserProfile(e, updatedUser))
+      }
+    }
+
     clearMessageHeader();
     const loadData = async () => {
       const url = import.meta.env.MODE === 'development' ? "http://127.0.0.1:8000" : "https://minislack.onrender.com";
@@ -363,6 +380,7 @@ function HomePage() {
       socket.on("offline", handleOffline);
       socket.on("user_delete_member_leave", handleUserDeleteMemberLeave);
       socket.on("owner_delete_delete_workspace", handleOwnerDeleteDeleteWorkspace);
+      socket.on("update_user", handleUpdateUser);
 
       await dispatch(sessionActions.restoreSession());
       await dispatch(sessionActions.loadEmojis());

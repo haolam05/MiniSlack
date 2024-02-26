@@ -22,7 +22,7 @@ def handle_new_message(data):
 
     if workspace_id not in onlines:
         onlines[workspace_id] = [user_id]
-    else:
+    elif user_id not in onlines[workspace_id]:
         onlines[workspace_id].append(user_id)
 
     emit("enter_workspace", onlines[workspace_id], broadcast=True)
