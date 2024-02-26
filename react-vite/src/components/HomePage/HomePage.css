@@ -285,8 +285,15 @@
   background-color: var(--other-message-background);
   border: none;
   border-radius: 5px;
-  width: 100%;
   padding: 5px 20px;
+}
+
+.searchbox-emojis input,
+.searchbox-workspaces input,
+.searchbox-channels input,
+.searchbox-memberships input,
+.searchbox-messages input {
+  width: 100%;
 }
 
 .searchbox-workspaces,
@@ -672,7 +679,7 @@
   width: fit-content;
   padding: 5px 10px;
   position: absolute;
-  bottom: 150px;
+  bottom: 145px;
   right: 40px;
   z-index: 1;
 }
