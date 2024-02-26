@@ -51,7 +51,8 @@ function UpdateUserFormModal({ user }) {
     return (
       !firstName.length ||
       !lastName.length ||
-      password.length < 6
+      password.length < 6 ||
+      errors.profileImageUrl
     );
   }
 

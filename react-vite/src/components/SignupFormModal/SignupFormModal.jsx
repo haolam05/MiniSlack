@@ -62,7 +62,8 @@ function SignupFormModal() {
       !lastName.length ||
       !email.length ||
       username.length < 4 ||
-      password.length < 6
+      password.length < 6 ||
+      errors.profileImageUrl
     );
   }
 
