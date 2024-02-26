@@ -86,6 +86,7 @@ export const createMessageThunk = payload => async dispatch => {
   const data = await res.json()
   if (!res.ok) return { errors: data };
   dispatch(addMessage(data));
+  return data;
 }
 
 export const updateMessageThunk = (messageId, payload) => async dispatch => {
@@ -98,6 +99,7 @@ export const updateMessageThunk = (messageId, payload) => async dispatch => {
   const data = await res.json();
   if (!res.ok) return { errors: data };
   dispatch(addMessage(data));
+  return data;
 }
 
 export const deleteMessageThunk = messageId => async dispatch => {

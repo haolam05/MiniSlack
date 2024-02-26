@@ -65,8 +65,8 @@ def create_message():
 
 
         """ Returns new message """
-        socketio.emit("new_message", new_message.to_dict())
-        return new_message.to_dict(), 200
+        socketio.emit("new_message", new_message.to_dict(reactions=True))
+        return new_message.to_dict(reactions=True), 200
 
     return form.errors, 400
 
@@ -99,8 +99,8 @@ def update_message(id):
             message.message = form.data["message"]
 
         db.session.commit()
-        socketio.emit("update_message", message.to_dict())
-        return message.to_dict(), 200
+        socketio.emit("update_message", message.to_dict(reactions=True))
+        return message.to_dict(reactions=True), 200
 
     return form.errors, 400
 
