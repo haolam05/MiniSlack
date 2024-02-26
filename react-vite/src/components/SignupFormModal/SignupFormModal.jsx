@@ -22,7 +22,6 @@ function SignupFormModal() {
   const handleSubmit = async e => {
     e.preventDefault();
     disabledSubmitButton();
-    console.log("")
 
     if (profileImageUrl && !isImageValid(profileImageUrl.name)) {
       enabledSubmitButton();

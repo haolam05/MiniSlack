@@ -396,7 +396,6 @@ function HomePage() {
   }, [dispatch, user, setModalContent]);
 
   const changeMemberIconToNonMemberIcon = email => {
-    console.log(email, '🐷🐷🐷🐷')
     const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
     if (!removeUserIcon) return;
     removeUserIcon.classList.remove("fa-user-xmark");

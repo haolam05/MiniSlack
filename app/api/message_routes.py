@@ -117,10 +117,11 @@ def delete_message(id):
     if current_user != message.owner:
         return redirect("/api/auth/forbidden")
 
+    socketio.emit("delete_message", message.to_dict())
+
     db.session.delete(message)
     db.session.commit()
 
-    socketio.emit("delete_message", message.to_dict(reactions=True))
     return { "message": f"Successfully deleted {current_user.email}'s message" }
 
 
