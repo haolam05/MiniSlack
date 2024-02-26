@@ -145,6 +145,7 @@ function HomePage() {
           <br />
           <p>{member.first_name} {member.last_name} just leaved the &quot;{workspace.name}&quot; workspace.</p>
         </div>);
+        changeMemberIconToNonMemberIcon(member.email);
       }
     }
 
@@ -354,7 +355,7 @@ function HomePage() {
           const messageHeader = document.querySelector(".message-header");
           if (messageHeader) messageHeader.textContent = `${updatedUser.first_name} ${updatedUser.last_name}`;
         }
-        member.addEventListener('click', e => showUserProfile(e, updatedUser))
+        if (memberImage) memberImage.addEventListener('click', e => showUserProfile(e, updatedUser))
       }
     }
 
@@ -395,6 +396,7 @@ function HomePage() {
   }, [dispatch, user, setModalContent]);
 
   const changeMemberIconToNonMemberIcon = email => {
+    console.log(email, '🐷🐷🐷🐷')
     const removeUserIcon = document.querySelector(`[data-email="${email}"]`);
     if (!removeUserIcon) return;
     removeUserIcon.classList.remove("fa-user-xmark");
