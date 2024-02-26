@@ -110,11 +110,9 @@ def update_user_password():
         db.session.commit()
 
         """ Emits logout event """
-        print(onlines, "BEFORE")
         for user_ids in onlines.values():
             if current_user.id in user_ids:
                 user_ids.remove(current_user.id)
-        print(onlines, "AFTER")
         socketio.emit("offline", onlines)
 
         logout_user()
