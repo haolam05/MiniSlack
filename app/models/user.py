@@ -33,7 +33,6 @@ class User(db.Model, UserMixin):
     """ many-to-many """
     workspaces = db.relationship('Workspace', secondary="memberships", back_populates="users")
 
-
     @validates('first_name')
     def validate_first_name(self, _, val):
         if not len(val):
