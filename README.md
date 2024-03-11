@@ -67,24 +67,36 @@
 ![alt text](<demo/Delete-reaction.gif>)
 
 ## Techologies
-
-* PFR Stack
+* PPFR Stack
   * Postgres (Sqlite in development)
-  * Flask 
+  * Python
+  * Flask
   * React (Redux for state management)
 * SQLAlchemy
   * ORM for easier CRUD operations on the database
 * AWS
-  * Cloud hosting service for image(s) uploading
+  * Cloud hosting service for image(s) uploading & downloading
+* Boto3 & Botocore
+  * Used to create, configure, and manage AWS services
+* Dyanmic seedings
+  * A variety of seeds are dynamically created for testing and demo purposes without hard-coding
 * Flask-socketio
   * Allows for real-time notifications, messaging, and authorization changes (e.g. being added to or removed from a workspace)
-* Open Emoji API
-  * Get a list of emojis to implement message reactions
 * Redux State Hydration
   * Avoid unecessary fetches from the database, speed up application, and increase users' experience while ensuring data integrity across pages
-* Protections
-  * csrf (exchange tokens for non-GET requests)
-  * SQL injection (sanitize query input)
+* CSRF Protection
+  * By exchanging tokens for non-GET requests
+* Prevent SQL injections
+  * By sanitize queries input
+* Prevent Rainbow Table attacks
+  * By salt and hash passwords before storing in the database
+  * Prevent XSS attacks
+  * Force all inputs to be text
+  * Also applied csrf practice mentioned above for extra layer of protection
+* CORS
+  * Enabled during development
+* Eslint
+  * Used for consistent styling
 * DBDiagram
   * Used for design and sketch database schema, assign associations amongst tables
 * Data Racing
@@ -539,7 +551,7 @@ Delete a user profile.
       "message": "Successfully deleted account"
     }
     ```
-  
+
 
 ## WORKSPACES
 ### Get all workspaces joined or owned by the current signed in user
