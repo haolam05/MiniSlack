@@ -177,12 +177,6 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             <div className={`reactions reaction-message-${m.id}`}><ShowReactions m={m} deleteReaction={deleteReaction} user={user} /></div>
           </div>
         ))}
-        {/* <div className="new-message" title="Scroll to the bottom">
-          <i className="fa-brands fa-weixin" onClick={handleScrollingBottom}></i>
-          <div className="notification hidden">
-            <i className="fa-solid fa-circle" onClick={handleScrollingBottom}></i>
-          </div>
-        </div> */}
         <div ref={messagesBottomRef}></div>
       </div>
       <div id="message-input" onClick={hideEmojisList}>
