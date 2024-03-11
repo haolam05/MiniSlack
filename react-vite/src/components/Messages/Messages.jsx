@@ -89,6 +89,18 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
     enabledSubmitButton();
   }
 
+
+  const handleKeyPress = e => {
+    if (e.keyCode === 13) { // enter
+      e.preventDefault(); // prevent default new line
+      if (e.ctrlKey) {
+        setMessageInput(messageInput + "\n")
+      } else {
+        handleSubmit(e);
+      }
+    }
+  }
+
   const showEmojisList = async e => {
     e.stopPropagation();
     if (!disabledInputMessage()) {
@@ -186,6 +198,7 @@ function Messages({ user, messages, showMessageTime, getMessageAuthorImage, form
             value={messageInput}
             disabled={disabledInputMessage()}
             onChange={e => setMessageInput(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <div className="new-message" title="Scroll to the bottom">
             <i className="fa-brands fa-weixin" onClick={handleScrollingBottom}></i>
