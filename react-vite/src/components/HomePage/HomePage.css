@@ -726,3 +726,18 @@
   list-style-type: circle;
   margin-left: 30px;
 }
+
+@media screen and (max-width: 750px) {
+  #home-page {
+    width: 90%;
+    scrollbar-color: var(--gray) transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar {
+    width: 79%;
+  }
+}
