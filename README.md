@@ -1,5 +1,13 @@
 # MiniSlack
 
+  - Inspired by Slack's success in revolutionizing team communication and collaboration, MiniSlack comes into live with the goal of minimalist designs, focusing on creating real-time a messaging app using websocket.
+
+  - Similar to Slack, Minislack provides channels for organized discussions, direct messaging for one-on-one conversations. However, it distinguishes itself by emphasizing simplicity and efficiency. The interface is minimalist, focusing on essential functions to ensure a seamless user experience without unnecessary clutter.
+
+  - Members can create workspaces. The workspace owners can invite other members into their workspaces via emails. Within a workspace, any member can create channels, and start chatting with each other. MiniSlack also supports direct messages. Even when a member leaves the workspace, the chat history are being preserved.
+
+  - Minislack's future plans involve implementing an infinite scrollbar for smooth navigation and minimize delay, enabling file sharing of diverse media, and support team meetings by integrating video calls. These upgrades aim to enhance Minislack's versatility and efficiency in team collaboration.
+
 ## Hosted On
 [![Render](https://img.shields.io/badge/Render-%46E3B7.svg?logo=render&logoColor=white)](https://minislack.onrender.com)
 
