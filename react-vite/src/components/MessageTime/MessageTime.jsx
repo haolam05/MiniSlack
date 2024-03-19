@@ -28,7 +28,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
             }
           }}
           onMouseEnter={e => setCurrentEmoji(e.target.id)}
-          onMouseLeave={e => setCurrentEmoji("0x1F60A")}
+          onMouseLeave={() => setCurrentEmoji("0x1F60A")}
         >
           {String.fromCodePoint(codePoint)}
         </div>
@@ -99,7 +99,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
           }}>+</p>
           <div className="current-emoji">
             <span className="current-emoji-icon">{String.fromCodePoint(currentEmoji)}</span>
-            <span>What's your mood?</span>
+            <span>What&apos;s your mood?</span>
           </div>
         </div>
       </div >
