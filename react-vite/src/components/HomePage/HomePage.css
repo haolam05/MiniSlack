@@ -70,7 +70,7 @@
   height: 240px;
   scrollbar-color: var(--gray) transparent;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 1px solid var(--home-page-background);
   box-shadow: var(--box-shadow);
   border-radius: 10px;
@@ -114,7 +114,7 @@
   padding-top: 0;
   scrollbar-color: var(--gray) transparent;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .message {
@@ -211,7 +211,7 @@
   resize: none;
   scrollbar-color: var(--gray) transparent;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .emojis {
@@ -260,7 +260,7 @@
   padding-top: 62px;
   scrollbar-color: var(--home-page-background) transparent;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100px;
   align-items: flex-start;
   width: 350px;
@@ -504,7 +504,7 @@
   padding-right: 10px;
   scrollbar-color: var(--gray) transparent;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .message-time .current-emoji {
@@ -521,7 +521,9 @@
 
 .message-time .current-emoji .current-emoji-text {
   line-break: anywhere;
-  max-width: 160px;
+  max-width: 130px;
+  display: flex;
+  align-items: center;
 }
 
 .workspace-details,
