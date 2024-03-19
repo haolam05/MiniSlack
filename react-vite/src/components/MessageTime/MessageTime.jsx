@@ -4,6 +4,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
   const [showAllEmojis, setShowAllEmojis] = useState(false);
   const [searchEmoji, setSearchEmoji] = useState("");
   const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
+  const [currentEmoji, setCurrentEmoji] = useState("0x1F60A");
   const showEmojisHelper = icons => {
     return icons.map(emoji => {
       const codePoint = "0x" + emoji.codePoint.split(" ")[0];
@@ -26,6 +27,8 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
               reaction.setAttribute("id", `reaction-${data.id}`);
             }
           }}
+          onMouseEnter={e => setCurrentEmoji(e.target.id)}
+          onMouseLeave={e => setCurrentEmoji("0x1F60A")}
         >
           {String.fromCodePoint(codePoint)}
         </div>
@@ -94,6 +97,10 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
               setShowAllEmojis(false);
             }
           }}>+</p>
+          <div className="current-emoji">
+            <span className="current-emoji-icon">{String.fromCodePoint(currentEmoji)}</span>
+            <span>What's your mood?</span>
+          </div>
         </div>
       </div >
       <div className="msg-date">{formattedDate(m.created_at)}</div>

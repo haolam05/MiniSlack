@@ -507,6 +507,18 @@
   overflow-y: scroll;
 }
 
+.message-time .current-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  border-top: 1px solid var(--gray);
+}
+
+.message-time .current-emoji .current-emoji-icon {
+  font-size: 20pt;
+}
+
 .workspace-details,
 .channel-details {
   flex-grow: 1;
