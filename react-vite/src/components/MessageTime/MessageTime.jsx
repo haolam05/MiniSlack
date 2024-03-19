@@ -5,6 +5,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
   const [searchEmoji, setSearchEmoji] = useState("");
   const [currentEmojis, setCurrentEmojis] = useState([...emojis]);
   const [currentEmoji, setCurrentEmoji] = useState("0x1F60A");
+  const [currentText, setCurrentText] = useState("What's your mood?");
   const showEmojisHelper = icons => {
     return icons.map(emoji => {
       const codePoint = "0x" + emoji.codePoint.split(" ")[0];
@@ -27,8 +28,16 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
               reaction.setAttribute("id", `reaction-${data.id}`);
             }
           }}
-          onMouseEnter={e => setCurrentEmoji(e.target.id)}
-          onMouseLeave={() => setCurrentEmoji("0x1F60A")}
+          onMouseEnter={e => {
+            if (e.target.classList.contains("emoji")) {
+              setCurrentEmoji(e.target.id);
+              setCurrentText(e.target.title);
+            }
+          }}
+          onMouseLeave={() => {
+            setCurrentEmoji("0x1F60A");
+            setCurrentText("What's your mood?");
+          }}
         >
           {String.fromCodePoint(codePoint)}
         </div>
@@ -99,7 +108,7 @@ function MessageTime({ formattedDate, formattedTime, m, emojis, createReaction, 
           }}>+</p>
           <div className="current-emoji">
             <span className="current-emoji-icon">{String.fromCodePoint(currentEmoji)}</span>
-            <span>What&apos;s your mood?</span>
+            <span className="current-emoji-text">{currentText}</span>
           </div>
         </div>
       </div >

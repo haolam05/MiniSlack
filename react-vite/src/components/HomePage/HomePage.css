@@ -519,6 +519,11 @@
   font-size: 20pt;
 }
 
+.message-time .current-emoji .current-emoji-text {
+  line-break: anywhere;
+  max-width: 160px;
+}
+
 .workspace-details,
 .channel-details {
   flex-grow: 1;
