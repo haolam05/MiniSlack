@@ -61,3 +61,25 @@
     left: 415px;
   }
 }
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.team-info .team-members {
+  display: flex;
+  gap: 40px;
+}
+
+.team-info .team-member {
+  display: flex;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.team-info .team-member:hover {
+  text-decoration: underline;
+}
