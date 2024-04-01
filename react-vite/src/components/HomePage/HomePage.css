@@ -757,7 +757,14 @@
   }
 
   #sidebar {
-    width: 79%;
+    height: 900px;
+    min-width: 527px;
+    width: auto;
+  }
+
+  #main-content {
+    min-width: 527px;
+    height: 900px;
   }
 }
 
