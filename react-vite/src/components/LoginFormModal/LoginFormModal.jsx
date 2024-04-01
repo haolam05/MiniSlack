@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
+import Loader from "../Loader";
 import * as sessionActions from "../../redux/session";
 
 function LoginFormModal() {
@@ -9,7 +10,7 @@ function LoginFormModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { setModalContent } = useModal();
+  const { setModalContent, closeModal } = useModal();
 
   const handleSubmit = async (e, loginAsDemoUser1, loginAsDemoUser2) => {
     e.preventDefault();
@@ -45,7 +46,11 @@ function LoginFormModal() {
       if (data.errors.message) return setModalContent(<h2 className="subheading modal-errors">{data.errors.message}</h2>)
       return setErrors(data.errors);
     }
-    setModalContent(<h2 className="subheading alert-success">Sucessfully Logged In</h2>);
+    setModalContent(<h2 className="subheading alert-success">
+      <span>Sucessfully Logged In</span>
+      <Loader />
+    </h2>);
+    setTimeout(() => closeModal(), 2000);
     enabledSubmitButton();
   };
 

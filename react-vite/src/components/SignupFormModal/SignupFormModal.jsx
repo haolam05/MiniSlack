@@ -4,6 +4,7 @@ import { useModal } from "../../context/Modal";
 import { disabledSubmitButton, enabledSubmitButton } from "../../utils/dom";
 import { isImageValid } from "../../utils/image";
 import Loading from "../Loading";
+import Loader from "../Loader";
 import * as sessionActions from "../../redux/session";
 
 function SignupFormModal() {
@@ -17,7 +18,7 @@ function SignupFormModal() {
   const [profileImageUrl, setProfileImageUrl] = useState("");
   const [imageIsUploading, setImageIsUploading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { setModalContent } = useModal();
+  const { setModalContent, closeModal } = useModal();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -50,7 +51,11 @@ function SignupFormModal() {
       setImageIsUploading(false);
       return setErrors(data.errors);
     }
-    setModalContent(<h2 className="subheading alert-success">Successfully Signed Up</h2>);
+    setModalContent(<h2 className="subheading alert-success">
+      <span>Sucessfully Signed Up</span>
+      <Loader />
+    </h2>);
+    setTimeout(() => closeModal(), 2000);
     setImageIsUploading(false);
     enabledSubmitButton();
   };

@@ -5,12 +5,13 @@ import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import Loader from "../Loader";
 import * as sessionActions from "../../redux/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const { setModalContent } = useModal();
+  const { setModalContent, closeModal } = useModal();
   const ulRef = useRef();
 
   const toggleMenu = e => {
@@ -36,7 +37,11 @@ function ProfileButton({ user }) {
   const logout = e => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    setModalContent(<h2 className="subheading alert-success">Successfully Logged Out</h2>)
+    setModalContent(<h2 className="subheading alert-success">
+      <span>Sucessfully Logged Out</span>
+      <Loader />
+    </h2>);
+    setTimeout(() => closeModal(), 2000);
     closeMenu();
   };
 
