@@ -32,6 +32,7 @@
   flex-direction: column;
   gap: 30px;
   padding: 10px 30px;
+  height: 100%;
 }
 
 #workspaces .subheading {
@@ -757,5 +758,21 @@
 
   #sidebar {
     width: 79%;
+  }
+}
+
+@media screen and (max-height: 900px) {
+
+  #sidebar,
+  #main-content {
+    scrollbar-color: var(--navbar-background) transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+  }
+
+  #sidebar {
+    width: 275px;
+    height: auto;
   }
 }
